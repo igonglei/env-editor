@@ -1,0 +1,606 @@
+﻿@import "mixins";
+
+body {
+    font-family: @font-family;
+    .fs(@font-size);
+    .cl(@font-color);
+}
+
+.EplugGraphEditorTop {
+    .bg(@topbar-bgcolor);
+    .bb(@topbar-border-color);
+    .h(@topbar-height);
+    .pos;
+    .z(1000);
+}
+
+.EplugGraphEditorTopMenu {
+    .f;
+    .h;
+    @padding: (@topbar-height - @topbar-icon-size)/2;
+    .p(0 10px);
+
+    > .item {
+        .inline-block;
+        .w(@topbar-icon-size);
+        .h(@topbar-icon-size);
+        .pointer;
+        .bgi(@image-toolbar);
+        .m(@padding - 2 10px @padding + 2 10px);
+
+        &.spanEditorViewText {
+            .bp(-10px -491px);
+
+            &:hover {
+                .bp(-10px -461px);
+            }
+        }
+
+        &.spanEditorTopolimit {
+            .bp(-10px -194px);
+
+            &:hover {
+                .bp(-10px -164px);
+            }
+        }
+
+        &.spanEditorBtnOpenEnx {
+            .bp(-10px -254px);
+
+            &:hover {
+                .bp(-10px -224px);
+            }
+        }
+
+        &.spanEditorBtnSaveImg {
+            .bp(-10px -344px);
+
+            &:hover {
+                .bp(-10px -314px);
+            }
+        }
+
+        &.spanEditorBtnSaveEnx {
+            .bp(-10px -374px);
+
+            &:hover {
+                .bp(-10px -284px);
+            }
+        }
+
+        &.spanEditorBtnExportEnx {
+            .bp(-10px -134px);
+
+            &:hover {
+                .bp(-10px -104px);
+            }
+        }
+    }
+
+    > .split-line {
+        .inline-block;
+        .h(@topbar-icon-size);
+        .w(1px);
+        .bgc(#DCDCDC);
+        .m(@padding 0);
+    }
+}
+
+.EplugGraphEditorRightContainer {
+    .m;
+    .pos-abs-tl;
+    .w;
+    .h;
+    .pt(@topbar-height);
+    .pr(@editor-padding+19);
+    .bgc(@editor-bgcolor);
+    .minh(800px);
+}
+
+.EplugGraphEditorContainer {
+    outline: none;
+    .h;
+    .of(auto);
+}
+
+.EplugGraphEditorSubEditor:extend(.EplugGraphEditorContainer) {
+    .pl(10px);
+    .pos-abs-tl;
+    .pt(191px);
+    .w;
+    .of;
+
+    > div {
+        .h;
+        .w;
+        .ofy(auto);
+        .ofx;
+    }
+}
+
+.EplugGraphEditorContainerParent {
+    .bg(url(@grid-image));
+    .bgc;
+    .h;
+    .pl(@leftbar-icon-width+@leftbar-padding*2);
+    .pos;
+    .bsd;
+}
+
+.EplugGraphEditorLeftBar {
+    .pos-abs-tl;
+}
+
+.EplugGraphEditorElementItem {
+    cursor: move;
+    .pt(@leftbar-padding);
+    .pl(@leftbar-padding);
+
+    > .icon {
+        .bgi(@image-drop);
+        .w(@leftbar-icon-width);
+        .h(@leftbar-icon-height);
+        .radius(100%);
+        .bsd;
+        .bp(-10px -232px);
+    }
+
+    > span {
+        .block;
+        .ta;
+    }
+}
+
+.EplugGraphEditorElementItemTester > .icon {
+    .bp(-10px -84px);
+}
+
+.EplugGraphEditorElementItemAtm > .icon {
+    .bp(-10px -10px);
+}
+
+.EplugGraphEditorElementItemEth > .icon {
+    .bp(-10px -158px);
+}
+
+.EplugGraphEditorElementItemSdh > .icon {
+    .bp(-10px -454px);
+}
+
+.EplugGraphEditorElementItemNetwork > .icon {
+    .bp(-10px -306px);
+}
+
+.EplugGraphEditorElementItemSftp > .icon {
+    .bp(-10px -528px);
+}
+
+.EplugGraphEditorElementItemAgent > .icon {
+    .bp(-10px -380px);
+}
+
+.EplugGraphEditorPropertyEditPanel {
+    .pos-abs-br(20px,30px);
+    .z(1000);
+    .bgc(#f8f8f8);
+    .bsd;
+    .radius(4px);
+    .w(312px);
+    .b(#e7e7e7);
+}
+
+.EplugGraphEditorPropertyPanelTitle {
+    .h(30px);
+    .lh(30px);
+    .fw;
+    .m(8px 12px);
+}
+
+.EplugGraphEditorPropertyPanelTitleBtn {
+    .inline-block;
+    .w(22px);
+    .h(22px);
+    .pointer;
+    .bgi(@image-toolbar);
+    .bp(-10px -10px);
+    .f;
+    .m(4px 0);
+}
+
+.EplugGraphEditorPropertyPanelFieldEdit {
+    .ofy(auto);
+    .p(12px 20px 12px 0);
+    .maxh(780px);
+}
+
+.EplugGraphEditorPropertyPanelLst {
+    .w;
+    .fs(16px);
+    table-layout: fixed;
+
+    td {
+        .pb(10px);
+        .pl(10px);
+    }
+
+    input, select {
+        .w(143px);
+    }
+
+    .custom_field_key {
+        .w(100px);
+
+        + span {
+            .inline-block;
+            .w(10px);
+            .ta(right);
+        }
+    }
+
+    .custom_field_value {
+        .w(105px);
+        .mr(5px);
+    }
+
+    .custom_field_add, .custom_field_delete {
+        .pointer;
+        .cl(#3c8ad8);
+
+        &:hover {
+            .cl(#f6ad3c);
+        }
+    }
+}
+
+input, select, textarea {
+    .b(#e5e5e5);
+    .h(25px);
+    .lh(25px);
+    .outline;
+    .pl(10px);
+    .transition;
+    resize: none;
+
+    &:focus {
+        .b(#66afe9);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+        outline: none !important;
+    }
+}
+
+input[type=file] {
+    padding-left: 0;
+}
+
+.EplugGraphEditorPropertyPanelFieldTitle {
+    .cl(#333);
+    .ta(right);
+    .w(120px);
+}
+
+.EplugGraphEditorPropertyBtn {
+    .ta;
+    .pt(15px);
+}
+
+.EplugGraphEditorPropertyBtnItem {
+    .inline-block;
+    .p(5px 15px);
+    .fs(16px);
+    .pointer;
+    .radius(20px);
+    .bgc(#009CFF);
+    .cl;
+    .transition;
+    .minw(80px);
+
+    &:hover {
+        .darken(10%,#009CFF);
+    }
+}
+
+.EPlugImportClose, .EPlugTopolimitClose {
+    .bgc(#DFE1E3);
+    .cl(#333);
+    .ml(10px);
+
+    &:hover {
+        .darken(10%,#DFE1E3);
+    }
+}
+
+.EPlugTextEllipsis {
+    .ellipsis;
+}
+
+.EplugGraphEditorTopNav {
+    .p(20px);
+
+    > div {
+        .inline-block;
+        .h(20px);
+        .va;
+    }
+
+    .EplugGraphEditorTopNavLink {
+        .cl(#333);
+    }
+
+    .EplugGraphEditorTopSep {
+        .p(0 5px);
+    }
+
+    .EplugGraphEditorTopElementName {
+        .cl(#929292);
+    }
+
+    .topnav-tools {
+        .f;
+
+        > span {
+            .inline-block;
+            .size(20px,20px);
+            .bgi(@image-toolbar);
+            .pointer;
+
+            &.tools-delete {
+                .bp(-10px -74px);
+
+                &:hover {
+                    .bp(-10px -521px);
+                }
+            }
+        }
+    }
+}
+
+.EplugGraphEditorResource {
+    .w(19px);
+    .pos-abs-tr;
+    .h;
+    .pt(@topbar-height);
+    .bgc(@subeditor-bgcolor);
+    .of;
+    .b(#e1e1e1);
+}
+
+.EplugGraphRightToggle {
+    .pos-abs-tl(50%);
+    transform: translateY(-50%);
+    .size(19px,124px);
+    .pointer;
+    .bgi(@image-toolbar);
+    .bp(-10px -685px);
+
+    &.left {
+        .bp(-10px -551px);
+    }
+}
+
+.EplugGraphEditorRightTop {
+    .pos-abs-tl;
+    .pt(30px);
+    .w;
+    .z(100);
+    .hide;
+}
+
+.EplugGraphEditorTopolimitContent {
+    .size(100%,200px);
+}
+
+.xmpViewText {
+    .maxh(800px);
+    .of(auto);
+
+    xmp {
+        font-family: Arial;
+    }
+}
+
+.EplugGraphEditorSubToolbar {
+    .bb(#e1e1e1);
+    .pt(10px);
+    .pb(5px);
+}
+
+.SubToolbarItem {
+    cursor: move;
+    .inline-block;
+    .pl(20px);
+
+    > .icon {
+        .bgi(@image-drop);
+        .w(@leftbar-icon-width);
+        .h(@leftbar-icon-height);
+        .radius(100%);
+        .bsd;
+        .bp(-10px -676px);
+    }
+
+    > span {
+        .block;
+        .ta;
+    }
+
+    &.SubToolbarBoard {
+        > .icon {
+            .bpy(-602px);
+        }
+    }
+
+    &.SubToolbarPort {
+        > .icon {
+            .bpy(-750px);
+        }
+    }
+
+    &.SubToolbarVM {
+        > .icon {
+            .bpy(-824px);
+        }
+    }
+
+    &.SubToolbarSubBoard {
+        > .icon {
+            .bp(-10px -898px);
+        }
+    }
+}
+
+.subgraph-item-label {
+    .ellipsis;
+    .pl(35px);
+    .bgi("v-ne.png",no-repeat,left);
+    .size(200px,31px);
+    background-size: 31px;
+    .ta(left);
+    .lh(31px);
+
+    &.label-Port {
+        .ml(112px);
+        .bi("v-port.png");
+
+        &.using {
+            .bi("v-port-using.png");
+        }
+    }
+
+    &.label-SubBoard {
+        .ml(60px);
+        .bi("v-subboard.png");
+    }
+
+    &.label-Board {
+        .ml(45px);
+        .bi("v-board.png");
+        background-size: 26px 31px;
+    }
+
+    &.label-VM {
+        .ml(40px);
+        .bi("v-vm.png");
+        .pl(32px);
+    }
+
+    &.label-Network {
+        .ml(110px);
+        .bi("v-network.png");
+        background-size: 22px;
+        .pl(30px);
+
+        &.using {
+            .bi("v-network-using.png");
+        }
+    }
+}
+
+.EplugGraphEditorPropertyPanelFieldLink {
+    .mb;
+    .va(top);
+    .pointer;
+}
+
+.core_tip {
+    .m;
+    .p;
+    list-style: none;
+
+    > li {
+        .p(5px 5px 0 5px);
+
+        > .tip_title {
+            .pr(10px);
+        }
+    }
+}
+
+::-webkit-scrollbar {
+    .size(@scrollbar-width,@scrollbar-width);
+}
+
+::-webkit-scrollbar-thumb {
+    .bgc(@scrollbar-thumb-bgColor);
+
+    &:hover {
+        .bgc(lighten(@scrollbar-thumb-bgColor,10%));
+    }
+}
+
+::-webkit-scrollbar-track-piece {
+    .bgc(lighten(@scrollbar-thumb-bgColor,20%));
+}
+
+.enveditor {
+    > div.mxTooltip {
+        .fade(60%,#000);
+        .fs(@font-size);
+        font-family: @font-family;
+        .cl;
+        filter: none;
+        .noborder;
+        .radius(4px);
+        .bsd(none);
+    }
+
+    > div.mxPopupMenu {
+        .noborder;
+        .bsd(@box-shadow);
+        .bg(#fff);
+        .p(2px);
+        .b(#e7e7e7);
+
+        table.mxPopupMenu {
+            .m;
+        }
+
+        tr.mxPopupMenuItem {
+            .cl(@font-color);
+            .transition;
+        }
+
+        td.mxPopupMenuIcon {
+            .bgc;
+            .p;
+        }
+
+        td.mxPopupMenuItem {
+            .fs(@font-size);
+            font-family: @font-family;
+            .p(5px 30px 5px 30px);
+
+            .mxMenu-key {
+                .pr(10px);
+                .cl(#929292);
+            }
+        }
+
+        tr.mxPopupMenuItemHover {
+            .bgc(#EBEBEB);
+            .cl(@font-color);
+        }
+    }
+}
+
+.mxMenu {
+    .bgi(@image-toolbar);
+    .bp(-10px -889px);
+    .size(25px,25px);
+    .m(5px);
+
+    &.edit {
+        .bpy(-924px);
+    }
+
+    &.delete {
+        .bpy(-854px);
+    }
+
+    &.paste {
+        .bpy(-959px);
+    }
+
+    &.select {
+        .bpy(-819px);
+    }
+}

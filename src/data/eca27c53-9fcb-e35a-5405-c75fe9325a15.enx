@@ -1,0 +1,1324 @@
+<logic_environment>
+  <parameters>
+  </parameters>
+  <devices>
+    <device>
+      <parameters>
+        <parameter name="guid" value="d657b60e-8e7d-06ab-4dcd-189b7574c3b9" />
+        <parameter name="objname" value="ne1" />
+        <parameter name="name" value="ne1" />
+        <parameter name="ip" value="10.22.148.186" />
+        <parameter name="type" value="OSN8800" />
+        <parameter name="version" value="" />
+        <parameter name="alias" value="" />
+        <parameter name="caption" value="" />
+        <parameter name="is_topo" value="" />
+        <parameter name="remark" value="" />
+        <parameter name="id" value="" />
+        <parameter name="console" value="" />
+        <parameter name="mask" value="" />
+        <parameter name="username" value="" />
+        <parameter name="password" value="" />
+        <parameter name="ptp" value="" />
+        <parameter name="vender" value="" />
+        <parameter name="virtual_real" value="Virtual" />
+        <parameter name="port" value="" />
+        <parameter name="cmts_port" value="" />
+        <parameter name="cmts_type" value="" />
+        <parameter name="olt_version" value="" />
+        <parameter name="sub_ip" value="" />
+        <parameter name="class" value="Ne" />
+        <parameter name="fullclass" value="Ne" />
+        <parameter name="position" value="244,267;306,329" />
+        <parameter name="roler" value="" />
+        <parameter name="test" value="hello" />
+      </parameters>
+      <devices>
+        <device>
+          <parameters>
+            <parameter name="guid" value="82353b00-3c9c-b016-160b-7da59cf13b83" />
+            <parameter name="objname" value="ne1_board1" />
+            <parameter name="name" value="ne1_board1" />
+            <parameter name="ip" value="" />
+            <parameter name="type" value="" />
+            <parameter name="version" value="" />
+            <parameter name="alias" value="" />
+            <parameter name="caption" value="" />
+            <parameter name="is_topo" value="" />
+            <parameter name="remark" value="" />
+            <parameter name="angle" value="" />
+            <parameter name="bid" value="" />
+            <parameter name="engrossstate" value="" />
+            <parameter name="username" value="" />
+            <parameter name="password" value="" />
+            <parameter name="portnum" value="" />
+            <parameter name="realNEId" value="" />
+            <parameter name="slot" value="" />
+            <parameter name="virtual_real" value="Virtual" />
+            <parameter name="class" value="Board" />
+            <parameter name="fullclass" value="Ne::Board" />
+          </parameters>
+          <devices>
+            <device>
+              <parameters>
+                <parameter name="guid" value="45ee03fd-c1ea-c85a-8ebc-053c966a7a3f" />
+                <parameter name="objname" value="ne1_board1_subboard1" />
+                <parameter name="name" value="ne1_board1_subboard1" />
+                <parameter name="ip" value="" />
+                <parameter name="type" value="" />
+                <parameter name="version" value="" />
+                <parameter name="alias" value="" />
+                <parameter name="caption" value="" />
+                <parameter name="is_topo" value="" />
+                <parameter name="remark" value="" />
+                <parameter name="bid" value="" />
+                <parameter name="sbid" value="" />
+                <parameter name="engrossstate" value="" />
+                <parameter name="username" value="" />
+                <parameter name="password" value="" />
+                <parameter name="portnum" value="" />
+                <parameter name="realNEId" value="" />
+                <parameter name="submask" value="" />
+                <parameter name="virtual_real" value="Virtual" />
+                <parameter name="class" value="SubBoard" />
+                <parameter name="fullclass" value="Board::SubBoard" />
+              </parameters>
+              <devices>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="a7bb9b0a-961f-bcaa-ef8c-accd078516db" />
+                    <parameter name="objname" value="ne1_board1_subboard1_port1" />
+                    <parameter name="name" value="ne1_board1_subboard1_port1" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="29862874-67c6-5138-4f94-fb38daf0d89a" />
+                    <parameter name="objname" value="ne1_board1_subboard1_port3" />
+                    <parameter name="name" value="ne1_board1_subboard1_port3" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="bf15ebb1-d708-5cfa-92ef-cead9f876c81" />
+                    <parameter name="objname" value="ne1_board1_subboard1_port5" />
+                    <parameter name="name" value="ne1_board1_subboard1_port5" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="834a0f5d-d46a-9aef-acf0-39ee7d5c93b5" />
+                    <parameter name="objname" value="ne1_board1_subboard1_port7" />
+                    <parameter name="name" value="ne1_board1_subboard1_port7" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="8a7bd262-33cc-5f51-76a6-4450ac6f5840" />
+                    <parameter name="objname" value="ne1_board1_subboard1_port9" />
+                    <parameter name="name" value="ne1_board1_subboard1_port9" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+              </devices>
+            </device>
+            <device>
+              <parameters>
+                <parameter name="guid" value="ab5690fb-46fd-280c-17f6-abdea87d04a1" />
+                <parameter name="objname" value="ne1_board1_port25" />
+                <parameter name="name" value="ne1_board1_port25" />
+                <parameter name="ip" value="" />
+                <parameter name="type" value="" />
+                <parameter name="version" value="" />
+                <parameter name="alias" value="" />
+                <parameter name="caption" value="" />
+                <parameter name="is_topo" value="" />
+                <parameter name="remark" value="" />
+                <parameter name="bid" value="" />
+                <parameter name="sbid" value="" />
+                <parameter name="pid" value="" />
+                <parameter name="shape" value="" />
+                <parameter name="submask" value="" />
+                <parameter name="interface" value="" />
+                <parameter name="host_id" value="" />
+                <parameter name="internal_external" value="" />
+                <parameter name="virtual_real" value="Virtual" />
+                <parameter name="class" value="Port" />
+                <parameter name="fullclass" value="Board::Port" />
+              </parameters>
+            </device>
+          </devices>
+        </device>
+        <device>
+          <parameters>
+            <parameter name="guid" value="abb5cee0-3a97-0051-187c-5df3db3cb3cd" />
+            <parameter name="objname" value="ne1_port23" />
+            <parameter name="name" value="ne1_port23" />
+            <parameter name="ip" value="" />
+            <parameter name="type" value="" />
+            <parameter name="version" value="" />
+            <parameter name="alias" value="" />
+            <parameter name="caption" value="" />
+            <parameter name="is_topo" value="" />
+            <parameter name="remark" value="" />
+            <parameter name="bid" value="" />
+            <parameter name="sbid" value="" />
+            <parameter name="pid" value="" />
+            <parameter name="shape" value="" />
+            <parameter name="submask" value="" />
+            <parameter name="interface" value="" />
+            <parameter name="host_id" value="" />
+            <parameter name="internal_external" value="" />
+            <parameter name="virtual_real" value="Virtual" />
+            <parameter name="class" value="Port" />
+            <parameter name="fullclass" value="Ne::Port" />
+          </parameters>
+        </device>
+        <device>
+          <parameters>
+            <parameter name="guid" value="787a8239-ff7d-1a83-a815-2c97ef12ebef" />
+            <parameter name="objname" value="network1" />
+            <parameter name="name" value="network1" />
+            <parameter name="ip" value="" />
+            <parameter name="type" value="" />
+            <parameter name="version" value="" />
+            <parameter name="alias" value="" />
+            <parameter name="caption" value="" />
+            <parameter name="is_topo" value="" />
+            <parameter name="remark" value="" />
+            <parameter name="cidr" value="" />
+            <parameter name="start_ip" value="" />
+            <parameter name="end_ip" value="" />
+            <parameter name="class" value="Network" />
+            <parameter name="fullclass" value="Network" />
+            <parameter name="position" value="5,25;5,25" />
+          </parameters>
+        </device>
+        <device>
+          <parameters>
+            <parameter name="guid" value="6fcf3a1e-19ec-7297-f00c-693242db9d58" />
+            <parameter name="objname" value="ne1_board6" />
+            <parameter name="name" value="ne1_board6" />
+            <parameter name="ip" value="" />
+            <parameter name="type" value="" />
+            <parameter name="version" value="" />
+            <parameter name="alias" value="" />
+            <parameter name="caption" value="" />
+            <parameter name="is_topo" value="" />
+            <parameter name="remark" value="" />
+            <parameter name="angle" value="" />
+            <parameter name="bid" value="" />
+            <parameter name="engrossstate" value="" />
+            <parameter name="username" value="" />
+            <parameter name="password" value="" />
+            <parameter name="portnum" value="" />
+            <parameter name="realNEId" value="" />
+            <parameter name="slot" value="" />
+            <parameter name="virtual_real" value="Virtual" />
+            <parameter name="class" value="Board" />
+            <parameter name="fullclass" value="Ne::Board" />
+          </parameters>
+        </device>
+        <device>
+          <parameters>
+            <parameter name="guid" value="9605aad8-5eb7-310c-7e83-3f6b989bb4bf" />
+            <parameter name="objname" value="ne1_port26" />
+            <parameter name="name" value="ne1_port26" />
+            <parameter name="ip" value="" />
+            <parameter name="type" value="" />
+            <parameter name="version" value="" />
+            <parameter name="alias" value="" />
+            <parameter name="caption" value="" />
+            <parameter name="is_topo" value="" />
+            <parameter name="remark" value="" />
+            <parameter name="bid" value="" />
+            <parameter name="sbid" value="" />
+            <parameter name="pid" value="" />
+            <parameter name="shape" value="" />
+            <parameter name="submask" value="" />
+            <parameter name="interface" value="" />
+            <parameter name="host_id" value="" />
+            <parameter name="internal_external" value="" />
+            <parameter name="virtual_real" value="Virtual" />
+            <parameter name="class" value="Port" />
+            <parameter name="fullclass" value="Ne::Port" />
+          </parameters>
+        </device>
+        <device>
+          <parameters>
+            <parameter name="guid" value="7d11ad8d-bd6a-6fcc-2657-c3c6326c8895" />
+            <parameter name="objname" value="ne1_port27" />
+            <parameter name="name" value="ne1_port27" />
+            <parameter name="ip" value="" />
+            <parameter name="type" value="" />
+            <parameter name="version" value="" />
+            <parameter name="alias" value="" />
+            <parameter name="caption" value="" />
+            <parameter name="is_topo" value="" />
+            <parameter name="remark" value="" />
+            <parameter name="bid" value="" />
+            <parameter name="sbid" value="" />
+            <parameter name="pid" value="" />
+            <parameter name="shape" value="" />
+            <parameter name="submask" value="" />
+            <parameter name="interface" value="" />
+            <parameter name="host_id" value="" />
+            <parameter name="internal_external" value="" />
+            <parameter name="virtual_real" value="Virtual" />
+            <parameter name="class" value="Port" />
+            <parameter name="fullclass" value="Ne::Port" />
+          </parameters>
+        </device>
+      </devices>
+    </device>
+    <device>
+      <parameters>
+        <parameter name="guid" value="33290323-85c8-f427-fc3d-213d14c69ebc" />
+        <parameter name="objname" value="ne2" />
+        <parameter name="name" value="ne2" />
+        <parameter name="ip" value="" />
+        <parameter name="type" value="" />
+        <parameter name="version" value="" />
+        <parameter name="alias" value="" />
+        <parameter name="caption" value="" />
+        <parameter name="is_topo" value="" />
+        <parameter name="remark" value="" />
+        <parameter name="id" value="" />
+        <parameter name="console" value="" />
+        <parameter name="mask" value="" />
+        <parameter name="username" value="" />
+        <parameter name="password" value="" />
+        <parameter name="ptp" value="" />
+        <parameter name="vender" value="" />
+        <parameter name="virtual_real" value="Virtual" />
+        <parameter name="port" value="" />
+        <parameter name="cmts_port" value="" />
+        <parameter name="cmts_type" value="" />
+        <parameter name="olt_version" value="" />
+        <parameter name="sub_ip" value="" />
+        <parameter name="class" value="Ne" />
+        <parameter name="fullclass" value="Ne" />
+        <parameter name="position" value="525,467;587,529" />
+        <parameter name="roler" value="" />
+        <parameter name="haha" value="hehe" />
+      </parameters>
+      <devices>
+        <device>
+          <parameters>
+            <parameter name="guid" value="20e6b1c4-ed76-f88b-1752-7962cfef6e33" />
+            <parameter name="objname" value="ne2_board2" />
+            <parameter name="name" value="ne2_board2" />
+            <parameter name="ip" value="" />
+            <parameter name="type" value="" />
+            <parameter name="version" value="" />
+            <parameter name="alias" value="" />
+            <parameter name="caption" value="" />
+            <parameter name="is_topo" value="" />
+            <parameter name="remark" value="" />
+            <parameter name="angle" value="" />
+            <parameter name="bid" value="" />
+            <parameter name="engrossstate" value="" />
+            <parameter name="username" value="" />
+            <parameter name="password" value="" />
+            <parameter name="portnum" value="" />
+            <parameter name="realNEId" value="" />
+            <parameter name="slot" value="" />
+            <parameter name="virtual_real" value="Virtual" />
+            <parameter name="class" value="Board" />
+            <parameter name="fullclass" value="Ne::Board" />
+            <parameter name="position" value="5,25;5,25" />
+          </parameters>
+          <devices>
+            <device>
+              <parameters>
+                <parameter name="guid" value="221dfec7-9d1d-f4cc-e352-54e7650d9ed9" />
+                <parameter name="objname" value="board2_subboard2" />
+                <parameter name="name" value="board2_subboard2" />
+                <parameter name="ip" value="" />
+                <parameter name="type" value="" />
+                <parameter name="version" value="" />
+                <parameter name="alias" value="" />
+                <parameter name="caption" value="" />
+                <parameter name="is_topo" value="" />
+                <parameter name="remark" value="" />
+                <parameter name="bid" value="" />
+                <parameter name="sbid" value="" />
+                <parameter name="engrossstate" value="" />
+                <parameter name="username" value="" />
+                <parameter name="password" value="" />
+                <parameter name="portnum" value="" />
+                <parameter name="realNEId" value="" />
+                <parameter name="submask" value="" />
+                <parameter name="virtual_real" value="Virtual" />
+                <parameter name="class" value="SubBoard" />
+                <parameter name="fullclass" value="Board::SubBoard" />
+                <parameter name="position" value="5,25;5,25" />
+              </parameters>
+              <devices>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="0d26a7c2-1d04-5399-cfed-ea7f23328fd9" />
+                    <parameter name="objname" value="subboard2_port2" />
+                    <parameter name="name" value="subboard2_port2" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="cc143f9a-a000-4166-3f14-6d1d34cbb612" />
+                    <parameter name="objname" value="board2_subboard2_port4" />
+                    <parameter name="name" value="board2_subboard2_port4" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="0539d5b2-faaa-46ab-2512-4928b0388911" />
+                    <parameter name="objname" value="board2_subboard2_port6" />
+                    <parameter name="name" value="board2_subboard2_port6" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="7b8b3a9e-2ad2-dc22-5adf-d2add7fcf99d" />
+                    <parameter name="objname" value="board2_subboard2_port8" />
+                    <parameter name="name" value="board2_subboard2_port8" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+              </devices>
+            </device>
+          </devices>
+        </device>
+        <device>
+          <parameters>
+            <parameter name="guid" value="52f5efae-2309-c1a4-0f7f-fe097f698219" />
+            <parameter name="objname" value="network5" />
+            <parameter name="name" value="network5" />
+            <parameter name="ip" value="" />
+            <parameter name="type" value="" />
+            <parameter name="version" value="" />
+            <parameter name="alias" value="" />
+            <parameter name="caption" value="" />
+            <parameter name="is_topo" value="" />
+            <parameter name="remark" value="" />
+            <parameter name="cidr" value="" />
+            <parameter name="start_ip" value="" />
+            <parameter name="end_ip" value="" />
+            <parameter name="class" value="Network" />
+            <parameter name="fullclass" value="Network" />
+            <parameter name="position" value="5,25;5,25" />
+          </parameters>
+        </device>
+        <device>
+          <parameters>
+            <parameter name="guid" value="ead8d133-6c65-46cc-c8f4-a598da74d306" />
+            <parameter name="objname" value="ne2_port24" />
+            <parameter name="name" value="ne2_port24" />
+            <parameter name="ip" value="" />
+            <parameter name="type" value="" />
+            <parameter name="version" value="" />
+            <parameter name="alias" value="" />
+            <parameter name="caption" value="" />
+            <parameter name="is_topo" value="" />
+            <parameter name="remark" value="" />
+            <parameter name="bid" value="" />
+            <parameter name="sbid" value="" />
+            <parameter name="pid" value="" />
+            <parameter name="shape" value="" />
+            <parameter name="submask" value="" />
+            <parameter name="interface" value="" />
+            <parameter name="host_id" value="" />
+            <parameter name="internal_external" value="" />
+            <parameter name="virtual_real" value="Virtual" />
+            <parameter name="class" value="Port" />
+            <parameter name="fullclass" value="Ne::Port" />
+          </parameters>
+        </device>
+      </devices>
+    </device>
+    <device>
+      <parameters>
+        <parameter name="guid" value="505fc7a6-7147-dd50-da3d-fd1dcdd7cc04" />
+        <parameter name="objname" value="ne3" />
+        <parameter name="name" value="ne3" />
+        <parameter name="ip" value="" />
+        <parameter name="type" value="" />
+        <parameter name="version" value="" />
+        <parameter name="alias" value="" />
+        <parameter name="caption" value="" />
+        <parameter name="is_topo" value="" />
+        <parameter name="remark" value="" />
+        <parameter name="id" value="" />
+        <parameter name="console" value="" />
+        <parameter name="mask" value="" />
+        <parameter name="username" value="" />
+        <parameter name="password" value="" />
+        <parameter name="ptp" value="" />
+        <parameter name="vender" value="" />
+        <parameter name="virtual_real" value="Virtual" />
+        <parameter name="port" value="" />
+        <parameter name="cmts_port" value="" />
+        <parameter name="cmts_type" value="" />
+        <parameter name="olt_version" value="" />
+        <parameter name="sub_ip" value="" />
+        <parameter name="class" value="Ne" />
+        <parameter name="fullclass" value="Ne" />
+        <parameter name="position" value="545,126;607,188" />
+        <parameter name="roler" value="" />
+      </parameters>
+      <devices>
+        <device>
+          <parameters>
+            <parameter name="guid" value="ed4e5a7e-2f51-df39-81a8-67a765fee315" />
+            <parameter name="objname" value="ne3_board4" />
+            <parameter name="name" value="ne4_board4" />
+            <parameter name="ip" value="" />
+            <parameter name="type" value="" />
+            <parameter name="version" value="" />
+            <parameter name="alias" value="" />
+            <parameter name="caption" value="" />
+            <parameter name="is_topo" value="" />
+            <parameter name="remark" value="" />
+            <parameter name="angle" value="" />
+            <parameter name="bid" value="" />
+            <parameter name="engrossstate" value="" />
+            <parameter name="username" value="" />
+            <parameter name="password" value="" />
+            <parameter name="portnum" value="" />
+            <parameter name="realNEId" value="" />
+            <parameter name="slot" value="" />
+            <parameter name="virtual_real" value="Virtual" />
+            <parameter name="class" value="Board" />
+            <parameter name="fullclass" value="Ne::Board" />
+            <parameter name="position" value="5,25;5,25" />
+          </parameters>
+          <devices>
+            <device>
+              <parameters>
+                <parameter name="guid" value="b3ab8864-b307-726f-d5b6-251f99a19657" />
+                <parameter name="objname" value="board4_subboard4" />
+                <parameter name="name" value="board4_subboard4" />
+                <parameter name="ip" value="" />
+                <parameter name="type" value="" />
+                <parameter name="version" value="" />
+                <parameter name="alias" value="" />
+                <parameter name="caption" value="" />
+                <parameter name="is_topo" value="" />
+                <parameter name="remark" value="" />
+                <parameter name="bid" value="" />
+                <parameter name="sbid" value="" />
+                <parameter name="engrossstate" value="" />
+                <parameter name="username" value="" />
+                <parameter name="password" value="" />
+                <parameter name="portnum" value="" />
+                <parameter name="realNEId" value="" />
+                <parameter name="submask" value="" />
+                <parameter name="virtual_real" value="Virtual" />
+                <parameter name="class" value="SubBoard" />
+                <parameter name="fullclass" value="Board::SubBoard" />
+                <parameter name="position" value="5,25;5,25" />
+              </parameters>
+              <devices>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="d985505d-7712-a644-adc2-4e4a0b10b126" />
+                    <parameter name="objname" value="subboard4_port10" />
+                    <parameter name="name" value="subboard4_port10" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="8b852299-ba57-e7a3-5a39-80f9bd64ce76" />
+                    <parameter name="objname" value="subboard4_port11" />
+                    <parameter name="name" value="subboard4_port11" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="98a2d1be-297f-df47-145d-f64c02e5fd06" />
+                    <parameter name="objname" value="subboard4_port12" />
+                    <parameter name="name" value="subboard4_port12" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="ebea9bb4-3c4b-6eb0-7f4a-2b67c3ad98e6" />
+                    <parameter name="objname" value="board4_subboard4_port19" />
+                    <parameter name="name" value="board4_subboard4_port19" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="97313794-71f7-4938-d3ea-c8bf2a7a9fcc" />
+                    <parameter name="objname" value="board4_subboard4_port21" />
+                    <parameter name="name" value="board4_subboard4_port21" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+              </devices>
+            </device>
+          </devices>
+        </device>
+        <device>
+          <parameters>
+            <parameter name="guid" value="686f85bd-4af7-7691-6004-404f2940be03" />
+            <parameter name="objname" value="network3" />
+            <parameter name="name" value="network3" />
+            <parameter name="ip" value="" />
+            <parameter name="type" value="" />
+            <parameter name="version" value="" />
+            <parameter name="alias" value="" />
+            <parameter name="caption" value="" />
+            <parameter name="is_topo" value="" />
+            <parameter name="remark" value="" />
+            <parameter name="cidr" value="" />
+            <parameter name="start_ip" value="" />
+            <parameter name="end_ip" value="" />
+            <parameter name="class" value="Network" />
+            <parameter name="fullclass" value="Network" />
+            <parameter name="position" value="5,25;5,25" />
+          </parameters>
+        </device>
+      </devices>
+    </device>
+    <device>
+      <parameters>
+        <parameter name="guid" value="8ca28afa-ab5f-2712-e7d0-8789b7d386d3" />
+        <parameter name="objname" value="ne4" />
+        <parameter name="name" value="ne4" />
+        <parameter name="ip" value="" />
+        <parameter name="type" value="" />
+        <parameter name="version" value="" />
+        <parameter name="alias" value="" />
+        <parameter name="caption" value="" />
+        <parameter name="is_topo" value="" />
+        <parameter name="remark" value="" />
+        <parameter name="id" value="" />
+        <parameter name="console" value="" />
+        <parameter name="mask" value="" />
+        <parameter name="username" value="" />
+        <parameter name="password" value="" />
+        <parameter name="ptp" value="" />
+        <parameter name="vender" value="" />
+        <parameter name="virtual_real" value="Virtual" />
+        <parameter name="port" value="" />
+        <parameter name="cmts_port" value="" />
+        <parameter name="cmts_type" value="" />
+        <parameter name="olt_version" value="" />
+        <parameter name="sub_ip" value="" />
+        <parameter name="class" value="Ne" />
+        <parameter name="fullclass" value="Ne" />
+        <parameter name="position" value="825,317;887,379" />
+        <parameter name="roler" value="" />
+      </parameters>
+      <devices>
+        <device>
+          <parameters>
+            <parameter name="guid" value="21b9f116-1674-51f5-dc69-96365fece0fe" />
+            <parameter name="objname" value="ne4_board5" />
+            <parameter name="name" value="ne5_board5" />
+            <parameter name="ip" value="" />
+            <parameter name="type" value="" />
+            <parameter name="version" value="" />
+            <parameter name="alias" value="" />
+            <parameter name="caption" value="" />
+            <parameter name="is_topo" value="" />
+            <parameter name="remark" value="" />
+            <parameter name="angle" value="" />
+            <parameter name="bid" value="" />
+            <parameter name="engrossstate" value="" />
+            <parameter name="username" value="" />
+            <parameter name="password" value="" />
+            <parameter name="portnum" value="" />
+            <parameter name="realNEId" value="" />
+            <parameter name="slot" value="" />
+            <parameter name="virtual_real" value="Virtual" />
+            <parameter name="class" value="Board" />
+            <parameter name="fullclass" value="Ne::Board" />
+            <parameter name="position" value="5,25;5,25" />
+          </parameters>
+          <devices>
+            <device>
+              <parameters>
+                <parameter name="guid" value="b09459eb-7694-1f43-3a21-cb1903f0a810" />
+                <parameter name="objname" value="board5_subboard5" />
+                <parameter name="name" value="board5_subboard5" />
+                <parameter name="ip" value="" />
+                <parameter name="type" value="" />
+                <parameter name="version" value="" />
+                <parameter name="alias" value="" />
+                <parameter name="caption" value="" />
+                <parameter name="is_topo" value="" />
+                <parameter name="remark" value="" />
+                <parameter name="bid" value="" />
+                <parameter name="sbid" value="" />
+                <parameter name="engrossstate" value="" />
+                <parameter name="username" value="" />
+                <parameter name="password" value="" />
+                <parameter name="portnum" value="" />
+                <parameter name="realNEId" value="" />
+                <parameter name="submask" value="" />
+                <parameter name="virtual_real" value="Virtual" />
+                <parameter name="class" value="SubBoard" />
+                <parameter name="fullclass" value="Board::SubBoard" />
+                <parameter name="position" value="5,25;5,25" />
+              </parameters>
+              <devices>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="8a8762ef-da8e-96af-f10f-06d5c703baab" />
+                    <parameter name="objname" value="subboard5_port13" />
+                    <parameter name="name" value="subboard5_port13" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="dad1b290-60bb-3d3d-d6a2-8428751983a2" />
+                    <parameter name="objname" value="subboard5_port14" />
+                    <parameter name="name" value="subboard5_port14" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+                <device>
+                  <parameters>
+                    <parameter name="guid" value="578e4916-5f7d-3c79-1216-a7c6973ab93d" />
+                    <parameter name="objname" value="subboard5_port15" />
+                    <parameter name="name" value="subboard5_port15" />
+                    <parameter name="ip" value="" />
+                    <parameter name="type" value="" />
+                    <parameter name="version" value="" />
+                    <parameter name="alias" value="" />
+                    <parameter name="caption" value="" />
+                    <parameter name="is_topo" value="" />
+                    <parameter name="remark" value="" />
+                    <parameter name="bid" value="" />
+                    <parameter name="sbid" value="" />
+                    <parameter name="pid" value="" />
+                    <parameter name="shape" value="" />
+                    <parameter name="submask" value="" />
+                    <parameter name="interface" value="" />
+                    <parameter name="host_id" value="" />
+                    <parameter name="internal_external" value="" />
+                    <parameter name="virtual_real" value="Virtual" />
+                    <parameter name="class" value="Port" />
+                    <parameter name="fullclass" value="SubBoard::Port" />
+                  </parameters>
+                </device>
+              </devices>
+            </device>
+          </devices>
+        </device>
+      </devices>
+    </device>
+    <device>
+      <parameters>
+        <parameter name="guid" value="df90840f-c0ad-0412-30df-db8c5a115a4c" />
+        <parameter name="objname" value="network7" />
+        <parameter name="name" value="network7" />
+        <parameter name="ip" value="" />
+        <parameter name="type" value="" />
+        <parameter name="version" value="" />
+        <parameter name="alias" value="" />
+        <parameter name="caption" value="" />
+        <parameter name="is_topo" value="" />
+        <parameter name="remark" value="" />
+        <parameter name="cidr" value="" />
+        <parameter name="start_ip" value="" />
+        <parameter name="end_ip" value="" />
+        <parameter name="class" value="Network" />
+        <parameter name="fullclass" value="Network" />
+        <parameter name="position" value="182,477;244,539" />
+      </parameters>
+    </device>
+    <device>
+      <parameters>
+        <parameter name="guid" value="93feb3d4-beb3-6b52-c8e2-f59691b4f4b9" />
+        <parameter name="objname" value="tester1" />
+        <parameter name="name" value="tester1" />
+        <parameter name="ip" value="" />
+        <parameter name="type" value="" />
+        <parameter name="version" value="" />
+        <parameter name="alias" value="" />
+        <parameter name="caption" value="" />
+        <parameter name="is_topo" value="" />
+        <parameter name="remark" value="" />
+        <parameter name="username" value="" />
+        <parameter name="password" value="" />
+        <parameter name="vmFlag" value="" />
+        <parameter name="cpu_memory" value="" />
+        <parameter name="hardDisk" value="" />
+        <parameter name="mirror" value="" />
+        <parameter name="virtual_real" value="Virtual" />
+        <parameter name="class" value="Instru::Tester" />
+        <parameter name="fullclass" value="Instru::Tester" />
+        <parameter name="position" value="675,567;737,629" />
+      </parameters>
+      <devices>
+        <device>
+          <parameters>
+            <parameter name="guid" value="4c4b2ff6-2e5b-f754-39e6-2ec816f08d59" />
+            <parameter name="objname" value="tester1_port28" />
+            <parameter name="name" value="tester1_port28" />
+            <parameter name="ip" value="" />
+            <parameter name="type" value="" />
+            <parameter name="version" value="" />
+            <parameter name="alias" value="" />
+            <parameter name="caption" value="" />
+            <parameter name="is_topo" value="" />
+            <parameter name="remark" value="" />
+            <parameter name="bid" value="" />
+            <parameter name="sbid" value="" />
+            <parameter name="pid" value="" />
+            <parameter name="shape" value="" />
+            <parameter name="submask" value="" />
+            <parameter name="interface" value="" />
+            <parameter name="host_id" value="" />
+            <parameter name="internal_external" value="" />
+            <parameter name="virtual_real" value="Virtual" />
+            <parameter name="class" value="Port" />
+            <parameter name="fullclass" value="Tester::Port" />
+          </parameters>
+        </device>
+      </devices>
+    </device>
+  </devices>
+  <links>
+    <link>
+      <parameter name="guid" value="0bc422a4-ed5e-d73e-64de-cd020098b23d" />
+      <parameter name="objname" value="link1" />
+      <parameter name="name" value="link1" />
+      <parameter name="ip" value="" />
+      <parameter name="type" value="" />
+      <parameter name="version" value="" />
+      <parameter name="alias" value="" />
+      <parameter name="caption" value="" />
+      <parameter name="is_topo" value="" />
+      <parameter name="remark" value="" />
+      <parameter name="sourcetopdevicename" value="ne1" />
+      <parameter name="sourcedeviceid" value="a7bb9b0a-961f-bcaa-ef8c-accd078516db" />
+      <parameter name="targettopdevicename" value="ne2" />
+      <parameter name="targetdeviceid" value="0d26a7c2-1d04-5399-cfed-ea7f23328fd9" />
+      <parameter name="connect_type" value="" />
+      <parameter name="direction" value="" />
+      <parameter name="parent" value="" />
+      <parameter name="cidr" value="" />
+      <parameter name="start_ip" value="" />
+      <parameter name="end_ip" value="" />
+      <parameter name="class" value="Connect" />
+    </link>
+    <link>
+      <parameter name="guid" value="ba6cdaf3-4eaa-814d-7a81-d2a6e14c4c4a" />
+      <parameter name="objname" value="link2" />
+      <parameter name="name" value="link2" />
+      <parameter name="ip" value="" />
+      <parameter name="type" value="" />
+      <parameter name="version" value="" />
+      <parameter name="alias" value="" />
+      <parameter name="caption" value="" />
+      <parameter name="is_topo" value="" />
+      <parameter name="remark" value="" />
+      <parameter name="sourcetopdevicename" value="ne1" />
+      <parameter name="sourcedeviceid" value="29862874-67c6-5138-4f94-fb38daf0d89a" />
+      <parameter name="targettopdevicename" value="ne2" />
+      <parameter name="targetdeviceid" value="cc143f9a-a000-4166-3f14-6d1d34cbb612" />
+      <parameter name="connect_type" value="" />
+      <parameter name="direction" value="" />
+      <parameter name="parent" value="" />
+      <parameter name="cidr" value="" />
+      <parameter name="start_ip" value="" />
+      <parameter name="end_ip" value="" />
+      <parameter name="class" value="Connect" />
+    </link>
+    <link>
+      <parameter name="guid" value="c986bfdc-b484-7de6-f94c-a811f8d3f47f" />
+      <parameter name="objname" value="link3" />
+      <parameter name="name" value="link3" />
+      <parameter name="ip" value="" />
+      <parameter name="type" value="" />
+      <parameter name="version" value="" />
+      <parameter name="alias" value="" />
+      <parameter name="caption" value="" />
+      <parameter name="is_topo" value="" />
+      <parameter name="remark" value="" />
+      <parameter name="sourcetopdevicename" value="ne1" />
+      <parameter name="sourcedeviceid" value="bf15ebb1-d708-5cfa-92ef-cead9f876c81" />
+      <parameter name="targettopdevicename" value="ne2" />
+      <parameter name="targetdeviceid" value="0539d5b2-faaa-46ab-2512-4928b0388911" />
+      <parameter name="connect_type" value="" />
+      <parameter name="direction" value="" />
+      <parameter name="parent" value="" />
+      <parameter name="cidr" value="" />
+      <parameter name="start_ip" value="" />
+      <parameter name="end_ip" value="" />
+      <parameter name="class" value="Connect" />
+    </link>
+    <link>
+      <parameter name="guid" value="6d89a4ec-d713-9cc5-4b4a-40ca86b52b32" />
+      <parameter name="objname" value="link8" />
+      <parameter name="name" value="link8" />
+      <parameter name="ip" value="" />
+      <parameter name="type" value="" />
+      <parameter name="version" value="" />
+      <parameter name="alias" value="" />
+      <parameter name="caption" value="" />
+      <parameter name="is_topo" value="" />
+      <parameter name="remark" value="" />
+      <parameter name="sourcetopdevicename" value="ne3" />
+      <parameter name="sourcedeviceid" value="8b852299-ba57-e7a3-5a39-80f9bd64ce76" />
+      <parameter name="targettopdevicename" value="ne4" />
+      <parameter name="targetdeviceid" value="dad1b290-60bb-3d3d-d6a2-8428751983a2" />
+      <parameter name="connect_type" value="" />
+      <parameter name="direction" value="" />
+      <parameter name="parent" value="" />
+      <parameter name="cidr" value="" />
+      <parameter name="start_ip" value="" />
+      <parameter name="end_ip" value="" />
+      <parameter name="class" value="Connect" />
+    </link>
+    <link>
+      <parameter name="guid" value="549cb77a-67e5-b854-eaa2-99b76bd1d1b9" />
+      <parameter name="objname" value="link6" />
+      <parameter name="name" value="link6" />
+      <parameter name="ip" value="" />
+      <parameter name="type" value="" />
+      <parameter name="version" value="" />
+      <parameter name="alias" value="" />
+      <parameter name="caption" value="" />
+      <parameter name="is_topo" value="" />
+      <parameter name="remark" value="" />
+      <parameter name="sourcetopdevicename" value="ne2" />
+      <parameter name="sourcedeviceid" value="7b8b3a9e-2ad2-dc22-5adf-d2add7fcf99d" />
+      <parameter name="targettopdevicename" value="ne4" />
+      <parameter name="targetdeviceid" value="8a8762ef-da8e-96af-f10f-06d5c703baab" />
+      <parameter name="connect_type" value="" />
+      <parameter name="direction" value="" />
+      <parameter name="parent" value="" />
+      <parameter name="cidr" value="" />
+      <parameter name="start_ip" value="" />
+      <parameter name="end_ip" value="" />
+      <parameter name="class" value="Connect" />
+    </link>
+    <link>
+      <parameter name="guid" value="b62f0e78-c53e-7e57-93d2-fe2c6813d35f" />
+      <parameter name="objname" value="link7" />
+      <parameter name="name" value="link7" />
+      <parameter name="ip" value="" />
+      <parameter name="type" value="" />
+      <parameter name="version" value="" />
+      <parameter name="alias" value="" />
+      <parameter name="caption" value="" />
+      <parameter name="is_topo" value="" />
+      <parameter name="remark" value="" />
+      <parameter name="sourcetopdevicename" value="ne3" />
+      <parameter name="sourcedeviceid" value="98a2d1be-297f-df47-145d-f64c02e5fd06" />
+      <parameter name="targettopdevicename" value="ne4" />
+      <parameter name="targetdeviceid" value="578e4916-5f7d-3c79-1216-a7c6973ab93d" />
+      <parameter name="connect_type" value="" />
+      <parameter name="direction" value="" />
+      <parameter name="parent" value="" />
+      <parameter name="cidr" value="" />
+      <parameter name="start_ip" value="" />
+      <parameter name="end_ip" value="" />
+      <parameter name="class" value="Connect" />
+    </link>
+    <link>
+      <parameter name="guid" value="40232696-1b85-7418-b95d-5ce8cfeeb02e" />
+      <parameter name="objname" value="link4" />
+      <parameter name="name" value="link4" />
+      <parameter name="ip" value="" />
+      <parameter name="type" value="" />
+      <parameter name="version" value="" />
+      <parameter name="alias" value="" />
+      <parameter name="caption" value="" />
+      <parameter name="is_topo" value="" />
+      <parameter name="remark" value="" />
+      <parameter name="sourcetopdevicename" value="ne1" />
+      <parameter name="sourcedeviceid" value="834a0f5d-d46a-9aef-acf0-39ee7d5c93b5" />
+      <parameter name="targettopdevicename" value="ne3" />
+      <parameter name="targetdeviceid" value="d985505d-7712-a644-adc2-4e4a0b10b126" />
+      <parameter name="connect_type" value="" />
+      <parameter name="direction" value="" />
+      <parameter name="parent" value="" />
+      <parameter name="cidr" value="" />
+      <parameter name="start_ip" value="" />
+      <parameter name="end_ip" value="" />
+      <parameter name="class" value="Connect" />
+    </link>
+    <link>
+      <parameter name="guid" value="5923b0db-df57-6cf1-6d73-43e6a87eb1fd" />
+      <parameter name="objname" value="link5" />
+      <parameter name="name" value="link5" />
+      <parameter name="ip" value="" />
+      <parameter name="type" value="" />
+      <parameter name="version" value="" />
+      <parameter name="alias" value="" />
+      <parameter name="caption" value="" />
+      <parameter name="is_topo" value="" />
+      <parameter name="remark" value="" />
+      <parameter name="sourcetopdevicename" value="ne1" />
+      <parameter name="sourcedeviceid" value="8a7bd262-33cc-5f51-76a6-4450ac6f5840" />
+      <parameter name="targettopdevicename" value="ne3" />
+      <parameter name="targetdeviceid" value="ebea9bb4-3c4b-6eb0-7f4a-2b67c3ad98e6" />
+      <parameter name="connect_type" value="" />
+      <parameter name="direction" value="" />
+      <parameter name="parent" value="" />
+      <parameter name="cidr" value="" />
+      <parameter name="start_ip" value="" />
+      <parameter name="end_ip" value="" />
+      <parameter name="class" value="Connect" />
+    </link>
+    <link>
+      <parameter name="guid" value="d42fccfd-6360-072f-e134-a6339fe2651b" />
+      <parameter name="objname" value="link17" />
+      <parameter name="name" value="link17" />
+      <parameter name="ip" value="" />
+      <parameter name="type" value="" />
+      <parameter name="version" value="" />
+      <parameter name="alias" value="" />
+      <parameter name="caption" value="" />
+      <parameter name="is_topo" value="" />
+      <parameter name="remark" value="" />
+      <parameter name="sourcetopdevicename" value="" />
+      <parameter name="sourcedeviceid" value="86a682e4-cbae-e868-7ace-74cf359f25f4" />
+      <parameter name="targettopdevicename" value="" />
+      <parameter name="targetdeviceid" value="ebc7f5ad-6fe8-0d3d-c199-cb8364841275" />
+      <parameter name="connect_type" value="" />
+      <parameter name="direction" value="" />
+      <parameter name="parent" value="" />
+      <parameter name="cidr" value="" />
+      <parameter name="start_ip" value="" />
+      <parameter name="end_ip" value="" />
+      <parameter name="class" value="Connect" />
+    </link>
+    <link>
+      <parameter name="guid" value="6450458e-6331-05a6-3e2e-f1418f227565" />
+      <parameter name="objname" value="link19" />
+      <parameter name="name" value="link19" />
+      <parameter name="ip" value="" />
+      <parameter name="type" value="" />
+      <parameter name="version" value="" />
+      <parameter name="alias" value="" />
+      <parameter name="caption" value="" />
+      <parameter name="is_topo" value="" />
+      <parameter name="remark" value="" />
+      <parameter name="sourcetopdevicename" value="network7" />
+      <parameter name="sourcedeviceid" value="df90840f-c0ad-0412-30df-db8c5a115a4c" />
+      <parameter name="targettopdevicename" value="ne1" />
+      <parameter name="targetdeviceid" value="ab5690fb-46fd-280c-17f6-abdea87d04a1" />
+      <parameter name="connect_type" value="" />
+      <parameter name="direction" value="" />
+      <parameter name="parent" value="" />
+      <parameter name="cidr" value="" />
+      <parameter name="start_ip" value="" />
+      <parameter name="end_ip" value="" />
+      <parameter name="class" value="Connect" />
+    </link>
+    <link>
+      <parameter name="guid" value="a4c0a8f2-0b45-f872-db0b-d55db323b5e4" />
+      <parameter name="objname" value="link21" />
+      <parameter name="name" value="link21" />
+      <parameter name="ip" value="" />
+      <parameter name="type" value="" />
+      <parameter name="version" value="" />
+      <parameter name="alias" value="" />
+      <parameter name="caption" value="" />
+      <parameter name="is_topo" value="" />
+      <parameter name="remark" value="" />
+      <parameter name="sourcetopdevicename" value="tester1" />
+      <parameter name="sourcedeviceid" value="4c4b2ff6-2e5b-f754-39e6-2ec816f08d59" />
+      <parameter name="targettopdevicename" value="ne2" />
+      <parameter name="targetdeviceid" value="ead8d133-6c65-46cc-c8f4-a598da74d306" />
+      <parameter name="connect_type" value="" />
+      <parameter name="direction" value="" />
+      <parameter name="parent" value="" />
+      <parameter name="cidr" value="" />
+      <parameter name="start_ip" value="" />
+      <parameter name="end_ip" value="" />
+      <parameter name="class" value="Connect" />
+    </link>
+  </links>
+  <topolimit><![CDATA[]]></topolimit>
+</logic_environment>

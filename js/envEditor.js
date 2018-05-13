@@ -9,7 +9,9 @@ if ($.fn.showLoader) {
     });
 }
 
-var plugPath = "static/plugins/envEditor/", imgPath = plugPath + "images/", dataPath = plugPath + "data/";
+var plugPath = "static/plugins/envEditor/",
+    imgPath = plugPath + "images/",
+    dataPath = plugPath + "data/";
 
 //环境编辑器测试
 var EnvEditor = new function() {
@@ -108,14 +110,23 @@ var EnvEditor = new function() {
         });
     };
     this.toggleRightContainer = function(state) {
-        var $to = $(".EplugGraphRightToggle"), $rp = $(".EplugGraphEditorResource"), $co = $(".EplugGraphEditorRightContainer"), $tn = $(".EplugGraphEditorRightTop"), rpWidth = 560, toWidth = $to.outerWidth(), diff = rpWidth - toWidth, leftCls = "left", isClosed = $to.hasClass(leftCls), toggle = function(width, func, title, exp, display) {
-            $co.css({
-                "padding-right": exp + diff
-            });
-            $rp.css("width", width);
-            $tn.css("display", display);
-            $to[func](leftCls).attr("title", title);
-        };
+        var $to = $(".EplugGraphRightToggle"),
+            $rp = $(".EplugGraphEditorResource"),
+            $co = $(".EplugGraphEditorRightContainer"),
+            $tn = $(".EplugGraphEditorRightTop"),
+            rpWidth = 560,
+            toWidth = $to.outerWidth(),
+            diff = rpWidth - toWidth,
+            leftCls = "left",
+            isClosed = $to.hasClass(leftCls),
+            toggle = function(width, func, title, exp, display) {
+                $co.css({
+                    "padding-right": exp + diff
+                });
+                $rp.css("width", width);
+                $tn.css("display", display);
+                $to[func](leftCls).attr("title", title);
+            };
         if (state) {
             if (isClosed) {
                 toggle(rpWidth, "removeClass", "Close", "+=", "block");
@@ -177,10 +188,10 @@ function EPlug() {
         this.NetworkJson = [];
         //select选项值
         this.SelectOptionValues = {
-            vmFlag: [ "", "Fenix_GTR_4U4G100G_01", "Fenix_vNE_sFTP_Tester_8U8G90G_01" ],
-            network: [ "", "Base1", "Base2", "Fabric1", "Fabric2", "OM", "External1", "External2", "External3", "External4", "External5", "External6", "ExternalN" ],
-            internal_external: [ "", "InternalPort", "ExternalPort" ],
-            virtual_real: [ "Virtual", "Real" ]
+            vmFlag: ["", "Fenix_GTR_4U4G100G_01", "Fenix_vNE_sFTP_Tester_8U8G90G_01"],
+            network: ["", "Base1", "Base2", "Fabric1", "Fabric2", "OM", "External1", "External2", "External3", "External4", "External5", "External6", "ExternalN"],
+            internal_external: ["", "InternalPort", "ExternalPort"],
+            virtual_real: ["Virtual", "Real"]
         };
         //文件名称。
         this.FileName = "";
@@ -193,8 +204,8 @@ function EPlug() {
         this.ConstInfo.Reset();
         this.Property.DataList = lstData;
         this.Property.TopoNode = JsonHelper.GetJsonByKey(lstData, EnxHelper.Field.BigType, EnxHelper.ModelType.Env);
-        this.Property.LstNodeJson = JsonHelper.FilterListByValues(lstData, EnxHelper.Field.IsTopDevice, [ EnxConstField.BoolStr.Yes ]);
-        this.Property.LstLinkJson = JsonHelper.FilterListByValues(lstData, EnxHelper.Field.BigType, [ EnxHelper.ModelType.Link ]);
+        this.Property.LstNodeJson = JsonHelper.FilterListByValues(lstData, EnxHelper.Field.IsTopDevice, [EnxConstField.BoolStr.Yes]);
+        this.Property.LstLinkJson = JsonHelper.FilterListByValues(lstData, EnxHelper.Field.BigType, [EnxHelper.ModelType.Link]);
         //占用的端口处理
         Me.Property.BusyPortId = [];
         $.each(Me.Property.LstLinkJson, function(index, linkNode) {
@@ -203,7 +214,7 @@ function EPlug() {
             Me.Property.BusyPortId.push(sourcePortId);
             Me.Property.BusyPortId.push(targetPortId);
         });
-        this.Property.LstPortJson = JsonHelper.FilterListByValues(lstData, EnxHelper.Field.BigType, [ EnxHelper.ModelType.Port ]);
+        this.Property.LstPortJson = JsonHelper.FilterListByValues(lstData, EnxHelper.Field.BigType, [EnxHelper.ModelType.Port]);
         //初始化图形
         this.GraphEditor.Init();
     };
@@ -619,10 +630,10 @@ function EPlug() {
             this.IsFirstInitAvailField.Link = true;
             this.IsFirstInitAvailField.Port = true;
             this.IsFirstInitAvailField.Network = true;
-            this.IsFirstInitAvailField.Sftp = true; 
+            this.IsFirstInitAvailField.Sftp = true;
             this.IsFirstInitAvailField.Agent = true;
             this.IsFirstInitAvailField.VM = true;
-            this.AvailableFiled.Ne = [ "roler" ];
+            this.AvailableFiled.Ne = ["roler"];
             this.Sdh = [];
             this.Atm = [];
             this.Eth = [];
@@ -653,46 +664,46 @@ function EPlug() {
         this.ClassSelectorSingal = ".";
         //是否首次初始化
         this.IsFirstInitAvailField = new function() {
-            this.Ne = true, this.Sdh = true, this.Atm = true, this.Eth = true, this.Tester = true, 
-            this.Dev = true, this.Board = true, this.SubBoard = true, this.Link = true, this.Port = true, 
-            this.Network = true, this.Sftp = true, this.Agent = true, this.VM = true;
+            this.Ne = true, this.Sdh = true, this.Atm = true, this.Eth = true, this.Tester = true,
+                this.Dev = true, this.Board = true, this.SubBoard = true, this.Link = true, this.Port = true,
+                this.Network = true, this.Sftp = true, this.Agent = true, this.VM = true;
         }();
         //有效的字段：表示可以通过列表展示，并且可以编辑的。  比如位置信息、guid等这些隐藏信息或者在图形化中编辑的字段不纳入进来；
         this.AvailableFiled = new function() {
-            this.Ne = [ "roler" ], this.Sdh = [], this.Atm = [], this.Eth = [], this.Tester = [], 
-            this.Dev = [], this.Board = [], this.SubBoard = [], this.Link = [], this.Port = [], 
-            this.Network = [], this.Sftp = [], this.Agent = [], this.VM = [];
+            this.Ne = ["roler"], this.Sdh = [], this.Atm = [], this.Eth = [], this.Tester = [],
+                this.Dev = [], this.Board = [], this.SubBoard = [], this.Link = [], this.Port = [],
+                this.Network = [], this.Sftp = [], this.Agent = [], this.VM = [];
         }();
         //默认的有效字段 (主要用于初始化模型用)
         this.DefaultAvailField = new function() {
             //通用有效字段
-            this.CommonAvailField = [ "objname", "name", "ip", "type", "version", "alias", "caption", "is_topo", "remark" ];
+            this.CommonAvailField = ["objname", "name", "ip", "type", "version", "alias", "caption", "is_topo", "remark"];
             //网元的有效字段
             //port: 设备端口号
             //cmts_port: 从框SN编码
             //cmts_type: 从框信道类型
             //olt_version: OLT类型
             //sub_ip: 从框IP
-            this.Ne = this.CommonAvailField.concat([ "id", "console", "mask", "username", "password", "ptp", "vender", "virtual_real", "port", "cmts_port", "cmts_type", "olt_version", "sub_ip" ]);
+            this.Ne = this.CommonAvailField.concat(["id", "console", "mask", "username", "password", "ptp", "vender", "virtual_real", "port", "cmts_port", "cmts_type", "olt_version", "sub_ip"]);
             //Atm的有效字段
             this.Atm = this.CommonAvailField;
             //Sdh的有效字段
             this.Sdh = this.CommonAvailField;
             //Eth的有效字段
-            this.Eth = this.CommonAvailField.concat([ "actor", "bid", "sbid", "pid", "connect_type", "engrossstate", "groupip", "id", "mac", "username", "password", "port", "portnum", "ptp", "realNEId", "realtype", "submask", "vender" ]);
+            this.Eth = this.CommonAvailField.concat(["actor", "bid", "sbid", "pid", "connect_type", "engrossstate", "groupip", "id", "mac", "username", "password", "port", "portnum", "ptp", "realNEId", "realtype", "submask", "vender"]);
             //单板的有效字段
-            this.Board = this.CommonAvailField.concat([ "angle", "bid", "engrossstate", "username", "password", "portnum", "realNEId", "slot", "virtual_real" ]);
+            this.Board = this.CommonAvailField.concat(["angle", "bid", "engrossstate", "username", "password", "portnum", "realNEId", "slot", "virtual_real"]);
             //子卡的有效字段
-            this.SubBoard = this.CommonAvailField.concat([ "bid", "sbid", "engrossstate", "username", "password", "portnum", "realNEId", "submask", "virtual_real" ]);
+            this.SubBoard = this.CommonAvailField.concat(["bid", "sbid", "engrossstate", "username", "password", "portnum", "realNEId", "submask", "virtual_real"]);
             //链路的有效字段
-            this.Link = this.CommonAvailField.concat([ "sourcetopdevicename", "sourcedeviceid", "targettopdevicename", "targetdeviceid", "connect_type", "direction", "parent", "cidr", "start_ip", "end_ip" ]);
+            this.Link = this.CommonAvailField.concat(["sourcetopdevicename", "sourcedeviceid", "targettopdevicename", "targetdeviceid", "connect_type", "direction", "parent", "cidr", "start_ip", "end_ip"]);
             //端口/网卡的有效字段 //(internal_external：内联端口/外联端口)
-            this.Port = this.CommonAvailField.concat([ "bid", "sbid", "pid", "shape", "submask", "interface", "host_id", "internal_external", "virtual_real" ]);
+            this.Port = this.CommonAvailField.concat(["bid", "sbid", "pid", "shape", "submask", "interface", "host_id", "internal_external", "virtual_real"]);
             //Network网络平面的有效字段
             //cidr(Classless Inter-Domain Routing):IP地址段，如果不指定则由云平台分配； start_ip:allocation_pools启始IP； end_ip:allocation_pools结束IP。start、end必须在所属cidr范围内
-            this.Network = this.CommonAvailField.concat([ "cidr", "start_ip", "end_ip" ]);
+            this.Network = this.CommonAvailField.concat(["cidr", "start_ip", "end_ip"]);
             //VM的有效字段[vmFlag: 配置标识;配置标识 下拉选择，然后CPU内存 和镜像 改成自动显示 不可修改的 用户选择好 配置标识以后 他们两个自动显示出来]
-            this.VM = this.CommonAvailField.concat([ "username", "password", "vmFlag", "cpu_memory", "hardDisk", "mirror", "virtual_real" ]);
+            this.VM = this.CommonAvailField.concat(["username", "password", "vmFlag", "cpu_memory", "hardDisk", "mirror", "virtual_real"]);
             //Sftp的有效字段
             this.Sftp = this.VM;
             //执行机的有效字段
@@ -704,9 +715,9 @@ function EPlug() {
         //无效的字段
         this.UnAvailableFiled = new function() {
             //通用无效字段
-            this.CommonUnAvailField = [ "name", "guid", "shape", "position", "class", "fullclass" ];
+            this.CommonUnAvailField = ["name", "guid", "shape", "position", "class", "fullclass"];
             //网元不显示的字段
-            this.Ne = this.CommonUnAvailField.concat([ "id", "bid", "connect_type", "mac", "pid", "port", "portnum" ]);
+            this.Ne = this.CommonUnAvailField.concat(["id", "bid", "connect_type", "mac", "pid", "port", "portnum"]);
             //Tester不显示的字段
             this.Tester = this.CommonUnAvailField;
             this.Dev = this.CommonUnAvailField;
@@ -719,9 +730,9 @@ function EPlug() {
             //单板不显示的字段
             this.Board = this.CommonUnAvailField;
             //子卡不显示的字段
-            this.SubBoard = this.CommonUnAvailField.concat([ "bid" ]);
+            this.SubBoard = this.CommonUnAvailField.concat(["bid"]);
             //链路不显示的字段
-            this.Link = this.CommonUnAvailField.concat([ "dst_port", "src_port" ]);
+            this.Link = this.CommonUnAvailField.concat(["dst_port", "src_port"]);
             //端口不显示的字段
             this.Port = this.CommonUnAvailField;
             this.Network = this.CommonUnAvailField;
@@ -770,12 +781,13 @@ function EPlug() {
             targetdeviceid: "dst_port"
         };
         //需要下拉框显示的字段
-        this.SelectField = [ "vmFlag", //配置标识 下拉选择，然后CPU内存 和镜像 改成自动显示 不可修改的 用户选择好 配置标识以后 他们两个自动显示出来
-        "network", //网络平面。网卡/端口的属性
-        "internal_external", //端口类型（内联端口/外联端口）
-        "virtual_real" ];//网元类型（虚拟网元/真实网元）
+        this.SelectField = ["vmFlag", //配置标识 下拉选择，然后CPU内存 和镜像 改成自动显示 不可修改的 用户选择好 配置标识以后 他们两个自动显示出来
+            "network", //网络平面。网卡/端口的属性
+            "internal_external", //端口类型（内联端口/外联端口）
+            "virtual_real"
+        ]; //网元类型（虚拟网元/真实网元）
         //不能编辑的字段
-        this.NoEditField = [ "sourcetopdevicename", "targettopdevicename" ];
+        this.NoEditField = ["sourcetopdevicename", "targettopdevicename"];
         //不能编辑的列的class
         this.NoEditTdClass = "EPlugNoEditTd";
         //地址栏参数
@@ -830,17 +842,17 @@ function EPlug() {
     this.GetLstByModelType = function(type) {
         var res = [];
         switch (type) {
-          case EnxHelper.ModelType.Ne:
-            res = Me.Property.LstNodeJson;
-            break;
+            case EnxHelper.ModelType.Ne:
+                res = Me.Property.LstNodeJson;
+                break;
 
-          case EnxHelper.ModelType.Link:
-            res = Me.Property.LstLinkJson;
-            break;
+            case EnxHelper.ModelType.Link:
+                res = Me.Property.LstLinkJson;
+                break;
 
-          case EnxHelper.ModelType.Port:
-            res = Me.Property.LstPortJson;
-            break;
+            case EnxHelper.ModelType.Port:
+                res = Me.Property.LstPortJson;
+                break;
         }
         return res;
     };
@@ -885,81 +897,81 @@ function EPlug() {
         EnxHelper.GlobalVar.ElemntIndex[type] = curIndex + 1;
         var parentClassPre = parentType ? parentType + EnxConstField.ClassSeparate : "";
         switch (type) {
-          case EnxHelper.ModelType.Ne:
-          case EnxHelper.ModelType.Sftp:
-          case EnxHelper.ModelType.Agent:
-            res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
-            res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, type);
-            res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, type);
-            Me.Property.LstNodeJson.push(res);
-            break;
-
-          case EnxHelper.ModelType.Network:
-            if (parentId && parentType != "Env") {
-                res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.No;
-            } else {
-                //和网元平级显示的网络平面
+            case EnxHelper.ModelType.Ne:
+            case EnxHelper.ModelType.Sftp:
+            case EnxHelper.ModelType.Agent:
                 res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
-            }
-            res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, type);
-            res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, type);
-            Me.Property.LstNodeJson.push(res);
-            break;
+                res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, type);
+                res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, type);
+                Me.Property.LstNodeJson.push(res);
+                break;
 
-          case EnxHelper.ModelType.Tester:
-            res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
-            res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_TESTERTYPE);
-            res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_TESTERTYPE);
-            Me.Property.LstNodeJson.push(res);
-            break;
+            case EnxHelper.ModelType.Network:
+                if (parentId && parentType != "Env") {
+                    res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.No;
+                } else {
+                    //和网元平级显示的网络平面
+                    res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
+                }
+                res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, type);
+                res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, type);
+                Me.Property.LstNodeJson.push(res);
+                break;
 
-          case EnxHelper.ModelType.Dev:
-            res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
-            res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_DEVTYPE);
-            res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_DEVTYPE);
-            Me.Property.LstNodeJson.push(res);
-            break;
+            case EnxHelper.ModelType.Tester:
+                res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
+                res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_TESTERTYPE);
+                res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_TESTERTYPE);
+                Me.Property.LstNodeJson.push(res);
+                break;
 
-          case EnxHelper.ModelType.Atm:
-            res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
-            res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEATM);
-            res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEATM);
-            Me.Property.LstNodeJson.push(res);
-            break;
+            case EnxHelper.ModelType.Dev:
+                res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
+                res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_DEVTYPE);
+                res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_DEVTYPE);
+                Me.Property.LstNodeJson.push(res);
+                break;
 
-          case EnxHelper.ModelType.Sdh:
-            res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
-            res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPESDH);
-            res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPESDH);
-            Me.Property.LstNodeJson.push(res);
-            break;
+            case EnxHelper.ModelType.Atm:
+                res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
+                res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEATM);
+                res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEATM);
+                Me.Property.LstNodeJson.push(res);
+                break;
 
-          case EnxHelper.ModelType.Eth:
-            res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
-            res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEETH);
-            res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEETH);
-            Me.Property.LstNodeJson.push(res);
-            break;
+            case EnxHelper.ModelType.Sdh:
+                res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
+                res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPESDH);
+                res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPESDH);
+                Me.Property.LstNodeJson.push(res);
+                break;
 
-          case EnxHelper.ModelType.Link:
-            res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.No;
-            res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPECONNECT);
-            Me.Property.LstLinkJson.push(res);
-            break;
+            case EnxHelper.ModelType.Eth:
+                res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
+                res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEETH);
+                res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEETH);
+                Me.Property.LstNodeJson.push(res);
+                break;
 
-          case EnxHelper.ModelType.Board:
-          case EnxHelper.ModelType.SubBoard:
-          case EnxHelper.ModelType.VM:
-            res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.No;
-            res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, type);
-            res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, parentClassPre + type);
+            case EnxHelper.ModelType.Link:
+                res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.No;
+                res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPECONNECT);
+                Me.Property.LstLinkJson.push(res);
+                break;
 
-          case EnxHelper.ModelType.Port:
-            res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.No;
-            res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, type);
-            res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, parentClassPre + type);
-            Me.Property.LstPortJson.push(res);
-            break;
+            case EnxHelper.ModelType.Board:
+            case EnxHelper.ModelType.SubBoard:
+            case EnxHelper.ModelType.VM:
+                res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.No;
+                res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, type);
+                res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, parentClassPre + type);
+
+            case EnxHelper.ModelType.Port:
+                res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.No;
+                res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, type);
+                res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, parentClassPre + type);
+                Me.Property.LstPortJson.push(res);
+                break;
         }
         Me.Property.DataList.push(res);
         return res;
@@ -976,7 +988,7 @@ function EPlug() {
         }
         var guidJson = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_GUID, id);
         res[EnxConstField.AttrName.ENXFILE_ATTR_GUID] = guidJson;
-        var fields = [ EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME, EnxConstField.AttrName.ENXFILE_ATTR_NAME ];
+        var fields = [EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME, EnxConstField.AttrName.ENXFILE_ATTR_NAME];
         var curIndex = EnxHelper.GlobalVar.ElemntIndex[type];
         var name = Me.Property.GraphPlug.ConstInfo.ElemntNamePre[type] + curIndex;
         $.each(fields, function(index, field) {
@@ -989,31 +1001,31 @@ function EPlug() {
         });
         EnxHelper.GlobalVar.ElemntIndex[type] = curIndex + 1;
         switch (type) {
-          case EnxHelper.ModelType.Ne:
-          case EnxHelper.ModelType.Tester:
-          case EnxHelper.ModelType.Dev:
-          case EnxHelper.ModelType.Atm:
-          case EnxHelper.ModelType.Sdh:
-          case EnxHelper.ModelType.Eth:
-            Me.Property.LstNodeJson.push(res);
-            break;
+            case EnxHelper.ModelType.Ne:
+            case EnxHelper.ModelType.Tester:
+            case EnxHelper.ModelType.Dev:
+            case EnxHelper.ModelType.Atm:
+            case EnxHelper.ModelType.Sdh:
+            case EnxHelper.ModelType.Eth:
+                Me.Property.LstNodeJson.push(res);
+                break;
 
-          case EnxHelper.ModelType.Link:
-            Me.Property.LstLinkJson.push(res);
-            break;
+            case EnxHelper.ModelType.Link:
+                Me.Property.LstLinkJson.push(res);
+                break;
 
-          case EnxHelper.ModelType.Port:
-            Me.Property.LstPortJson.push(res);
-            break;
+            case EnxHelper.ModelType.Port:
+                Me.Property.LstPortJson.push(res);
+                break;
 
-          default:
-            Me.Property.LstNodeJson.push(res);
-            break;
+            default:
+                Me.Property.LstNodeJson.push(res);
+                break;
         }
         Me.Property.DataList.push(res);
         //判断下是否有子节点，有的话，继续复制
-        var childNode = JsonHelper.FilterListByValues(Me.Property.DataList, EnxHelper.Field.ParentGID, [ oldId ]);
-        var returnResult = [ res ];
+        var childNode = JsonHelper.FilterListByValues(Me.Property.DataList, EnxHelper.Field.ParentGID, [oldId]);
+        var returnResult = [res];
         $.each(childNode, function(index, jsonNode) {
             var tempResut = Me.CopyModel(jsonNode, id, name, isRecu);
             returnResult = returnResult.concat(tempResut);
@@ -1068,34 +1080,34 @@ function EPlug() {
         var id = json[EnxHelper.Field.ID];
         var type = json[EnxHelper.Field.BigType];
         switch (type) {
-          case EnxHelper.ModelType.Ne:
-          case EnxHelper.ModelType.Tester:
-          case EnxHelper.ModelType.Dev:
-          case EnxHelper.ModelType.Atm:
-          case EnxHelper.ModelType.Sdh:
-          case EnxHelper.ModelType.Eth:
-            Me.Property.LstNodeJson = Me.JsonArrDelete(Me.Property.LstNodeJson, EnxHelper.Field.ID, id);
-            break;
+            case EnxHelper.ModelType.Ne:
+            case EnxHelper.ModelType.Tester:
+            case EnxHelper.ModelType.Dev:
+            case EnxHelper.ModelType.Atm:
+            case EnxHelper.ModelType.Sdh:
+            case EnxHelper.ModelType.Eth:
+                Me.Property.LstNodeJson = Me.JsonArrDelete(Me.Property.LstNodeJson, EnxHelper.Field.ID, id);
+                break;
 
-          case EnxHelper.ModelType.Link:
-            Me.Property.LstLinkJson = Me.JsonArrDelete(Me.Property.LstLinkJson, EnxHelper.Field.ID, id);
-            //删除链路，还需要删除占用端口
-            var sourcePortId = JsonHelper.GetStrValue(json[EnxConstField.AttrName.ENXFILE_ATTR_SOURCEDEVICEID], EnxConstField.AttrName.ENXFILE_ATTR_VALUE);
-            var targetPortId = JsonHelper.GetStrValue(json[EnxConstField.AttrName.ENXFILE_ATTR_TARGETDEVICEID], EnxConstField.AttrName.ENXFILE_ATTR_VALUE);
-            Me.Property.BusyPortId.splice(Me.Property.BusyPortId.indexOf(sourcePortId), 1);
-            Me.Property.BusyPortId.splice(Me.Property.BusyPortId.indexOf(targetPortId), 1);
-            break;
+            case EnxHelper.ModelType.Link:
+                Me.Property.LstLinkJson = Me.JsonArrDelete(Me.Property.LstLinkJson, EnxHelper.Field.ID, id);
+                //删除链路，还需要删除占用端口
+                var sourcePortId = JsonHelper.GetStrValue(json[EnxConstField.AttrName.ENXFILE_ATTR_SOURCEDEVICEID], EnxConstField.AttrName.ENXFILE_ATTR_VALUE);
+                var targetPortId = JsonHelper.GetStrValue(json[EnxConstField.AttrName.ENXFILE_ATTR_TARGETDEVICEID], EnxConstField.AttrName.ENXFILE_ATTR_VALUE);
+                Me.Property.BusyPortId.splice(Me.Property.BusyPortId.indexOf(sourcePortId), 1);
+                Me.Property.BusyPortId.splice(Me.Property.BusyPortId.indexOf(targetPortId), 1);
+                break;
 
-          case EnxHelper.ModelType.Port:
-            Me.Property.LstPortJson = Me.JsonArrDelete(Me.Property.LstPortJson, EnxHelper.Field.ID, id);
-            var indexPort = Me.Property.BusyPortId.indexOf(id);
-            if (indexPort > -1) {
-                //删除链路数据
-                var link = Me.GetLinkByPortId(id);
-                //删除端口对应的链路，删除链路的同时，会删除占用端口
-                Me.RemoveModel(EnxHelper.Field.ID, JsonHelper.GetStrValue(link, EnxHelper.Field.ID));
-            }
-            break;
+            case EnxHelper.ModelType.Port:
+                Me.Property.LstPortJson = Me.JsonArrDelete(Me.Property.LstPortJson, EnxHelper.Field.ID, id);
+                var indexPort = Me.Property.BusyPortId.indexOf(id);
+                if (indexPort > -1) {
+                    //删除链路数据
+                    var link = Me.GetLinkByPortId(id);
+                    //删除端口对应的链路，删除链路的同时，会删除占用端口
+                    Me.RemoveModel(EnxHelper.Field.ID, JsonHelper.GetStrValue(link, EnxHelper.Field.ID));
+                }
+                break;
         }
     };
     //获取节点的子节点缓存数据
@@ -1359,7 +1371,7 @@ var GraphHelper = function(edit) {
             try {
                 //如果是自连接，样式改变
                 if (!link.geometry.points && link.data.sourcetopdevicename.value == link.data.targettopdevicename.value) {
-                    link.geometry.points = [ new mxPoint(310, 370) ];
+                    link.geometry.points = [new mxPoint(310, 370)];
                 }
             } finally {
                 SubGraphObj.Graph.getModel().endUpdate();
@@ -1420,8 +1432,8 @@ var GraphHelper = function(edit) {
                 return false;
             } else if (curentLink.source.bigtype == EnxHelper.ModelType.Network && curentLink.target.bigtype == EnxHelper.ModelType.Network) {
                 //网络平面和网络平面之间不可以连线
-                thisObj.Property.CoreGraph.removeCells([ curentLink ]);
-                SubGraphObj.Graph.removeCells([ curentLink ]);
+                thisObj.Property.CoreGraph.removeCells([curentLink]);
+                SubGraphObj.Graph.removeCells([curentLink]);
                 toastr.warning("No connection between the network!");
                 return false;
             } else {
@@ -1461,10 +1473,11 @@ var GraphHelper = function(edit) {
                 if (!cell) {
                     return;
                 }
-                var selectItems = SubGraphObj.Graph.getSelectionCells(), addKey = function(item, key) {
-                    $(item).find("td:last").html('<span class="mxMenu-key">' + key + "</span>");
-                };
-                selectItems = selectItems.length == 0 ? [ cell ] : selectItems;
+                var selectItems = SubGraphObj.Graph.getSelectionCells(),
+                    addKey = function(item, key) {
+                        $(item).find("td:last").html('<span class="mxMenu-key">' + key + "</span>");
+                    };
+                selectItems = selectItems.length == 0 ? [cell] : selectItems;
                 if (selectItems.length == 1) {
                     var item = menu.addItem("Edit", null, function() {
                         thisObj.PropertyPanel.EditNodeById(selectItems[0].id);
@@ -1649,12 +1662,12 @@ var GraphHelper = function(edit) {
         this.GetBond = function(type) {
             var elementWidth = SubGraphObj.ConstInfo.ElementDeaultSet[type];
             var width = elementWidth ? elementWidth.Width : 90;
-            return [ 0, 0, width, 30 ];
+            return [0, 0, width, 30];
         };
         //渲染子节点parentCell :父节点  parentContain：父容器   子节点不一定放在父节点上，可能是另外一个容器；isPortConnect：是否连线面板；portTypeShow：显示哪种类型的端口（1内联口，2外联口，空全部）
         this.RenderChildCell = function(currentCell, parentContain, isPortConnect, portTypeShow, isLink) {
             var parentId = JsonHelper.GetStrValue(currentCell, thisObj.ConstInfo.AttrName.ID);
-            var childNodeJson = JsonHelper.FilterListByValues(edit.Property.DataList, EnxHelper.Field.ParentGID, [ parentId ]);
+            var childNodeJson = JsonHelper.FilterListByValues(edit.Property.DataList, EnxHelper.Field.ParentGID, [parentId]);
             $.each(childNodeJson, function(index, jsonNode) {
                 //外联端口在连线面板显示，内联口不显示.如果是external就是外部口， 除此之外其它的base1, fabric, 都是内联口。
                 if (isPortConnect && jsonNode.BigType == EnxHelper.ModelType.Port && jsonNode.internal_external && jsonNode.internal_external.value) {
@@ -1667,7 +1680,7 @@ var GraphHelper = function(edit) {
                     }
                 }
                 var width = SubGraphObj.ConstInfo.ElementDeaultSet[jsonNode.BigType].Width;
-                var tempGraphNode = thisObj.Translater.JsonToCell(SubGraphObj.Graph, jsonNode, parentContain, [ 0, 0, width, 30 ], thisObj.ConstInfo.SwimStyle, isPortConnect);
+                var tempGraphNode = thisObj.Translater.JsonToCell(SubGraphObj.Graph, jsonNode, parentContain, [0, 0, width, 30], thisObj.ConstInfo.SwimStyle, isPortConnect);
                 //网络平面在连线面板一定可以连线，在编辑面板不可以连线
                 if (jsonNode.BigType == EnxHelper.ModelType.Network) {
                     tempGraphNode.setConnectable(true && isPortConnect && isLink);
@@ -1753,6 +1766,7 @@ var GraphHelper = function(edit) {
                 thisObj.ExcuteDropInElement(SubGraphObj.Graph, parentCell, type, [], thisObj.ConstInfo.SwimStyle);
             }
         };
+
         function Permission(canSelectNode, canMoveVertet) {
             this.canSelectNode = canSelectNode != null ? canSelectNode : true;
             this.canMoveVertet = canMoveVertet != null ? canMoveVertet : true;
@@ -1831,7 +1845,9 @@ var GraphHelper = function(edit) {
         this.GetNodeJson = function() {
             var nodeJson = {};
             PropertyPanelObj.GetElement(".EplugGraphEditorPropertyPanelLst tr").each(function(index, tr) {
-                var $tr = $(this), fieldName = $tr.attr("data-fieldname"), fieldValue;
+                var $tr = $(this),
+                    fieldName = $tr.attr("data-fieldname"),
+                    fieldValue;
                 if (!fieldName) {
                     return;
                 }
@@ -1911,7 +1927,8 @@ var GraphHelper = function(edit) {
                         tr = $(EnxHelper.Format(PropertyPanelObj.HtmlTemplate.FieldShowItem, fieldName, fieldDisplayName, fieldValue, fieldDisplayValue));
                         PropertyPanelObj.BindEventForLink(tr);
                     } else if (selectField.indexOf(fieldName) > -1) {
-                        var options = "", selectOptionValues = edit.Property.SelectOptionValues[fieldName];
+                        var options = "",
+                            selectOptionValues = edit.Property.SelectOptionValues[fieldName];
                         $.each(selectOptionValues, function(index, optionValue) {
                             if (fieldDisplayValue && fieldDisplayValue == optionValue) {
                                 options += EnxHelper.Format(PropertyPanelObj.HtmlTemplate.SelectOptionItem, optionValue, optionValue, "selected='selected'");
@@ -2041,7 +2058,9 @@ var GraphHelper = function(edit) {
     //根据两个网元信息渲染连线  [主画布上的连线都是虚拟的];
     this.RenderVirtualLink = function(source, target, afterEditLinks) {
         //获取两个节点的连线；
-        var virtualLinks = this.GetLinksBetween(source, target, false), graph = this.Property.CoreGraph, self = this;
+        var virtualLinks = this.GetLinksBetween(source, target, false),
+            graph = this.Property.CoreGraph,
+            self = this;
         graph.removeCells(virtualLinks);
         //新增的节点新划线；
         if (afterEditLinks) {
@@ -2076,7 +2095,7 @@ var GraphHelper = function(edit) {
     };
     //主画布删除连线:删除当前连线，并且重新绘制兄弟连线; baseLineRelDel:基线删除是否级联删除同组数据
     this.RemoveLink = function(link, baseLineRelDel) {
-        this.Property.CoreGraph.removeCells([ link ]);
+        this.Property.CoreGraph.removeCells([link]);
         var oldLinks = this.Property.CoreGraph.getModel().getEdgesBetween(link.source, link.target, false);
         //this.Property.CoreGraph.removeCells(oldLinks);
         //如果删除的是分组的基线，则需要对剩下的连线重新分组
@@ -2129,12 +2148,15 @@ var GraphHelper = function(edit) {
         }();
         //固定返回四位的数组，分别是x,y,width,height;
         this.GetJsonBond = function(json) {
-            var result = [ 0, 0, thisObj.ConstInfo.FixWidth, thisObj.ConstInfo.FixHeight ];
+            var result = [0, 0, thisObj.ConstInfo.FixWidth, thisObj.ConstInfo.FixHeight];
             //150,129;192,225   317,338;359,434    494,296;536,392
             var strPosition = JsonHelper.GetJsonValue(json, EnxConstField.AttrName.ENXFILE_ATTR_POSITION)[EnxConstField.AttrName.ENXFILE_ATTR_VALUE];
             if (strPosition && strPosition.indexOf(";") > -1) {
                 var arrPositon = strPosition.split(";");
-                var x = 0, y = 0, x2 = 0, y2 = 0;
+                var x = 0,
+                    y = 0,
+                    x2 = 0,
+                    y2 = 0;
                 if (arrPositon[0].indexOf(",") > -1) {
                     var startPostion = arrPositon[0].split(",");
                     x = parseInt(startPostion[0]) - this.FixFlex.XAdd;
@@ -2287,32 +2309,35 @@ var GraphHelper = function(edit) {
     this.GetCellsByFieldValue = function(type, fieldName, fieldValue) {
         var tempElmt = [];
         switch (type) {
-          case EnxHelper.ModelType.Ne:
-          case EnxHelper.ModelType.Tester:
-          case EnxHelper.ModelType.Dev:
-          case EnxHelper.ModelType.Sdh:
-          case EnxHelper.ModelType.Atm:
-          case EnxHelper.ModelType.Eth:
-          case EnxHelper.ModelType.Board:
-          case EnxHelper.ModelType.SubBoard:
-          case EnxHelper.ModelType.Port:
-            tempElmt = this.GetAllNode(thisObj.Property.CoreGraph);
-            break;
+            case EnxHelper.ModelType.Ne:
+            case EnxHelper.ModelType.Tester:
+            case EnxHelper.ModelType.Dev:
+            case EnxHelper.ModelType.Sdh:
+            case EnxHelper.ModelType.Atm:
+            case EnxHelper.ModelType.Eth:
+            case EnxHelper.ModelType.Board:
+            case EnxHelper.ModelType.SubBoard:
+            case EnxHelper.ModelType.Port:
+                tempElmt = this.GetAllNode(thisObj.Property.CoreGraph);
+                break;
 
-          case EnxHelper.ModelType.Link:
-            tempElmt = this.GetAllLink(thisObj.Property.CoreGraph);
-            break;
+            case EnxHelper.ModelType.Link:
+                tempElmt = this.GetAllLink(thisObj.Property.CoreGraph);
+                break;
 
-          default:
-            tempElmt = this.GetAllNode(thisObj.Property.CoreGraph);
-            break;
+            default:
+                tempElmt = this.GetAllNode(thisObj.Property.CoreGraph);
+                break;
         }
         var cellJson = JsonHelper.GetJsonByKey(tempElmt, fieldName, fieldValue);
         return cellJson;
     };
     //更新节点
     this.UpdateCell = function(type, json) {
-        var id = JsonHelper.GetStrValue(json, EnxHelper.Field.ID), isTopDevice = json.IsTopDevice == EnxConstField.BoolStr.Yes, isLink = type == EnxHelper.ModelType.Link, cell;
+        var id = JsonHelper.GetStrValue(json, EnxHelper.Field.ID),
+            isTopDevice = json.IsTopDevice == EnxConstField.BoolStr.Yes,
+            isLink = type == EnxHelper.ModelType.Link,
+            cell;
         if (isTopDevice || isLink) {
             //连线或者顶层设备，在主画布获取
             cell = thisObj.GetCellsByFieldValue(type, thisObj.ConstInfo.AttrName.ID, id);
@@ -2541,12 +2566,14 @@ var GraphHelper = function(edit) {
     //连接事件
     this.ConnectHandler = mxUtils.bind(this, function(sender, evt) {
         //删除线条，打开连线子画布
-        var curentLink = evt.properties.edge, coreGraph = thisObj.Property.CoreGraph, coreModel = coreGraph.getModel();
+        var curentLink = evt.properties.edge,
+            coreGraph = thisObj.Property.CoreGraph,
+            coreModel = coreGraph.getModel();
         if (!curentLink.target) {
             return false;
         } else if (curentLink.source.bigtype == EnxHelper.ModelType.Network && curentLink.target.bigtype == EnxHelper.ModelType.Network) {
             //网络平面和网络平面之间不可以连线
-            coreGraph.removeCells([ curentLink ]);
+            coreGraph.removeCells([curentLink]);
             toastr.warning("No connection between the network!");
             return false;
         } else {
@@ -2699,7 +2726,7 @@ var GraphHelper = function(edit) {
     };
     //获取顶层设备的位置信息
     this.GetTopDeviceBond = function(type, x, y) {
-        var bond = [ x, y, 62, 62 ];
+        var bond = [x, y, 62, 62];
         return bond;
     };
     //拖入元素
@@ -2779,9 +2806,10 @@ var GraphHelper = function(edit) {
     this.InitPopMenu = function() {
         //1. 注意多选和单选   2.分类型绑定（空白处、网元、线条、端口等） [先做线条事件]
         thisObj.Property.CoreGraph.popupMenuHandler.factoryMethod = function(menu, cell, evt) {
-            var selectItems = thisObj.Property.CoreGraph.getSelectionCells(), addKey = function(item, key) {
-                $(item).find("td:last").html('<span class="mxMenu-key">' + key + "</span>");
-            };
+            var selectItems = thisObj.Property.CoreGraph.getSelectionCells(),
+                addKey = function(item, key) {
+                    $(item).find("td:last").html('<span class="mxMenu-key">' + key + "</span>");
+                };
             //连线的特殊操作（主要是分组）
             if (cell && cell.edge) {
                 //两端点相同的连线
@@ -2878,22 +2906,22 @@ var GraphHelper = function(edit) {
         var graph = thisObj.Property.CoreGraph;
         var lst = [];
         switch (type) {
-          case EnxHelper.ModelType.Link:
-            //只可能是主画布，不需要遍历 （连线面板是不允许外部删除的）
-            lst = this.GetAllLink(graph);
-            break;
+            case EnxHelper.ModelType.Link:
+                //只可能是主画布，不需要遍历 （连线面板是不允许外部删除的）
+                lst = this.GetAllLink(graph);
+                break;
 
-          case EnxHelper.ModelType.Ne:
-          case EnxHelper.ModelType.Tester:
-          case EnxHelper.ModelType.Sftp:
-          case EnxHelper.ModelType.Agent:
-          case EnxHelper.ModelType.Network:
-          case EnxHelper.ModelType.Atm:
-          case EnxHelper.ModelType.Eth:
-          case EnxHelper.ModelType.Sdh:
-            //只可能是主画布，不需要遍历
-            lst = this.GetAllNode(graph);
-            break;
+            case EnxHelper.ModelType.Ne:
+            case EnxHelper.ModelType.Tester:
+            case EnxHelper.ModelType.Sftp:
+            case EnxHelper.ModelType.Agent:
+            case EnxHelper.ModelType.Network:
+            case EnxHelper.ModelType.Atm:
+            case EnxHelper.ModelType.Eth:
+            case EnxHelper.ModelType.Sdh:
+                //只可能是主画布，不需要遍历
+                lst = this.GetAllNode(graph);
+                break;
         }
         if (!lst || lst.length == 0) {
             return;
@@ -2904,7 +2932,7 @@ var GraphHelper = function(edit) {
                 //主画布的连线删除，需要重新绘制所有的兄弟连线
                 thisObj.RemoveLink(cell);
             } else {
-                graph.removeCells([ cell ]);
+                graph.removeCells([cell]);
             }
         }
     };
@@ -2963,13 +2991,13 @@ var GraphHelper = function(edit) {
         //当前节点 把分组名称设置为连线的名称
         thisObj.Property.CoreGraph.getModel().setValue(cell, groupName);
         //当前连线改变样式 setCellStyle  'strokeColor=#40d4e9;strokeWidth=4;'
-        thisObj.Property.CoreGraph.setCellStyle(thisObj.ConstInfo.LinkGroupedStyle, [ cell ]);
+        thisObj.Property.CoreGraph.setCellStyle(thisObj.ConstInfo.LinkGroupedStyle, [cell]);
         this.CopyLink(cell, true);
     };
     //连线拷贝 (主要是为了分组后直接是直线)
     this.CopyLink = function(cell, isRemoveSource) {
         if (isRemoveSource) {
-            thisObj.Property.CoreGraph.removeCells([ cell ]);
+            thisObj.Property.CoreGraph.removeCells([cell]);
         }
         this.InsertLink(cell.parent, cell.id, cell.value, cell.source, cell.target, cell.style, cell.data);
     };
@@ -2983,14 +3011,14 @@ var GraphHelper = function(edit) {
             if (data.group) {
                 tempGraphLink.group = data.group.value ? data.group.value : "";
                 if (!data.group.groupshow) {
-                    thisObj.Property.CoreGraph.toggleCells(false, [ tempGraphLink ]);
+                    thisObj.Property.CoreGraph.toggleCells(false, [tempGraphLink]);
                 } else {
                     thisObj.Property.CoreGraph.getModel().setValue(tempGraphLink, data.group.value);
                     var style = thisObj.ConstInfo.LinkGroupedStyle;
                     if (tempGraphLink.source.id == tempGraphLink.target.id) {
                         style = thisObj.ConstInfo.LoopGroupLinkStyleName;
                     }
-                    thisObj.Property.CoreGraph.setCellStyle(style, [ tempGraphLink ]);
+                    thisObj.Property.CoreGraph.setCellStyle(style, [tempGraphLink]);
                 }
             } else {
                 //如果是自连接，样式改变
@@ -3007,12 +3035,13 @@ var GraphHelper = function(edit) {
     //顶层设备拷贝
     this.Copy = function() {
         var selectItemLst = thisObj.Property.CoreGraph.getSelectionCells();
-        var selectNode = JsonHelper.FilterListByValues(selectItemLst, thisObj.ConstInfo.AttrName.VERTEX, [ true ]);
+        var selectNode = JsonHelper.FilterListByValues(selectItemLst, thisObj.ConstInfo.AttrName.VERTEX, [true]);
         mxClipboard.copy(thisObj.Property.CoreGraph, selectNode);
     };
     //顶层设备粘贴
     this.Paste = function() {
-        var graph = thisObj.Property.CoreGraph, cells = graph.getImportableCells(mxClipboard.getCells());
+        var graph = thisObj.Property.CoreGraph,
+            cells = graph.getImportableCells(mxClipboard.getCells());
         $.each(cells, function(index, cell) {
             //缓存中拷贝元素
             var jsonAndChild = edit.CopyModel(cell.data);
@@ -3054,7 +3083,7 @@ var GraphHelper = function(edit) {
         if (cell.source.id == cell.target.id) {
             this.Property.CoreGraph.getModel().setStyle(cell, thisObj.ConstInfo.LoopLinkStyleName);
         } else {
-            thisObj.Property.CoreGraph.setCellStyle(thisObj.ConstInfo.LinkUnGroupStyle, [ cell ]);
+            thisObj.Property.CoreGraph.setCellStyle(thisObj.ConstInfo.LinkUnGroupStyle, [cell]);
         }
     };
     //选中网元或者连线

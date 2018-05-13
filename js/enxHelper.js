@@ -146,7 +146,7 @@ var EnxHelper = new function() {
         Other: "Other"
     };
     //顶层设备的类型
-    this.ModelTypeOfTopDevice = [ this.ModelType.Ne, this.ModelType.Atm, this.ModelType.Tester, this.ModelType.Dev, this.ModelType.Eth, this.ModelType.Sdh, this.ModelType.Network, this.ModelType.Sftp, this.ModelType.Agent ];
+    this.ModelTypeOfTopDevice = [this.ModelType.Ne, this.ModelType.Atm, this.ModelType.Tester, this.ModelType.Dev, this.ModelType.Eth, this.ModelType.Sdh, this.ModelType.Network, this.ModelType.Sftp, this.ModelType.Agent];
     //重置最大索引
     this.ResetMaxIndex = function(type, name) {
         var res = name.match(new RegExp("0|[1-9]\\d*", "gm"));
@@ -179,45 +179,45 @@ var EnxHelper = new function() {
         var firstLevelNodes = EnxHelper.GetChildNode(rootNode);
         $.each(firstLevelNodes, function(index, currenNode) {
             switch (currenNode.tagName) {
-              //组网基本参数解析
+                //组网基本参数解析
                 case EnxConstField.NodeName.ENXFILE_NODE_PARAMETERS:
-                var basicEnvInfo = EnxHelper.ParameterNodeToJson(currenNode);
-                rootNodeJson = JsonHelper.CombineJson(basicEnvInfo, rootNodeJson);
-                result.push(rootNodeJson);
-                break;
+                    var basicEnvInfo = EnxHelper.ParameterNodeToJson(currenNode);
+                    rootNodeJson = JsonHelper.CombineJson(basicEnvInfo, rootNodeJson);
+                    result.push(rootNodeJson);
+                    break;
 
-              //设备
+                    //设备
                 case EnxConstField.NodeName.ENXFILE_NODE_DEVICES:
-                var deviceNodes = EnxHelper.GetChildNode(currenNode);
-                $(deviceNodes).each(function(index, deviceNode) {
-                    var tempDeviceLst = EnxHelper.DeviceNodeToJson(deviceNode, rootNodeJson, true);
-                    result = result.concat(tempDeviceLst);
-                });
-                break;
+                    var deviceNodes = EnxHelper.GetChildNode(currenNode);
+                    $(deviceNodes).each(function(index, deviceNode) {
+                        var tempDeviceLst = EnxHelper.DeviceNodeToJson(deviceNode, rootNodeJson, true);
+                        result = result.concat(tempDeviceLst);
+                    });
+                    break;
 
-              //连线
+                    //连线
                 case EnxConstField.NodeName.ENXFILE_NODE_LINKS:
-                var linkNodes = EnxHelper.GetChildNode(currenNode);
-                $(linkNodes).each(function(index, value) {
-                    var linkJson = EnxHelper.LinkNodeToJson(value);
-                    if (linkJson && linkJson.objname && linkJson.objname.value) {
-                        linkJson[EnxHelper.Field.ParentGID] = JsonHelper.GetStrValue(rootNodeJson, EnxHelper.Field.ID);
-                        result.push(linkJson);
-                        thisObj.ResetMaxIndex(EnxHelper.ModelType.Link, linkJson.objname.value);
-                    }
-                });
-                break;
+                    var linkNodes = EnxHelper.GetChildNode(currenNode);
+                    $(linkNodes).each(function(index, value) {
+                        var linkJson = EnxHelper.LinkNodeToJson(value);
+                        if (linkJson && linkJson.objname && linkJson.objname.value) {
+                            linkJson[EnxHelper.Field.ParentGID] = JsonHelper.GetStrValue(rootNodeJson, EnxHelper.Field.ID);
+                            result.push(linkJson);
+                            thisObj.ResetMaxIndex(EnxHelper.ModelType.Link, linkJson.objname.value);
+                        }
+                    });
+                    break;
 
-              //Toplimit
+                    //Toplimit
                 case EnxConstField.NodeName.ENXFILE_NODE_TOPOLIMIT:
-                var limit = {};
-                limit[EnxHelper.Field.BigType] = EnxHelper.ModelType.Topolimit;
-                limit[EnxHelper.Field.ParentGID] = JsonHelper.GetStrValue(rootNodeJson, EnxHelper.Field.ID);
-                //此处注意正则替换
-                limit[EnxHelper.Field.Name] = EnxHelper.MatchTopLimit($.trim(currenNode.innerHTML));
-                limit[EnxHelper.Field.ID] = EnxHelper.CreateNewGuid();
-                result.push(limit);
-                break;
+                    var limit = {};
+                    limit[EnxHelper.Field.BigType] = EnxHelper.ModelType.Topolimit;
+                    limit[EnxHelper.Field.ParentGID] = JsonHelper.GetStrValue(rootNodeJson, EnxHelper.Field.ID);
+                    //此处注意正则替换
+                    limit[EnxHelper.Field.Name] = EnxHelper.MatchTopLimit($.trim(currenNode.innerHTML));
+                    limit[EnxHelper.Field.ID] = EnxHelper.CreateNewGuid();
+                    result.push(limit);
+                    break;
             }
         });
         return result;
@@ -248,7 +248,7 @@ var EnxHelper = new function() {
         EnxHelper.XMLJsonToNode(rootNode, xmlContent, lstJson);
         //02.03 反向解析链路 (</link> 注意此标签会被自动解析掉)
         var linksContent = $(EnxConstField.XMLTAG.LINKS);
-        var linkChildNodes = JsonHelper.FilterListByValues(lstJson, EnxHelper.Field.BigType, [ EnxHelper.ModelType.Link ]);
+        var linkChildNodes = JsonHelper.FilterListByValues(lstJson, EnxHelper.Field.BigType, [EnxHelper.ModelType.Link]);
         var strLinkTag = "";
         $.each(linkChildNodes, function(index, linkNode) {
             strLinkTag += EnxHelper.Format(EnxHelper.GlobalVar.FormatTpl.Link, EnxHelper.XmlGetParameter(linkNode));
@@ -313,9 +313,9 @@ var EnxHelper = new function() {
         var childNodes = [];
         if (parentJson.BigType == EnxHelper.ModelType.Env) {
             //如果父节点是环境节点，则直接取顶层设备
-            childNodes = JsonHelper.FilterListByValues(lstJson, EnxHelper.Field.IsTopDevice, [ EnxConstField.BoolStr.Yes ]);
+            childNodes = JsonHelper.FilterListByValues(lstJson, EnxHelper.Field.IsTopDevice, [EnxConstField.BoolStr.Yes]);
         } else {
-            childNodes = JsonHelper.FilterListByValues(lstJson, EnxHelper.Field.ParentGID, [ parentId ]);
+            childNodes = JsonHelper.FilterListByValues(lstJson, EnxHelper.Field.ParentGID, [parentId]);
         }
         if (childNodes && childNodes.length > 0) {
             //02.02 反向解析设备
@@ -380,29 +380,29 @@ var EnxHelper = new function() {
             var tagName = childNode.tagName;
             var grandsonNodes = EnxHelper.GetChildNode(childNode);
             switch (tagName) {
-              //解析子设备
+                //解析子设备
                 case EnxConstField.NodeName.ENXFILE_NODE_DEVICES:
-                $.each(grandsonNodes, function(index, grandsonNode) {
-                    var tempGrandsonNodes = EnxHelper.DeviceNodeToJson(grandsonNode, curDevice);
-                    childrenDevice = childrenDevice.concat(tempGrandsonNodes);
-                });
-                break;
+                    $.each(grandsonNodes, function(index, grandsonNode) {
+                        var tempGrandsonNodes = EnxHelper.DeviceNodeToJson(grandsonNode, curDevice);
+                        childrenDevice = childrenDevice.concat(tempGrandsonNodes);
+                    });
+                    break;
 
-              //解析参数
+                    //解析参数
                 case EnxConstField.NodeName.ENXFILE_NODE_PARAMETERS:
-                $.each(grandsonNodes, function(index, grandsonNode) {
-                    var fieldName = $(grandsonNode).attr(EnxConstField.AttrName.ENXFILE_ATTR_NAME);
-                    if (fieldName == EnxConstField.AttrName.ENXFILE_ATTR_CLASS) {
-                        var className = $(grandsonNode).attr(EnxConstField.AttrName.ENXFILE_ATTR_VALUE);
-                        curDevice[EnxHelper.Field.BigType] = EnxHelper.GetDeviceType(className);
+                    $.each(grandsonNodes, function(index, grandsonNode) {
+                        var fieldName = $(grandsonNode).attr(EnxConstField.AttrName.ENXFILE_ATTR_NAME);
+                        if (fieldName == EnxConstField.AttrName.ENXFILE_ATTR_CLASS) {
+                            var className = $(grandsonNode).attr(EnxConstField.AttrName.ENXFILE_ATTR_VALUE);
+                            curDevice[EnxHelper.Field.BigType] = EnxHelper.GetDeviceType(className);
+                        }
+                        curDevice[fieldName] = EnxHelper.GetNodeAttr(grandsonNode);
+                    });
+                    if (curDevice.objname.value == "ne1_board1_subboard1_port1") {
+                        var gg = "";
                     }
-                    curDevice[fieldName] = EnxHelper.GetNodeAttr(grandsonNode);
-                });
-                if (curDevice.objname.value == "ne1_board1_subboard1_port1") {
-                    var gg = "";
-                }
-                EnxHelper.NodeAttachFieldId(curDevice);
-                break;
+                    EnxHelper.NodeAttachFieldId(curDevice);
+                    break;
             }
         });
         if (curDevice.objname) {
@@ -420,29 +420,29 @@ var EnxHelper = new function() {
     this.GetDeviceType = function(className) {
         var bigType = "";
         switch (className) {
-          case EnxConstField.SpecialName.ENXFILE_SPECIAL_TESTERTYPE:
-            bigType = EnxHelper.ModelType.Tester;
-            break;
+            case EnxConstField.SpecialName.ENXFILE_SPECIAL_TESTERTYPE:
+                bigType = EnxHelper.ModelType.Tester;
+                break;
 
-          case EnxConstField.SpecialName.ENXFILE_SPECIAL_DEVTYPE:
-            bigType = EnxHelper.ModelType.Dev;
-            break;
+            case EnxConstField.SpecialName.ENXFILE_SPECIAL_DEVTYPE:
+                bigType = EnxHelper.ModelType.Dev;
+                break;
 
-          case EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEATM:
-            bigType = EnxHelper.ModelType.Atm;
-            break;
+            case EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEATM:
+                bigType = EnxHelper.ModelType.Atm;
+                break;
 
-          case EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEETH:
-            bigType = EnxHelper.ModelType.Eth;
-            break;
+            case EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEETH:
+                bigType = EnxHelper.ModelType.Eth;
+                break;
 
-          case EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPESDH:
-            bigType = EnxHelper.ModelType.Sdh;
-            break;
+            case EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPESDH:
+                bigType = EnxHelper.ModelType.Sdh;
+                break;
 
-          default:
-            bigType = className;
-            break;
+            default:
+                bigType = className;
+                break;
         }
         return bigType;
     };
@@ -481,7 +481,7 @@ var EnxHelper = new function() {
             params = $.makeArray(arguments).slice(1);
         }
         if (params.constructor != Array) {
-            params = [ params ];
+            params = [params];
         }
         $.each(params, function(i, n) {
             source = source.replace(new RegExp("\\{" + i + "\\}", "g"), n);
@@ -790,43 +790,45 @@ var JsonHelper = new function() {
     this.JsonArrSingleUpdate = function(arrJson, key, valueFiledName, keyValue, newJson, callback) {
         var updatedResult = {};
         var beforeUpdate = {};
-        if (arrJson && arrJson.length > 0) for (var i = 0; i < arrJson.length; i++) {
-            var jsonItem = arrJson[i];
-            var jsonValue = jsonItem[key];
-            if (keyValue == jsonValue) {
-                beforeUpdate = JSON.parse(JSON.stringify(jsonItem));
-                for (var tempKey in newJson) {
-                    if (!jsonItem[tempKey]) {
-                        jsonItem[tempKey] = {
-                            name: tempKey,
-                            value: newJson[tempKey]
-                        };
+        if (arrJson && arrJson.length > 0)
+            for (var i = 0; i < arrJson.length; i++) {
+                var jsonItem = arrJson[i];
+                var jsonValue = jsonItem[key];
+                if (keyValue == jsonValue) {
+                    beforeUpdate = JSON.parse(JSON.stringify(jsonItem));
+                    for (var tempKey in newJson) {
+                        if (!jsonItem[tempKey]) {
+                            jsonItem[tempKey] = {
+                                name: tempKey,
+                                value: newJson[tempKey]
+                            };
+                        }
+                        jsonItem[tempKey][valueFiledName] = newJson[tempKey];
+                        //路由器特定需求，objname和name保持一致
+                        if (tempKey == EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME) {
+                            jsonItem[EnxConstField.AttrName.ENXFILE_ATTR_NAME][valueFiledName] = newJson[tempKey];
+                        }
                     }
-                    jsonItem[tempKey][valueFiledName] = newJson[tempKey];
-                    //路由器特定需求，objname和name保持一致
-                    if (tempKey == EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME) {
-                        jsonItem[EnxConstField.AttrName.ENXFILE_ATTR_NAME][valueFiledName] = newJson[tempKey];
-                    }
+                    updatedResult = jsonItem;
+                    break;
                 }
-                updatedResult = jsonItem;
-                break;
             }
-        }
         callback && callback(beforeUpdate, updatedResult);
         return updatedResult;
     };
     //单个更新Json数组中的某个json(两层，查询时第二层)
     this.JsonArrSingleUpdate2 = function(arrJson, key, valueFiledName, keyValue, newJson) {
-        if (arrJson && arrJson.length > 0) for (var i = 0; i < arrJson.length; i++) {
-            var jsonItem = arrJson[i];
-            var jsonValue = jsonItem[key][valueFiledName];
-            if (keyValue == jsonValue) {
-                for (var tempKey in newJson) {
-                    jsonItem[tempKey][valueFiledName] = newJson[tempKey];
+        if (arrJson && arrJson.length > 0)
+            for (var i = 0; i < arrJson.length; i++) {
+                var jsonItem = arrJson[i];
+                var jsonValue = jsonItem[key][valueFiledName];
+                if (keyValue == jsonValue) {
+                    for (var tempKey in newJson) {
+                        jsonItem[tempKey][valueFiledName] = newJson[tempKey];
+                    }
+                    break;
                 }
-                break;
             }
-        }
     };
     //删除Json数组中的某个json
     this.JsonArrDelete = function(arrJson, key, keyValue) {
@@ -905,20 +907,20 @@ var JsonHelper = new function() {
                 var Item = arrStr[i];
                 var flag = false;
                 switch (type) {
-                  case 0:
-                    flag = Item.indexOf(paraFiledValue) == 0;
-                    break;
+                    case 0:
+                        flag = Item.indexOf(paraFiledValue) == 0;
+                        break;
 
-                  case 1:
-                    flag = Item.length - paraFiledValue.length == Item.lastIndexOf(paraFiledValue);
-                    break;
+                    case 1:
+                        flag = Item.length - paraFiledValue.length == Item.lastIndexOf(paraFiledValue);
+                        break;
 
-                  case 2:
-                    flag = paraFiledValue == Item;
-                    break;
+                    case 2:
+                        flag = paraFiledValue == Item;
+                        break;
 
-                  default:
-                    break;
+                    default:
+                        break;
                 }
                 if (flag) {
                     lstResult.push(Item);
@@ -1010,24 +1012,24 @@ var JsonHelper = new function() {
                     flag = flag && compareValue.indexOf(sourceValue) > -1;
                 } else {
                     switch (tempType) {
-                      case 0:
-                        flag = flag && sourceValue.indexOf(compareValue) == 0;
-                        break;
+                        case 0:
+                            flag = flag && sourceValue.indexOf(compareValue) == 0;
+                            break;
 
-                      case 1:
-                        flag = flag && sourceValue == compareValue;
-                        break;
+                        case 1:
+                            flag = flag && sourceValue == compareValue;
+                            break;
 
-                      case 2:
-                        flag = flag && sourceValue.length - compareValue.length == sourceValue.lastIndexOf(compareValue);
-                        break;
+                        case 2:
+                            flag = flag && sourceValue.length - compareValue.length == sourceValue.lastIndexOf(compareValue);
+                            break;
 
-                      case 3:
-                        flag = flag && sourceValue.indexOf(compareValue) >= 0;
-                        break;
+                        case 3:
+                            flag = flag && sourceValue.indexOf(compareValue) >= 0;
+                            break;
 
-                      default:
-                        break;
+                        default:
+                            break;
                     }
                 }
                 if (!flag) {

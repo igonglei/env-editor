@@ -29,7 +29,7 @@
         <parameter name="sub_ip" value="" />
         <parameter name="class" value="Ne" />
         <parameter name="fullclass" value="Ne" />
-        <parameter name="position" value="244,267;306,329" />
+        <parameter name="position" value="145,269;207,331" />
         <parameter name="roler" value="" />
         <parameter name="test" value="hello" />
       </parameters>
@@ -214,8 +214,8 @@
             <device>
               <parameters>
                 <parameter name="guid" value="ab5690fb-46fd-280c-17f6-abdea87d04a1" />
-                <parameter name="objname" value="ne1_board1_port25" />
-                <parameter name="name" value="ne1_board1_port25" />
+                <parameter name="objname" value="ne1_board1_port18" />
+                <parameter name="name" value="ne1_board1_port18" />
                 <parameter name="ip" value="" />
                 <parameter name="type" value="" />
                 <parameter name="version" value="" />
@@ -241,8 +241,8 @@
         <device>
           <parameters>
             <parameter name="guid" value="abb5cee0-3a97-0051-187c-5df3db3cb3cd" />
-            <parameter name="objname" value="ne1_port23" />
-            <parameter name="name" value="ne1_port23" />
+            <parameter name="objname" value="ne1_port19" />
+            <parameter name="name" value="ne1_port19" />
             <parameter name="ip" value="" />
             <parameter name="type" value="" />
             <parameter name="version" value="" />
@@ -266,8 +266,8 @@
         <device>
           <parameters>
             <parameter name="guid" value="787a8239-ff7d-1a83-a815-2c97ef12ebef" />
-            <parameter name="objname" value="network1" />
-            <parameter name="name" value="network1" />
+            <parameter name="objname" value="network2" />
+            <parameter name="name" value="network2" />
             <parameter name="ip" value="" />
             <parameter name="type" value="" />
             <parameter name="version" value="" />
@@ -311,8 +311,8 @@
         <device>
           <parameters>
             <parameter name="guid" value="9605aad8-5eb7-310c-7e83-3f6b989bb4bf" />
-            <parameter name="objname" value="ne1_port26" />
-            <parameter name="name" value="ne1_port26" />
+            <parameter name="objname" value="ne1_port20" />
+            <parameter name="name" value="ne1_port20" />
             <parameter name="ip" value="" />
             <parameter name="type" value="" />
             <parameter name="version" value="" />
@@ -336,8 +336,8 @@
         <device>
           <parameters>
             <parameter name="guid" value="7d11ad8d-bd6a-6fcc-2657-c3c6326c8895" />
-            <parameter name="objname" value="ne1_port27" />
-            <parameter name="name" value="ne1_port27" />
+            <parameter name="objname" value="ne1_port21" />
+            <parameter name="name" value="ne1_port21" />
             <parameter name="ip" value="" />
             <parameter name="type" value="" />
             <parameter name="version" value="" />
@@ -387,7 +387,7 @@
         <parameter name="sub_ip" value="" />
         <parameter name="class" value="Ne" />
         <parameter name="fullclass" value="Ne" />
-        <parameter name="position" value="525,467;587,529" />
+        <parameter name="position" value="385,455;447,517" />
         <parameter name="roler" value="" />
         <parameter name="haha" value="hehe" />
       </parameters>
@@ -551,8 +551,8 @@
         <device>
           <parameters>
             <parameter name="guid" value="52f5efae-2309-c1a4-0f7f-fe097f698219" />
-            <parameter name="objname" value="network5" />
-            <parameter name="name" value="network5" />
+            <parameter name="objname" value="network4" />
+            <parameter name="name" value="network4" />
             <parameter name="ip" value="" />
             <parameter name="type" value="" />
             <parameter name="version" value="" />
@@ -571,8 +571,8 @@
         <device>
           <parameters>
             <parameter name="guid" value="ead8d133-6c65-46cc-c8f4-a598da74d306" />
-            <parameter name="objname" value="ne2_port24" />
-            <parameter name="name" value="ne2_port24" />
+            <parameter name="objname" value="ne2_port22" />
+            <parameter name="name" value="ne2_port22" />
             <parameter name="ip" value="" />
             <parameter name="type" value="" />
             <parameter name="version" value="" />
@@ -622,7 +622,7 @@
         <parameter name="sub_ip" value="" />
         <parameter name="class" value="Ne" />
         <parameter name="fullclass" value="Ne" />
-        <parameter name="position" value="545,126;607,188" />
+        <parameter name="position" value="438,135;500,197" />
         <parameter name="roler" value="" />
       </parameters>
       <devices>
@@ -756,8 +756,8 @@
                 <device>
                   <parameters>
                     <parameter name="guid" value="ebea9bb4-3c4b-6eb0-7f4a-2b67c3ad98e6" />
-                    <parameter name="objname" value="board4_subboard4_port19" />
-                    <parameter name="name" value="board4_subboard4_port19" />
+                    <parameter name="objname" value="board4_subboard4_port16" />
+                    <parameter name="name" value="board4_subboard4_port16" />
                     <parameter name="ip" value="" />
                     <parameter name="type" value="" />
                     <parameter name="version" value="" />
@@ -781,8 +781,8 @@
                 <device>
                   <parameters>
                     <parameter name="guid" value="97313794-71f7-4938-d3ea-c8bf2a7a9fcc" />
-                    <parameter name="objname" value="board4_subboard4_port21" />
-                    <parameter name="name" value="board4_subboard4_port21" />
+                    <parameter name="objname" value="board4_subboard4_port17" />
+                    <parameter name="name" value="board4_subboard4_port17" />
                     <parameter name="ip" value="" />
                     <parameter name="type" value="" />
                     <parameter name="version" value="" />
@@ -856,7 +856,7 @@
         <parameter name="sub_ip" value="" />
         <parameter name="class" value="Ne" />
         <parameter name="fullclass" value="Ne" />
-        <parameter name="position" value="825,317;887,379" />
+        <parameter name="position" value="665,315;727,377" />
         <parameter name="roler" value="" />
       </parameters>
       <devices>
@@ -996,8 +996,8 @@
     <device>
       <parameters>
         <parameter name="guid" value="df90840f-c0ad-0412-30df-db8c5a115a4c" />
-        <parameter name="objname" value="network7" />
-        <parameter name="name" value="network7" />
+        <parameter name="objname" value="network1" />
+        <parameter name="name" value="network1" />
         <parameter name="ip" value="" />
         <parameter name="type" value="" />
         <parameter name="version" value="" />
@@ -1010,7 +1010,7 @@
         <parameter name="end_ip" value="" />
         <parameter name="class" value="Network" />
         <parameter name="fullclass" value="Network" />
-        <parameter name="position" value="182,477;244,539" />
+        <parameter name="position" value="95,479;157,541" />
       </parameters>
     </device>
     <device>
@@ -1034,14 +1034,14 @@
         <parameter name="virtual_real" value="Virtual" />
         <parameter name="class" value="Instru::Tester" />
         <parameter name="fullclass" value="Instru::Tester" />
-        <parameter name="position" value="675,567;737,629" />
+        <parameter name="position" value="568,555;630,617" />
       </parameters>
       <devices>
         <device>
           <parameters>
             <parameter name="guid" value="4c4b2ff6-2e5b-f754-39e6-2ec816f08d59" />
-            <parameter name="objname" value="tester1_port28" />
-            <parameter name="name" value="tester1_port28" />
+            <parameter name="objname" value="tester1_port23" />
+            <parameter name="name" value="tester1_port23" />
             <parameter name="ip" value="" />
             <parameter name="type" value="" />
             <parameter name="version" value="" />
@@ -1275,8 +1275,8 @@
     </link>
     <link>
       <parameter name="guid" value="6450458e-6331-05a6-3e2e-f1418f227565" />
-      <parameter name="objname" value="link19" />
-      <parameter name="name" value="link19" />
+      <parameter name="objname" value="link9" />
+      <parameter name="name" value="link9" />
       <parameter name="ip" value="" />
       <parameter name="type" value="" />
       <parameter name="version" value="" />
@@ -1284,7 +1284,7 @@
       <parameter name="caption" value="" />
       <parameter name="is_topo" value="" />
       <parameter name="remark" value="" />
-      <parameter name="sourcetopdevicename" value="network7" />
+      <parameter name="sourcetopdevicename" value="network1" />
       <parameter name="sourcedeviceid" value="df90840f-c0ad-0412-30df-db8c5a115a4c" />
       <parameter name="targettopdevicename" value="ne1" />
       <parameter name="targetdeviceid" value="ab5690fb-46fd-280c-17f6-abdea87d04a1" />
@@ -1298,8 +1298,8 @@
     </link>
     <link>
       <parameter name="guid" value="a4c0a8f2-0b45-f872-db0b-d55db323b5e4" />
-      <parameter name="objname" value="link21" />
-      <parameter name="name" value="link21" />
+      <parameter name="objname" value="link10" />
+      <parameter name="name" value="link10" />
       <parameter name="ip" value="" />
       <parameter name="type" value="" />
       <parameter name="version" value="" />

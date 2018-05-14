@@ -2404,7 +2404,7 @@ var GraphHelper = function(edit) {
         //鼠标框选
         new mxRubberband(this.Property.CoreGraph);
         thisObj.ConfigureStylesheet();
-        mxConstants.DEFAULT_FONTFAMILY = "Microsoft YaHei";
+        mxConstants.DEFAULT_FONTFAMILY = "Helvetica,Arial";
         //字体
         //设置对象选中状态的颜色、线宽
         mxConstants.VERTEX_SELECTION_COLOR = "#87CEEB";

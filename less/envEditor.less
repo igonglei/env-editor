@@ -521,14 +521,15 @@ input[type=file] {
 
 ::-webkit-scrollbar-thumb {
     .bgc(@scrollbar-thumb-bgColor);
+    -webkit-border-radius: 3px;
 
     &:hover {
-        .bgc(lighten(@scrollbar-thumb-bgColor,10%));
+        .bgc(darken(@scrollbar-thumb-bgColor,5%));
     }
 }
 
 ::-webkit-scrollbar-track-piece {
-    .bgc(lighten(@scrollbar-thumb-bgColor,20%));
+    .bgc(fade(#fff,0%));
 }
 
 .enveditor {

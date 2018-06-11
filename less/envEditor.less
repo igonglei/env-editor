@@ -1,11 +1,5 @@
 ﻿@import "mixins";
 
-body {
-    font-family: @font-family;
-    .fs(@font-size);
-    .cl(@font-color);
-}
-
 .EplugGraphEditorTop {
     .bg(@topbar-bgcolor);
     .bb(@topbar-border-color);
@@ -95,6 +89,7 @@ body {
     .pr(@editor-padding+19);
     .bgc(@editor-bgcolor);
     .minh(800px);
+    .cl(#333);
 }
 
 .EplugGraphEditorContainer {
@@ -515,24 +510,7 @@ input[type=file] {
     }
 }
 
-::-webkit-scrollbar {
-    .size(@scrollbar-width,@scrollbar-width);
-}
-
-::-webkit-scrollbar-thumb {
-    .bgc(@scrollbar-thumb-bgColor);
-    -webkit-border-radius: 3px;
-
-    &:hover {
-        .bgc(darken(@scrollbar-thumb-bgColor,5%));
-    }
-}
-
-::-webkit-scrollbar-track-piece {
-    .bgc(fade(#fff,0%));
-}
-
-.enveditor {
+.envEditor {
     > div.mxTooltip {
         .fade(60%,#000);
         .fs(@font-size);

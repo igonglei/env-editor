@@ -1,20 +1,20 @@
 /*!
  * envEditor - enx editor based on mxgraph
- * Copyright 2018, Gonglei
+ * Author, Gonglei & blake_cai
  */
 (function(root, factory) {
     "use strict";
     if (typeof define === "function" && define.amd) {
         // AMD
-        define(["jquery"], factory);
+        define(["jquery", "enxHelper"], factory);
     } else if (typeof module === "object" && typeof module.exports === "object") {
         // CommonJS
-        module.exports = factory(require("jquery"));
+        module.exports = factory(require("jquery"), require("enxHelper"));
     } else {
         // Browser globals
-        root.envEditor = factory(root.jQuery);
+        root.envEditor = factory(root.jQuery, root.enxHelper);
     }
-})(this, function($) {
+})(this, function($, helper) {
     // Document
     var document = typeof window !== "undefined" ? window.document : {};
     // 默认参数
@@ -55,12 +55,12 @@
                 $(".EPlugTopolimitSubmit").off("click").click(function() {
                     var topolimit_content = $("#txtTopoLimit").val();
                     var arr_topolimit = {
-                        BigType: EnxHelper.ModelType.Topolimit,
+                        BigType: helper.enxHelper.ModelType.Topolimit,
                         Name: topolimit_content
                     };
                     var flag = false;
                     $.each(plugObj.Property.DataList, function(index, value) {
-                        if (value.BigType == EnxHelper.ModelType.Topolimit) {
+                        if (value.BigType == helper.enxHelper.ModelType.Topolimit) {
                             value.Name = topolimit_content;
                             flag = true;
                         }
@@ -83,7 +83,7 @@
                     var enxContent = $(".EPlugEnxInput").val();
                     var fileName = $("#EPlugImportBtn").val();
                     plugObj.Property.FileName = fileName.substr(fileName.lastIndexOf("\\") + 1);
-                    var lst = EnxHelper.EnxToLstJson(enxContent);
+                    var lst = helper.enxHelper.EnxToLstJson(enxContent);
                     plugObj.SetData(lst);
                     ////查看转换后的数据结构 （后期删除）
                     var afterTranRes = "";
@@ -153,7 +153,7 @@
             //容器元素的jquery包装
             this.Element = {};
             //选中的模型类型
-            this.SelectModelType = EnxHelper.ModelType.Ne;
+            this.SelectModelType = helper.enxHelper.ModelType.Ne;
             //当前登录的用户
             this.CurrentUser = "";
             //默认PDU为SYSTEM
@@ -164,7 +164,7 @@
             //enx文件格式
             this.FileAfter = ".enx";
             //组网的id
-            this.EnxId = EnxHelper.CreateNewGuid();
+            this.EnxId = helper.enxHelper.CreateNewGuid();
             //发送请求的地址
             this.PostUrl = new function() {
                 //根据ID获取
@@ -195,18 +195,18 @@
             //重置常量，这个后期应该移到变量里面
             this.ConstInfo.Reset();
             this.Property.DataList = lstData;
-            this.Property.TopoNode = JsonHelper.GetJsonByKey(lstData, EnxHelper.Field.BigType, EnxHelper.ModelType.Env);
-            this.Property.LstNodeJson = JsonHelper.FilterListByValues(lstData, EnxHelper.Field.IsTopDevice, [EnxConstField.BoolStr.Yes]);
-            this.Property.LstLinkJson = JsonHelper.FilterListByValues(lstData, EnxHelper.Field.BigType, [EnxHelper.ModelType.Link]);
+            this.Property.TopoNode = helper.jsonHelper.GetJsonByKey(lstData, helper.enxHelper.Field.BigType, helper.enxHelper.ModelType.Env);
+            this.Property.LstNodeJson = helper.jsonHelper.FilterListByValues(lstData, helper.enxHelper.Field.IsTopDevice, [helper.enxConstField.BoolStr.Yes]);
+            this.Property.LstLinkJson = helper.jsonHelper.FilterListByValues(lstData, helper.enxHelper.Field.BigType, [helper.enxHelper.ModelType.Link]);
             //占用的端口处理
             Me.Property.BusyPortId = [];
             $.each(Me.Property.LstLinkJson, function(index, linkNode) {
-                var sourcePortId = JsonHelper.GetStrValue(linkNode[EnxConstField.AttrName.ENXFILE_ATTR_SOURCEDEVICEID], EnxConstField.AttrName.ENXFILE_ATTR_VALUE);
-                var targetPortId = JsonHelper.GetStrValue(linkNode[EnxConstField.AttrName.ENXFILE_ATTR_TARGETDEVICEID], EnxConstField.AttrName.ENXFILE_ATTR_VALUE);
+                var sourcePortId = helper.jsonHelper.GetStrValue(linkNode[helper.enxConstField.AttrName.ENXFILE_ATTR_SOURCEDEVICEID], helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE);
+                var targetPortId = helper.jsonHelper.GetStrValue(linkNode[helper.enxConstField.AttrName.ENXFILE_ATTR_TARGETDEVICEID], helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE);
                 Me.Property.BusyPortId.push(sourcePortId);
                 Me.Property.BusyPortId.push(targetPortId);
             });
-            this.Property.LstPortJson = JsonHelper.FilterListByValues(lstData, EnxHelper.Field.BigType, [EnxHelper.ModelType.Port]);
+            this.Property.LstPortJson = helper.jsonHelper.FilterListByValues(lstData, helper.enxHelper.Field.BigType, [helper.enxHelper.ModelType.Port]);
             //初始化图形
             this.GraphEditor.Init();
         };
@@ -215,8 +215,8 @@
             var objnameDicId = {};
             if (Me.Property.DataList && Me.Property.DataList.length > 0) {
                 $(Me.Property.DataList).each(function(index, value) {
-                    var objName = JsonHelper.GetJsonValue(JsonHelper.GetJsonValue(value, EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME), EnxConstField.AttrName.ENXFILE_ATTR_VALUE);
-                    var id = value[EnxHelper.Field.ID];
+                    var objName = helper.jsonHelper.GetJsonValue(helper.jsonHelper.GetJsonValue(value, helper.enxConstField.AttrName.ENXFILE_ATTR_OBJNAME), helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE);
+                    var id = value[helper.enxHelper.Field.ID];
                     objnameDicId[objName] = id;
                 });
             }
@@ -225,9 +225,9 @@
         //初始化插件
         this.Init = function(option) {
             //解析地址栏参数
-            var pdu = EnxHelper.GetQueryString(Me.ConstInfo.QueryStringParam.pdu);
-            var user = EnxHelper.GetQueryString(Me.ConstInfo.QueryStringParam.user);
-            var enxId = EnxHelper.GetQueryString(Me.ConstInfo.QueryStringParam.enxId);
+            var pdu = helper.enxHelper.GetQueryString(Me.ConstInfo.QueryStringParam.pdu);
+            var user = helper.enxHelper.GetQueryString(Me.ConstInfo.QueryStringParam.user);
+            var enxId = helper.enxHelper.GetQueryString(Me.ConstInfo.QueryStringParam.enxId);
             Me.Property.CurrentPDU = pdu || Me.Property.DefaultPDU;
             var postHost = Me.PduRelUrl[Me.Property.CurrentPDU] || Me.PduRelUrl[Me.Property.DefaultPDU];
             //判断是否是webservices
@@ -256,7 +256,7 @@
             var opts = this.OptionParam;
             $content.showLoader();
             $.get(opts.root + opts.dataDir + opts.enxId + ".enx", function(data) {
-                Me.SetData(EnxHelper.EnxToLstJson(data));
+                Me.SetData(helper.enxHelper.EnxToLstJson(data));
             }).always(function() {
                 $content.hideLoader();
             });
@@ -299,7 +299,7 @@
             var param = "";
             //webservices接口
             if (Me.Property.PostUrl.GetById.indexOf(Me.Property.WebsvcSuffix) == -1) {
-                Me.Property.PostUrl.GetById = EnxHelper.Format(Me.Property.PostUrl.GetById, enxId);
+                Me.Property.PostUrl.GetById = helper.enxHelper.Format(Me.Property.PostUrl.GetById, enxId);
             } else {
                 reqType = "POST";
                 param = JSON.stringify({
@@ -342,7 +342,7 @@
                     toastr.error(alertMsg);
                 }
                 if (strEnxContent) {
-                    lstEnxContent = EnxHelper.EnxToLstJson(strEnxContent);
+                    lstEnxContent = helper.enxHelper.EnxToLstJson(strEnxContent);
                 }
             }, function(XMLHttpRequest, textStatus, errorThrown) {
                 $content.hideLoader();
@@ -360,14 +360,14 @@
         this.GetEnxContent = function() {
             //1.获取位置信息
             $.each(Me.Property.LstNodeJson, function(index, value) {
-                var id = value[EnxHelper.Field.ID];
-                var bigType = value[EnxHelper.Field.BigType];
+                var id = value[helper.enxHelper.Field.ID];
+                var bigType = value[helper.enxHelper.Field.BigType];
                 var cell = Me.Property.GraphPlug.GetCellsByFieldValue(bigType, Me.Property.GraphPlug.ConstInfo.AttrName.ID, id);
-                var positionJson = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_POSITION, Me.Property.GraphPlug.Translater.BondToString(cell));
-                value[EnxConstField.AttrName.ENXFILE_ATTR_POSITION] = positionJson;
+                var positionJson = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_POSITION, Me.Property.GraphPlug.Translater.BondToString(cell));
+                value[helper.enxConstField.AttrName.ENXFILE_ATTR_POSITION] = positionJson;
             });
             //2.列表解析成xml
-            var xmlContent = EnxHelper.LstJsonToEnx(Me.Property.DataList);
+            var xmlContent = helper.enxHelper.LstJsonToEnx(Me.Property.DataList);
             xmlContent = xmlContent.replace(new RegExp("&lt;", "gm"), "<").replace(new RegExp("&gt;", "gm"), ">").replace(new RegExp("★", "gm"), "&quot;").replace(new RegExp("♣", "gm"), "&amp;").replace(new RegExp("◀", "gm"), "&lt;").replace(new RegExp("▶", "gm"), "&gt;");
             return xmlContent;
         };
@@ -576,9 +576,9 @@
                 var unAvailField = this.GetModelUnAvailField(type);
                 var availField = this.GetModelField(type, true);
                 var json = this.GetFirstModelEntity(type);
-                var userDefineKeys = JsonHelper.GetJsonAllValue(EnxHelper.Field);
+                var userDefineKeys = helper.jsonHelper.GetJsonAllValue(helper.enxHelper.Field);
                 Me.ConstInfo.IsFirstInitAvailField[type] = false;
-                var isJosonObj = JsonHelper.IsJsonObj(json);
+                var isJosonObj = helper.jsonHelper.IsJsonObj(json);
                 var fieldName;
                 for (var key in json) {
                     if (isJosonObj) {
@@ -605,7 +605,7 @@
         //绘图插件
         this.GraphEditor = new function() {
             this.Init = function() {
-                if (JsonHelper.IsEmptyJson(Me.Property.GraphPlug)) {
+                if (helper.jsonHelper.IsEmptyJson(Me.Property.GraphPlug)) {
                     Me.Property.GraphPlug = new GraphHelper(Me);
                 } else {
                     Me.Property.GraphPlug.ClearChildren();
@@ -623,8 +623,8 @@
         //获取特别字段，主要是链路中的端口id
         this.GetSpecialField = function(type) {
             var specialPortField = [];
-            if (type == EnxHelper.ModelType.Link) {
-                specialPortField = JsonHelper.GetJsonAllKey(Me.ConstInfo.SpecialFieldDic);
+            if (type == helper.enxHelper.ModelType.Link) {
+                specialPortField = helper.jsonHelper.GetJsonAllKey(Me.ConstInfo.SpecialFieldDic);
             }
             return specialPortField;
         };
@@ -842,7 +842,7 @@
         this.SetNodeAttr = function(type, nodeId, fieldName, json) {
             var res = this.GetLstByModelType(type);
             for (var i = 0; i < res.length; i++) {
-                var tempNodeId = res[i][EnxHelper.Field.ID];
+                var tempNodeId = res[i][helper.enxHelper.Field.ID];
                 if (tempNodeId == nodeId) {
                     res[i][fieldName] = json;
                     break;
@@ -853,7 +853,7 @@
         this.DeleteNodeAttr = function(type, nodeId, fieldName) {
             var res = this.GetLstByModelType(type);
             for (var i = 0; i < res.length; i++) {
-                var tempNodeId = res[i][EnxHelper.Field.ID];
+                var tempNodeId = res[i][helper.enxHelper.Field.ID];
                 if (tempNodeId == nodeId) {
                     delete res[i][fieldName];
                     break;
@@ -864,15 +864,15 @@
         this.GetLstByModelType = function(type) {
             var res = [];
             switch (type) {
-                case EnxHelper.ModelType.Ne:
+                case helper.enxHelper.ModelType.Ne:
                     res = Me.Property.LstNodeJson;
                     break;
 
-                case EnxHelper.ModelType.Link:
+                case helper.enxHelper.ModelType.Link:
                     res = Me.Property.LstLinkJson;
                     break;
 
-                case EnxHelper.ModelType.Port:
+                case helper.enxHelper.ModelType.Port:
                     res = Me.Property.LstPortJson;
                     break;
             }
@@ -882,116 +882,116 @@
         this.CreateModel = function(type, parentId, pareantName, parentType, id, jsonvalue) {
             //注意定位和父级信息 ParentGID FullClass在外面设置 ne有shape固定值，后续再加 ; 定位信息Me.GraphEditor.SubGraph.GetBond(type);
             var res = {};
-            res[EnxHelper.Field.BigType] = type;
+            res[helper.enxHelper.Field.BigType] = type;
             if (!id) {
-                id = EnxHelper.CreateNewGuid();
+                id = helper.enxHelper.CreateNewGuid();
             }
-            res[EnxHelper.Field.ID] = id;
+            res[helper.enxHelper.Field.ID] = id;
             if (parentId) {
-                res[EnxHelper.Field.ParentGID] = parentId;
+                res[helper.enxHelper.Field.ParentGID] = parentId;
             }
-            var guidJson = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_GUID, id);
-            res[EnxConstField.AttrName.ENXFILE_ATTR_GUID] = guidJson;
+            var guidJson = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_GUID, id);
+            res[helper.enxConstField.AttrName.ENXFILE_ATTR_GUID] = guidJson;
             var fields = Me.ConstInfo.DefaultAvailField[type];
-            var curIndex = EnxHelper.GlobalVar.ElemntIndex[type];
+            var curIndex = helper.enxHelper.GlobalVar.ElemntIndex[type];
             if (fields) {
                 var selectField = Me.ConstInfo.SelectField;
                 $.each(fields, function(index, field) {
                     var fieldValue = "";
-                    if (field == EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME || field == EnxConstField.AttrName.ENXFILE_ATTR_NAME) {
+                    if (field == helper.enxConstField.AttrName.ENXFILE_ATTR_OBJNAME || field == helper.enxConstField.AttrName.ENXFILE_ATTR_NAME) {
                         fieldValue = Me.Property.GraphPlug.ConstInfo.ElemntNamePre[type] + curIndex;
                         //单板、子卡、端口
-                        if (pareantName && (type == EnxHelper.ModelType.Board || type == EnxHelper.ModelType.SubBoard || type == EnxHelper.ModelType.Port || type == EnxHelper.ModelType.VM)) {
-                            fieldValue = pareantName + EnxConstField.NameSeparate + fieldValue;
+                        if (pareantName && (type == helper.enxHelper.ModelType.Board || type == helper.enxHelper.ModelType.SubBoard || type == helper.enxHelper.ModelType.Port || type == helper.enxHelper.ModelType.VM)) {
+                            fieldValue = pareantName + helper.enxConstField.NameSeparate + fieldValue;
                         }
                     }
                     //下拉框的属性值默认取第一个
                     if (selectField.indexOf(field) > -1) {
                         fieldValue = Me.Property.SelectOptionValues[field][0];
                     }
-                    if (JsonHelper.IsJsonObj(jsonvalue) && jsonvalue[field]) {
+                    if (helper.jsonHelper.IsJsonObj(jsonvalue) && jsonvalue[field]) {
                         fieldValue = jsonvalue[field];
                     }
-                    var fieldJson = EnxHelper.AttrParameter(field, fieldValue);
+                    var fieldJson = helper.enxHelper.AttrParameter(field, fieldValue);
                     res[field] = fieldJson;
                 });
             }
-            EnxHelper.GlobalVar.ElemntIndex[type] = curIndex + 1;
-            var parentClassPre = parentType ? parentType + EnxConstField.ClassSeparate : "";
+            helper.enxHelper.GlobalVar.ElemntIndex[type] = curIndex + 1;
+            var parentClassPre = parentType ? parentType + helper.enxConstField.ClassSeparate : "";
             switch (type) {
-                case EnxHelper.ModelType.Ne:
-                case EnxHelper.ModelType.Sftp:
-                case EnxHelper.ModelType.Agent:
-                    res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, type);
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, type);
+                case helper.enxHelper.ModelType.Ne:
+                case helper.enxHelper.ModelType.Sftp:
+                case helper.enxHelper.ModelType.Agent:
+                    res[helper.enxHelper.Field.IsTopDevice] = helper.enxConstField.BoolStr.Yes;
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS, type);
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, type);
                     Me.Property.LstNodeJson.push(res);
                     break;
 
-                case EnxHelper.ModelType.Network:
+                case helper.enxHelper.ModelType.Network:
                     if (parentId && parentType != "Env") {
-                        res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.No;
+                        res[helper.enxHelper.Field.IsTopDevice] = helper.enxConstField.BoolStr.No;
                     } else {
                         //和网元平级显示的网络平面
-                        res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
+                        res[helper.enxHelper.Field.IsTopDevice] = helper.enxConstField.BoolStr.Yes;
                     }
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, type);
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, type);
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS, type);
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, type);
                     Me.Property.LstNodeJson.push(res);
                     break;
 
-                case EnxHelper.ModelType.Tester:
-                    res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_TESTERTYPE);
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_TESTERTYPE);
+                case helper.enxHelper.ModelType.Tester:
+                    res[helper.enxHelper.Field.IsTopDevice] = helper.enxConstField.BoolStr.Yes;
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS, helper.enxConstField.SpecialName.ENXFILE_SPECIAL_TESTERTYPE);
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, helper.enxConstField.SpecialName.ENXFILE_SPECIAL_TESTERTYPE);
                     Me.Property.LstNodeJson.push(res);
                     break;
 
-                case EnxHelper.ModelType.Dev:
-                    res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_DEVTYPE);
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_DEVTYPE);
+                case helper.enxHelper.ModelType.Dev:
+                    res[helper.enxHelper.Field.IsTopDevice] = helper.enxConstField.BoolStr.Yes;
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS, helper.enxConstField.SpecialName.ENXFILE_SPECIAL_DEVTYPE);
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, helper.enxConstField.SpecialName.ENXFILE_SPECIAL_DEVTYPE);
                     Me.Property.LstNodeJson.push(res);
                     break;
 
-                case EnxHelper.ModelType.Atm:
-                    res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEATM);
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEATM);
+                case helper.enxHelper.ModelType.Atm:
+                    res[helper.enxHelper.Field.IsTopDevice] = helper.enxConstField.BoolStr.Yes;
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS, helper.enxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEATM);
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, helper.enxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEATM);
                     Me.Property.LstNodeJson.push(res);
                     break;
 
-                case EnxHelper.ModelType.Sdh:
-                    res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPESDH);
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPESDH);
+                case helper.enxHelper.ModelType.Sdh:
+                    res[helper.enxHelper.Field.IsTopDevice] = helper.enxConstField.BoolStr.Yes;
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS, helper.enxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPESDH);
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, helper.enxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPESDH);
                     Me.Property.LstNodeJson.push(res);
                     break;
 
-                case EnxHelper.ModelType.Eth:
-                    res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.Yes;
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEETH);
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEETH);
+                case helper.enxHelper.ModelType.Eth:
+                    res[helper.enxHelper.Field.IsTopDevice] = helper.enxConstField.BoolStr.Yes;
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS, helper.enxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEETH);
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, helper.enxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPEETH);
                     Me.Property.LstNodeJson.push(res);
                     break;
 
-                case EnxHelper.ModelType.Link:
-                    res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.No;
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, EnxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPECONNECT);
+                case helper.enxHelper.ModelType.Link:
+                    res[helper.enxHelper.Field.IsTopDevice] = helper.enxConstField.BoolStr.No;
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS, helper.enxConstField.SpecialName.ENXFILE_SPECIAL_UNKOWNTYPECONNECT);
                     Me.Property.LstLinkJson.push(res);
                     break;
 
-                case EnxHelper.ModelType.Board:
-                case EnxHelper.ModelType.SubBoard:
-                case EnxHelper.ModelType.VM:
-                    res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.No;
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, type);
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, parentClassPre + type);
+                case helper.enxHelper.ModelType.Board:
+                case helper.enxHelper.ModelType.SubBoard:
+                case helper.enxHelper.ModelType.VM:
+                    res[helper.enxHelper.Field.IsTopDevice] = helper.enxConstField.BoolStr.No;
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS, type);
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, parentClassPre + type);
 
-                case EnxHelper.ModelType.Port:
-                    res[EnxHelper.Field.IsTopDevice] = EnxConstField.BoolStr.No;
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_CLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_CLASS, type);
-                    res[EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, parentClassPre + type);
+                case helper.enxHelper.ModelType.Port:
+                    res[helper.enxHelper.Field.IsTopDevice] = helper.enxConstField.BoolStr.No;
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_CLASS, type);
+                    res[helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS] = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_FULLCLASS, parentClassPre + type);
                     Me.Property.LstPortJson.push(res);
                     break;
             }
@@ -1001,42 +1001,42 @@
         //复制数据原型 (ID,GUID,OBJNAME,NAME都需要改变)
         this.CopyModel = function(json, parentId, pareantName, isRecu) {
             var res = JSON.parse(JSON.stringify(json));
-            var id = EnxHelper.CreateNewGuid();
-            var oldId = res[EnxHelper.Field.ID];
-            res[EnxHelper.Field.ID] = id;
-            var type = res[EnxHelper.Field.BigType];
+            var id = helper.enxHelper.CreateNewGuid();
+            var oldId = res[helper.enxHelper.Field.ID];
+            res[helper.enxHelper.Field.ID] = id;
+            var type = res[helper.enxHelper.Field.BigType];
             if (parentId) {
-                res[EnxHelper.Field.ParentGID] = parentId;
+                res[helper.enxHelper.Field.ParentGID] = parentId;
             }
-            var guidJson = EnxHelper.AttrParameter(EnxConstField.AttrName.ENXFILE_ATTR_GUID, id);
-            res[EnxConstField.AttrName.ENXFILE_ATTR_GUID] = guidJson;
-            var fields = [EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME, EnxConstField.AttrName.ENXFILE_ATTR_NAME];
-            var curIndex = EnxHelper.GlobalVar.ElemntIndex[type];
+            var guidJson = helper.enxHelper.AttrParameter(helper.enxConstField.AttrName.ENXFILE_ATTR_GUID, id);
+            res[helper.enxConstField.AttrName.ENXFILE_ATTR_GUID] = guidJson;
+            var fields = [helper.enxConstField.AttrName.ENXFILE_ATTR_OBJNAME, helper.enxConstField.AttrName.ENXFILE_ATTR_NAME];
+            var curIndex = helper.enxHelper.GlobalVar.ElemntIndex[type];
             var name = Me.Property.GraphPlug.ConstInfo.ElemntNamePre[type] + curIndex;
             $.each(fields, function(index, field) {
                 var curName = name;
                 //单板、子卡、端口
-                if (pareantName && (type == EnxHelper.ModelType.Board || type == EnxHelper.ModelType.SubBoard || type == EnxHelper.ModelType.Port || type == EnxHelper.ModelType.VM)) {
-                    curName = pareantName + EnxConstField.NameSeparate + name;
+                if (pareantName && (type == helper.enxHelper.ModelType.Board || type == helper.enxHelper.ModelType.SubBoard || type == helper.enxHelper.ModelType.Port || type == helper.enxHelper.ModelType.VM)) {
+                    curName = pareantName + helper.enxConstField.NameSeparate + name;
                 }
-                res[field][EnxConstField.AttrName.ENXFILE_ATTR_VALUE] = curName;
+                res[field][helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE] = curName;
             });
-            EnxHelper.GlobalVar.ElemntIndex[type] = curIndex + 1;
+            helper.enxHelper.GlobalVar.ElemntIndex[type] = curIndex + 1;
             switch (type) {
-                case EnxHelper.ModelType.Ne:
-                case EnxHelper.ModelType.Tester:
-                case EnxHelper.ModelType.Dev:
-                case EnxHelper.ModelType.Atm:
-                case EnxHelper.ModelType.Sdh:
-                case EnxHelper.ModelType.Eth:
+                case helper.enxHelper.ModelType.Ne:
+                case helper.enxHelper.ModelType.Tester:
+                case helper.enxHelper.ModelType.Dev:
+                case helper.enxHelper.ModelType.Atm:
+                case helper.enxHelper.ModelType.Sdh:
+                case helper.enxHelper.ModelType.Eth:
                     Me.Property.LstNodeJson.push(res);
                     break;
 
-                case EnxHelper.ModelType.Link:
+                case helper.enxHelper.ModelType.Link:
                     Me.Property.LstLinkJson.push(res);
                     break;
 
-                case EnxHelper.ModelType.Port:
+                case helper.enxHelper.ModelType.Port:
                     Me.Property.LstPortJson.push(res);
                     break;
 
@@ -1046,7 +1046,7 @@
             }
             Me.Property.DataList.push(res);
             //判断下是否有子节点，有的话，继续复制
-            var childNode = JsonHelper.FilterListByValues(Me.Property.DataList, EnxHelper.Field.ParentGID, [oldId]);
+            var childNode = helper.jsonHelper.FilterListByValues(Me.Property.DataList, helper.enxHelper.Field.ParentGID, [oldId]);
             var returnResult = [res];
             $.each(childNode, function(index, jsonNode) {
                 var tempResut = Me.CopyModel(jsonNode, id, name, isRecu);
@@ -1069,7 +1069,7 @@
         };
         //根据父级删除所有的子级 id isRecu
         this.RemoveModelByParentId = function(parentId, isRecu) {
-            var childIds = this.RemoveModel(EnxHelper.Field.ParentGID, parentId);
+            var childIds = this.RemoveModel(helper.enxHelper.Field.ParentGID, parentId);
             if (isRecu) {
                 $.each(childIds, function(index, id) {
                     Me.RemoveModelByParentId(id, isRecu);
@@ -1084,13 +1084,13 @@
                 var fieldInfo = value[fieldName];
                 //如果对应的字段是个对象，则取其值
                 if (typeof fieldInfo == "object") {
-                    fieldInfo = JsonHelper.GetStrValue(fieldInfo, EnxConstField.AttrName.ENXFILE_ATTR_VALUE);
+                    fieldInfo = helper.jsonHelper.GetStrValue(fieldInfo, helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE);
                 }
                 if (fieldInfo != fieldValue) {
                     arrResJson.push(value);
                 } else {
                     Me.RemoveModelRelaHandler(value);
-                    removeId.push(JsonHelper.GetStrValue(value, EnxHelper.Field.ID));
+                    removeId.push(helper.jsonHelper.GetStrValue(value, helper.enxHelper.Field.ID));
                 }
             });
             Me.Property.DataList = arrResJson;
@@ -1099,35 +1099,35 @@
         //删除分类的缓存数据 一般情况下在RemoveModel内部使用，主要用于删除某个分类的临时数据 (也就是説暂时只对于顶层设备、链路、端口的处理)
         //如果是端口，注意还有占用端口的清除；删除链路，还需要删除占用端口
         this.RemoveModelRelaHandler = function(json) {
-            var id = json[EnxHelper.Field.ID];
-            var type = json[EnxHelper.Field.BigType];
+            var id = json[helper.enxHelper.Field.ID];
+            var type = json[helper.enxHelper.Field.BigType];
             switch (type) {
-                case EnxHelper.ModelType.Ne:
-                case EnxHelper.ModelType.Tester:
-                case EnxHelper.ModelType.Dev:
-                case EnxHelper.ModelType.Atm:
-                case EnxHelper.ModelType.Sdh:
-                case EnxHelper.ModelType.Eth:
-                    Me.Property.LstNodeJson = Me.JsonArrDelete(Me.Property.LstNodeJson, EnxHelper.Field.ID, id);
+                case helper.enxHelper.ModelType.Ne:
+                case helper.enxHelper.ModelType.Tester:
+                case helper.enxHelper.ModelType.Dev:
+                case helper.enxHelper.ModelType.Atm:
+                case helper.enxHelper.ModelType.Sdh:
+                case helper.enxHelper.ModelType.Eth:
+                    Me.Property.LstNodeJson = Me.JsonArrDelete(Me.Property.LstNodeJson, helper.enxHelper.Field.ID, id);
                     break;
 
-                case EnxHelper.ModelType.Link:
-                    Me.Property.LstLinkJson = Me.JsonArrDelete(Me.Property.LstLinkJson, EnxHelper.Field.ID, id);
+                case helper.enxHelper.ModelType.Link:
+                    Me.Property.LstLinkJson = Me.JsonArrDelete(Me.Property.LstLinkJson, helper.enxHelper.Field.ID, id);
                     //删除链路，还需要删除占用端口
-                    var sourcePortId = JsonHelper.GetStrValue(json[EnxConstField.AttrName.ENXFILE_ATTR_SOURCEDEVICEID], EnxConstField.AttrName.ENXFILE_ATTR_VALUE);
-                    var targetPortId = JsonHelper.GetStrValue(json[EnxConstField.AttrName.ENXFILE_ATTR_TARGETDEVICEID], EnxConstField.AttrName.ENXFILE_ATTR_VALUE);
+                    var sourcePortId = helper.jsonHelper.GetStrValue(json[helper.enxConstField.AttrName.ENXFILE_ATTR_SOURCEDEVICEID], helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE);
+                    var targetPortId = helper.jsonHelper.GetStrValue(json[helper.enxConstField.AttrName.ENXFILE_ATTR_TARGETDEVICEID], helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE);
                     Me.Property.BusyPortId.splice(Me.Property.BusyPortId.indexOf(sourcePortId), 1);
                     Me.Property.BusyPortId.splice(Me.Property.BusyPortId.indexOf(targetPortId), 1);
                     break;
 
-                case EnxHelper.ModelType.Port:
-                    Me.Property.LstPortJson = Me.JsonArrDelete(Me.Property.LstPortJson, EnxHelper.Field.ID, id);
+                case helper.enxHelper.ModelType.Port:
+                    Me.Property.LstPortJson = Me.JsonArrDelete(Me.Property.LstPortJson, helper.enxHelper.Field.ID, id);
                     var indexPort = Me.Property.BusyPortId.indexOf(id);
                     if (indexPort > -1) {
                         //删除链路数据
                         var link = Me.GetLinkByPortId(id);
                         //删除端口对应的链路，删除链路的同时，会删除占用端口
-                        Me.RemoveModel(EnxHelper.Field.ID, JsonHelper.GetStrValue(link, EnxHelper.Field.ID));
+                        Me.RemoveModel(helper.enxHelper.Field.ID, helper.jsonHelper.GetStrValue(link, helper.enxHelper.Field.ID));
                     }
                     break;
             }
@@ -1136,11 +1136,11 @@
         this.GetChildrens = function(parentId, isRecu) {
             var arrResJson = [];
             $.each(Me.Property.DataList, function(index, value) {
-                var tempParentId = value[EnxHelper.Field.ParentGID];
+                var tempParentId = value[helper.enxHelper.Field.ParentGID];
                 if (tempParentId == parentId) {
                     arrResJson.push(value);
                     if (isRecu) {
-                        var tempChildren = Me.GetChildrens(value[EnxHelper.Field.ID], isRecu);
+                        var tempChildren = Me.GetChildrens(value[helper.enxHelper.Field.ID], isRecu);
                         arrResJson = arrResJson.concat(tempChildren);
                     }
                 }
@@ -1154,7 +1154,7 @@
                 var fieldInfo = value[key];
                 //如果对应的字段是个对象，则取其值
                 if (typeof fieldInfo == "object") {
-                    fieldInfo = JsonHelper.GetStrValue(fieldInfo, EnxConstField.AttrName.ENXFILE_ATTR_VALUE);
+                    fieldInfo = helper.jsonHelper.GetStrValue(fieldInfo, helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE);
                 }
                 if (fieldInfo != keyValue) {
                     arrResJson.push(value);
@@ -1212,7 +1212,7 @@
         this.GroupLink = function(lstlinkId) {
             var allLink = this.GetAllLink(thisObj.Property.CoreGraph);
             //选择的链路
-            var selectLinks = JsonHelper.FilterListByValues(allLink, this.ConstInfo.AttrName.ID, lstlinkId);
+            var selectLinks = helper.jsonHelper.FilterListByValues(allLink, this.ConstInfo.AttrName.ID, lstlinkId);
             //已经处理的链路
             var hasDealLinksId = [];
             $.each(selectLinks, function(index, link) {
@@ -1366,7 +1366,7 @@
                 lineStyle[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_BOTTOM;
                 lineStyle[mxConstants.STYLE_EDGE] = mxConstants.EDGESTYLE_ENTITY_RELATION;
                 lineStyle[mxConstants.STYLE_SEGMENT] = 0;
-                this.Graph.getStylesheet().putCellStyle(EnxHelper.ModelType.Link, lineStyle);
+                this.Graph.getStylesheet().putCellStyle(helper.enxHelper.ModelType.Link, lineStyle);
             };
             //设置端口状态
             this.SetPortStatus = function(cell, canConnect) {
@@ -1437,11 +1437,11 @@
             //获取端口所在的设备节点 [网元编辑面板]
             this.GetRootDeviceCellInfo = function(cell) {
                 //和网元平级显示的网络平面，直接返回自身
-                if (cell && cell.data && cell.data.IsTopDevice == EnxConstField.BoolStr.Yes && cell.bigtype == EnxHelper.ModelType.Network) {
+                if (cell && cell.data && cell.data.IsTopDevice == helper.enxConstField.BoolStr.Yes && cell.bigtype == helper.enxHelper.ModelType.Network) {
                     return cell;
                 }
                 var parentCell = SubGraphObj.Graph.getModel().getParent(cell);
-                if (!parentCell || parentCell.data && parentCell.data.IsTopDevice && parentCell.data.IsTopDevice == EnxConstField.BoolStr.Yes) {
+                if (!parentCell || parentCell.data && parentCell.data.IsTopDevice && parentCell.data.IsTopDevice == helper.enxConstField.BoolStr.Yes) {
                     return parentCell;
                 }
                 parentCell = this.GetRootDeviceCellInfo(parentCell);
@@ -1452,20 +1452,20 @@
                 var curentLink = evt.properties.edge;
                 if (!curentLink.target) {
                     return false;
-                } else if (curentLink.source.bigtype == EnxHelper.ModelType.Network && curentLink.target.bigtype == EnxHelper.ModelType.Network) {
+                } else if (curentLink.source.bigtype == helper.enxHelper.ModelType.Network && curentLink.target.bigtype == helper.enxHelper.ModelType.Network) {
                     //网络平面和网络平面之间不可以连线
                     thisObj.Property.CoreGraph.removeCells([curentLink]);
                     SubGraphObj.Graph.removeCells([curentLink]);
                     toastr.warning("No connection between the network!");
                     return false;
                 } else {
-                    curentLink.style = EnxHelper.ModelType.Link;
+                    curentLink.style = helper.enxHelper.ModelType.Link;
                     //回写连线数据
                     //var edit = new EPlug();
-                    var parentId = SubGraphObj.EditGraphCell.target.data[EnxHelper.Field.ParentGID];
-                    var linkJson = edit.CreateModel(EnxHelper.ModelType.Link, parentId);
-                    linkJson[EnxConstField.AttrName.ENXFILE_ATTR_SOURCEDEVICEID][EnxConstField.AttrName.ENXFILE_ATTR_VALUE] = curentLink.source.id;
-                    linkJson[EnxConstField.AttrName.ENXFILE_ATTR_TARGETDEVICEID][EnxConstField.AttrName.ENXFILE_ATTR_VALUE] = curentLink.target.id;
+                    var parentId = SubGraphObj.EditGraphCell.target.data[helper.enxHelper.Field.ParentGID];
+                    var linkJson = edit.CreateModel(helper.enxHelper.ModelType.Link, parentId);
+                    linkJson[helper.enxConstField.AttrName.ENXFILE_ATTR_SOURCEDEVICEID][helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE] = curentLink.source.id;
+                    linkJson[helper.enxConstField.AttrName.ENXFILE_ATTR_TARGETDEVICEID][helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE] = curentLink.target.id;
                     edit.Property.BusyPortId.push(curentLink.source.data.guid.value);
                     edit.Property.BusyPortId.push(curentLink.target.data.guid.value);
                     SubGraphObj.SetPortStatus(curentLink.source, false);
@@ -1475,10 +1475,10 @@
                     var targetTopDeviceCell = SubGraphObj.GetRootDeviceCellInfo(curentLink.target);
                     curentLink.source[SubGraphObj.ConstInfo.ROOTDEVICE] = sourceTopDeviceCell.data;
                     curentLink.target[SubGraphObj.ConstInfo.ROOTDEVICE] = targetTopDeviceCell.data;
-                    linkJson[EnxConstField.AttrName.ENXFILE_ATTR_SOURCETOPDEVICENAME][EnxConstField.AttrName.ENXFILE_ATTR_VALUE] = sourceTopDeviceCell.value;
-                    linkJson[EnxConstField.AttrName.ENXFILE_ATTR_TARGETTOPDEVICENAME][EnxConstField.AttrName.ENXFILE_ATTR_VALUE] = targetTopDeviceCell.value;
+                    linkJson[helper.enxConstField.AttrName.ENXFILE_ATTR_SOURCETOPDEVICENAME][helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE] = sourceTopDeviceCell.value;
+                    linkJson[helper.enxConstField.AttrName.ENXFILE_ATTR_TARGETTOPDEVICENAME][helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE] = targetTopDeviceCell.value;
                     thisObj.AttachCell(curentLink, linkJson);
-                    SubGraphObj.Graph.getModel().setValue(curentLink, linkJson[EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME][EnxConstField.AttrName.ENXFILE_ATTR_VALUE]);
+                    SubGraphObj.Graph.getModel().setValue(curentLink, linkJson[helper.enxConstField.AttrName.ENXFILE_ATTR_OBJNAME][helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE]);
                     SubGraphObj.SetLoopLinkPosition(curentLink);
                     sender.connectionHandler.select = false;
                     if (SubGraphObj.EditGraphCell.edge) {
@@ -1526,7 +1526,7 @@
                     //删除子元件的缓存数据
                     edit.RemoveModelByParentId(cell.id, true);
                     //删除当前元件缓存数据
-                    edit.RemoveModel(EnxHelper.Field.ID, cell.id);
+                    edit.RemoveModel(helper.enxHelper.Field.ID, cell.id);
                     edit.Property.GraphPlug.RemoveCellById(cell.bigtype, cell.id);
                 });
                 var cell = cells[0];
@@ -1550,13 +1550,13 @@
                 }
                 var usedPortLst = [];
                 //删除是端口的时，并且是占用的端口时 [网元编辑面板]
-                if (cell.bigtype == EnxHelper.ModelType.Port && edit.Property.BusyPortId.indexOf(cell.id) > -1) {
+                if (cell.bigtype == helper.enxHelper.ModelType.Port && edit.Property.BusyPortId.indexOf(cell.id) > -1) {
                     usedPortLst.push(cell);
                 } else {
                     //如果删除是单板或者子卡时，找出所有的占有端口 [网元编辑面板]
                     var childrenCell = thisObj.GetAllNode(SubGraphObj.Graph, cell, true);
                     usedPortLst = $.grep(childrenCell, function(childCell, index) {
-                        return childCell.bigtype == EnxHelper.ModelType.Port && edit.Property.BusyPortId.indexOf(childCell.id) > -1;
+                        return childCell.bigtype == helper.enxHelper.ModelType.Port && edit.Property.BusyPortId.indexOf(childCell.id) > -1;
                     });
                 }
                 //遍历占用端口对应的连线：删除主画布的连线，如果是自连接，还要更新当前画布对端端口的状态 [网元编辑面板]
@@ -1571,8 +1571,8 @@
                         return;
                     }
                     var cellid = edges[0]._id;
-                    thisObj.RemoveCellById(EnxHelper.ModelType.Link, cellid);
-                    edit.RemoveModel(EnxHelper.Field.ID, cellid);
+                    thisObj.RemoveCellById(helper.enxHelper.ModelType.Link, cellid);
+                    edit.RemoveModel(helper.enxHelper.Field.ID, cellid);
                 });
             };
             //初始化链路编辑
@@ -1611,7 +1611,7 @@
                     var portDic = {};
                     var arrRes = thisObj.GetAllNode(SubGraphObj.Graph, undefined, true);
                     $.each(arrRes, function(index, node) {
-                        if (node.bigtype == EnxHelper.ModelType.Port || node.bigtype == EnxHelper.ModelType.Network) {
+                        if (node.bigtype == helper.enxHelper.ModelType.Port || node.bigtype == helper.enxHelper.ModelType.Network) {
                             portDic[node.data.guid.value] = node;
                         }
                     });
@@ -1623,8 +1623,8 @@
                             var data = link.data;
                             if (data) {
                                 //1.获取端口ID
-                                var sourceId = data[EnxConstField.AttrName.ENXFILE_ATTR_SOURCEDEVICEID][EnxConstField.AttrName.ENXFILE_ATTR_VALUE];
-                                var targetId = data[EnxConstField.AttrName.ENXFILE_ATTR_TARGETDEVICEID][EnxConstField.AttrName.ENXFILE_ATTR_VALUE];
+                                var sourceId = data[helper.enxConstField.AttrName.ENXFILE_ATTR_SOURCEDEVICEID][helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE];
+                                var targetId = data[helper.enxConstField.AttrName.ENXFILE_ATTR_TARGETDEVICEID][helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE];
                                 //2.端口的连线
                                 var source = portDic[sourceId];
                                 var target = portDic[targetId];
@@ -1633,7 +1633,7 @@
                                     SubGraphObj.SetCellConnectable(target, false);
                                     source[SubGraphObj.ConstInfo.ROOTDEVICE] = link.source.data;
                                     target[SubGraphObj.ConstInfo.ROOTDEVICE] = link.target.data;
-                                    var tempGraphLink = SubGraphObj.Graph.insertEdge(parentNode, link.id, link.objname, portDic[sourceId], portDic[targetId], EnxHelper.ModelType.Link);
+                                    var tempGraphLink = SubGraphObj.Graph.insertEdge(parentNode, link.id, link.objname, portDic[sourceId], portDic[targetId], helper.enxHelper.ModelType.Link);
                                     thisObj.AttachCell(tempGraphLink, link.data);
                                     SubGraphObj.SetLoopLinkPosition(tempGraphLink);
                                 }
@@ -1646,7 +1646,7 @@
             };
             //设置cell是否可连线。网络平面一直可连线
             this.SetCellConnectable = function(cell, connectable) {
-                if (cell && cell.bigtype != EnxHelper.ModelType.Network) {
+                if (cell && cell.bigtype != helper.enxHelper.ModelType.Network) {
                     cell.setConnectable(connectable);
                 }
             };
@@ -1659,10 +1659,10 @@
                 SubGraphObj.Graph.getModel().beginUpdate();
                 try {
                     if (hasSelf) {
-                        var jsonNode = JsonHelper.GetJsonByKey(edit.Property.LstNodeJson, EnxHelper.Field.ID, ne.id);
+                        var jsonNode = helper.jsonHelper.GetJsonByKey(edit.Property.LstNodeJson, helper.enxHelper.Field.ID, ne.id);
                         var bond = SubGraphObj.GetBond(jsonNode.BigType);
                         var tempVertex = thisObj.Translater.JsonToCell(SubGraphObj.Graph, jsonNode, root, bond, thisObj.ConstInfo.SwimStyle);
-                        if (jsonNode.BigType == EnxHelper.ModelType.Network) {
+                        if (jsonNode.BigType == helper.enxHelper.ModelType.Network) {
                             tempVertex.setConnectable(true && isLink);
                         } else {
                             tempVertex.setConnectable(false);
@@ -1688,11 +1688,11 @@
             };
             //渲染子节点parentCell :父节点  parentContain：父容器   子节点不一定放在父节点上，可能是另外一个容器；isPortConnect：是否连线面板；portTypeShow：显示哪种类型的端口（1内联口，2外联口，空全部）
             this.RenderChildCell = function(currentCell, parentContain, isPortConnect, portTypeShow, isLink) {
-                var parentId = JsonHelper.GetStrValue(currentCell, thisObj.ConstInfo.AttrName.ID);
-                var childNodeJson = JsonHelper.FilterListByValues(edit.Property.DataList, EnxHelper.Field.ParentGID, [parentId]);
+                var parentId = helper.jsonHelper.GetStrValue(currentCell, thisObj.ConstInfo.AttrName.ID);
+                var childNodeJson = helper.jsonHelper.FilterListByValues(edit.Property.DataList, helper.enxHelper.Field.ParentGID, [parentId]);
                 $.each(childNodeJson, function(index, jsonNode) {
                     //外联端口在连线面板显示，内联口不显示.如果是external就是外部口， 除此之外其它的base1, fabric, 都是内联口。
-                    if (isPortConnect && jsonNode.BigType == EnxHelper.ModelType.Port && jsonNode.internal_external && jsonNode.internal_external.value) {
+                    if (isPortConnect && jsonNode.BigType == helper.enxHelper.ModelType.Port && jsonNode.internal_external && jsonNode.internal_external.value) {
                         var internal_external_value = jsonNode.internal_external.value.toLowerCase().indexOf("external");
                         if (portTypeShow == 1 && internal_external_value > -1) {
                             return true;
@@ -1704,11 +1704,11 @@
                     var width = SubGraphObj.ConstInfo.ElementDeaultSet[jsonNode.BigType].Width;
                     var tempGraphNode = thisObj.Translater.JsonToCell(SubGraphObj.Graph, jsonNode, parentContain, [0, 0, width, 30], thisObj.ConstInfo.SwimStyle, isPortConnect);
                     //网络平面在连线面板一定可以连线，在编辑面板不可以连线
-                    if (jsonNode.BigType == EnxHelper.ModelType.Network) {
+                    if (jsonNode.BigType == helper.enxHelper.ModelType.Network) {
                         tempGraphNode.setConnectable(true && isPortConnect && isLink);
                     } else {
                         //设置网元是否可连线 （一定要考虑性能） 是端口或网络平面，并且是连线面板，并且占用端口不包含当前端口；
-                        tempGraphNode.setConnectable(jsonNode.BigType == EnxHelper.ModelType.Port && isPortConnect && isLink && edit.Property.BusyPortId.indexOf(jsonNode.guid.value) < 0);
+                        tempGraphNode.setConnectable(jsonNode.BigType == helper.enxHelper.ModelType.Port && isPortConnect && isLink && edit.Property.BusyPortId.indexOf(jsonNode.guid.value) < 0);
                     }
                     if (edit.Property.BusyPortId.indexOf(jsonNode.guid.value) > -1) {
                         SubGraphObj.Graph.getModel().setStyle(tempGraphNode, thisObj.ConstInfo.UsedPort);
@@ -1781,8 +1781,8 @@
             //插入节点"(对外接口)：主要用于树状结构的插入子节点
             this.InsertCell = function(type, parentId) {
                 var allNodes = thisObj.GetAllNode(SubGraphObj.Graph, null, true);
-                var parentCell = JsonHelper.GetJsonByKey(allNodes, thisObj.ConstInfo.AttrName.ID, parentId);
-                if (!JsonHelper.IsEmptyJson(parentCell)) {
+                var parentCell = helper.jsonHelper.GetJsonByKey(allNodes, thisObj.ConstInfo.AttrName.ID, parentId);
+                if (!helper.jsonHelper.IsEmptyJson(parentCell)) {
                     thisObj.SubGraph.ResetNodeMovable();
                     //树状和缓存已经都添加数据了
                     thisObj.ExcuteDropInElement(SubGraphObj.Graph, parentCell, type, [], thisObj.ConstInfo.SwimStyle);
@@ -1807,7 +1807,7 @@
             $(".EplugGraphEditorTopMenu span").show();
             $(".EplugGraphEditorTopMenu span[data-hidetype='" + thisObj.EditType + "']").hide();
             //bigtype == Tester Sftp Agent时，只显示端口
-            if (thisObj.EditType == thisObj.ConstInfo.EnumEditType.Element && bigtype && (bigtype == EnxHelper.ModelType.Tester || bigtype == EnxHelper.ModelType.Dev || bigtype == EnxHelper.ModelType.Sftp || bigtype == EnxHelper.ModelType.Agent)) {
+            if (thisObj.EditType == thisObj.ConstInfo.EnumEditType.Element && bigtype && (bigtype == helper.enxHelper.ModelType.Tester || bigtype == helper.enxHelper.ModelType.Dev || bigtype == helper.enxHelper.ModelType.Sftp || bigtype == helper.enxHelper.ModelType.Agent)) {
                 $(".EplugGraphEditorElementItem").hide();
                 $(".EplugGraphEditorElementItem[data-type='Port']").show();
             }
@@ -1854,13 +1854,13 @@
             // 更新属性
             this.updateProperties = function() {
                 var newNodeJson = PropertyPanelObj.GetNodeJson();
-                if (JsonHelper.IsEmptyJson(newNodeJson)) {
+                if (helper.jsonHelper.IsEmptyJson(newNodeJson)) {
                     return;
                 }
                 $.each(PropertyPanelObj.CustomFields, function(key, value) {
                     delete PropertyPanelObj.EditNodeJson[key];
                 });
-                var updatedJson = JsonHelper.JsonArrSingleUpdate(edit.Property.DataList, EnxHelper.Field.ID, EnxConstField.AttrName.ENXFILE_ATTR_VALUE, PropertyPanelObj.EditNodeJson._id, newNodeJson);
+                var updatedJson = helper.jsonHelper.JsonArrSingleUpdate(edit.Property.DataList, helper.enxHelper.Field.ID, helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE, PropertyPanelObj.EditNodeJson._id, newNodeJson);
                 edit.Property.GraphPlug.UpdateCell(PropertyPanelObj.EditNodeJson.BigType, updatedJson);
             };
             //获取编辑后的数据
@@ -1877,7 +1877,7 @@
                     if ($value.length > 0) {
                         fieldValue = $.trim($value.val());
                         //objname 特殊处理
-                        if (fieldName == EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME) {
+                        if (fieldName == helper.enxConstField.AttrName.ENXFILE_ATTR_OBJNAME) {
                             var objnameDicId = edit.GetObjectNameCache();
                             if (objnameDicId[fieldValue] && objnameDicId[fieldValue] != PropertyPanelObj.EditNodeJson._id) {
                                 fieldValue = fieldValue + edit.ConstInfo.RepeatedSingal;
@@ -1911,7 +1911,7 @@
             };
             //添加字段
             this.AddField = function(fieldName) {
-                var tr = EnxHelper.Format(PropertyPanelObj.HtmlTemplate.FieldEditItem, fieldName, fieldName, "");
+                var tr = helper.enxHelper.Format(PropertyPanelObj.HtmlTemplate.FieldEditItem, fieldName, fieldName, "");
                 PropertyPanelObj.GetElement(".EplugGraphEditorPropertyPanelLst").append(tr);
             };
             //添加行
@@ -1923,8 +1923,8 @@
                 if (!id) {
                     return;
                 }
-                PropertyPanelObj.EditNodeJson = JsonHelper.GetJsonByKey(edit.Property.DataList, EnxHelper.Field.ID, id);
-                if (JsonHelper.IsEmptyJson(PropertyPanelObj.EditNodeJson)) {
+                PropertyPanelObj.EditNodeJson = helper.jsonHelper.GetJsonByKey(edit.Property.DataList, helper.enxHelper.Field.ID, id);
+                if (helper.jsonHelper.IsEmptyJson(PropertyPanelObj.EditNodeJson)) {
                     return;
                 }
                 PropertyPanelObj.Show();
@@ -1935,39 +1935,39 @@
                 var selectField = edit.ConstInfo.SelectField;
                 $.each(fieldLst, function(index, fieldName) {
                     var fieldDisplayName = edit.GetDisplayFieldName(fieldName);
-                    var fieldJson = JsonHelper.GetJsonValue(PropertyPanelObj.EditNodeJson, fieldName);
-                    var fieldValue = JsonHelper.GetStrValue(fieldJson, EnxConstField.AttrName.ENXFILE_ATTR_VALUE).replace(new RegExp('"', "gm"), "&quot;");
+                    var fieldJson = helper.jsonHelper.GetJsonValue(PropertyPanelObj.EditNodeJson, fieldName);
+                    var fieldValue = helper.jsonHelper.GetStrValue(fieldJson, helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE).replace(new RegExp('"', "gm"), "&quot;");
                     var fieldDisplayValue = fieldValue;
                     var tr = "";
                     //不可编辑控制
                     if (edit.ConstInfo.NoEditField.indexOf(fieldName) < 0) {
                         if (specialPortField.indexOf(fieldName) > -1) {
-                            var portJson = JsonHelper.GetJsonByKeyAndSecondKey(edit.Property.LstPortJson, EnxConstField.AttrName.ENXFILE_ATTR_GUID, EnxConstField.AttrName.ENXFILE_ATTR_VALUE, fieldValue);
-                            if (!JsonHelper.IsEmptyJson(portJson)) {
-                                fieldDisplayValue = portJson[EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME][EnxConstField.AttrName.ENXFILE_ATTR_VALUE];
+                            var portJson = helper.jsonHelper.GetJsonByKeyAndSecondKey(edit.Property.LstPortJson, helper.enxConstField.AttrName.ENXFILE_ATTR_GUID, helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE, fieldValue);
+                            if (!helper.jsonHelper.IsEmptyJson(portJson)) {
+                                fieldDisplayValue = portJson[helper.enxConstField.AttrName.ENXFILE_ATTR_OBJNAME][helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE];
                             }
-                            tr = $(EnxHelper.Format(PropertyPanelObj.HtmlTemplate.FieldShowItem, fieldName, fieldDisplayName, fieldValue, fieldDisplayValue));
+                            tr = $(helper.enxHelper.Format(PropertyPanelObj.HtmlTemplate.FieldShowItem, fieldName, fieldDisplayName, fieldValue, fieldDisplayValue));
                             PropertyPanelObj.BindEventForLink(tr);
                         } else if (selectField.indexOf(fieldName) > -1) {
                             var options = "",
                                 selectOptionValues = edit.Property.SelectOptionValues[fieldName];
                             $.each(selectOptionValues, function(index, optionValue) {
                                 if (fieldDisplayValue && fieldDisplayValue == optionValue) {
-                                    options += EnxHelper.Format(PropertyPanelObj.HtmlTemplate.SelectOptionItem, optionValue, optionValue, "selected='selected'");
+                                    options += helper.enxHelper.Format(PropertyPanelObj.HtmlTemplate.SelectOptionItem, optionValue, optionValue, "selected='selected'");
                                 } else {
-                                    options += EnxHelper.Format(PropertyPanelObj.HtmlTemplate.SelectOptionItem, optionValue, optionValue, "");
+                                    options += helper.enxHelper.Format(PropertyPanelObj.HtmlTemplate.SelectOptionItem, optionValue, optionValue, "");
                                 }
                             });
-                            tr = $(EnxHelper.Format(PropertyPanelObj.HtmlTemplate.FieldEditSelItem, fieldName, fieldDisplayName, options));
+                            tr = $(helper.enxHelper.Format(PropertyPanelObj.HtmlTemplate.FieldEditSelItem, fieldName, fieldDisplayName, options));
                         } else {
-                            tr = $(EnxHelper.Format(PropertyPanelObj.HtmlTemplate.FieldEditItem, fieldName, fieldDisplayName, fieldValue));
+                            tr = $(helper.enxHelper.Format(PropertyPanelObj.HtmlTemplate.FieldEditItem, fieldName, fieldDisplayName, fieldValue));
                         }
                         PropertyPanelObj.AddTr(tr);
                     }
                 });
-                var allkeys = JsonHelper.GetJsonAllKey(PropertyPanelObj.EditNodeJson);
+                var allkeys = helper.jsonHelper.GetJsonAllKey(PropertyPanelObj.EditNodeJson);
                 var nokeys = edit.HtmlEditor.GetModelUnAvailField(bigType);
-                nokeys = nokeys.concat(JsonHelper.GetJsonAllValue(EnxHelper.Field), fieldLst);
+                nokeys = nokeys.concat(helper.jsonHelper.GetJsonAllValue(helper.enxHelper.Field), fieldLst);
                 var cusKeys = $.grep(allkeys, function(n) {
                     return $.inArray(n, nokeys) == -1;
                 });
@@ -1995,7 +1995,7 @@
                 }
             };
             this.AddCustomField = function($prev, key, value) {
-                var $custom_field = $(EnxHelper.Format(PropertyPanelObj.HtmlTemplate.FieldEditCustomItem, key || "", value || ""));
+                var $custom_field = $(helper.enxHelper.Format(PropertyPanelObj.HtmlTemplate.FieldEditCustomItem, key || "", value || ""));
                 if ($prev) {
                     $prev.after($custom_field);
                 } else {
@@ -2023,17 +2023,17 @@
         }();
         //获取节点的显示名称。isPortConnect:是否连线面板
         this.GetDisplayNodeName = function(nodeJson, isPortConnect) {
-            if (JsonHelper.IsEmptyJson(nodeJson)) {
+            if (helper.jsonHelper.IsEmptyJson(nodeJson)) {
                 return;
             }
-            var objname = nodeJson[EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME][EnxConstField.AttrName.ENXFILE_ATTR_VALUE];
-            var roler = JsonHelper.GetJsonValue(nodeJson, EnxConstField.AttrName.ENXFILE_ATTR_ROLER)[EnxConstField.AttrName.ENXFILE_ATTR_VALUE];
+            var objname = nodeJson[helper.enxConstField.AttrName.ENXFILE_ATTR_OBJNAME][helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE];
+            var roler = helper.jsonHelper.GetJsonValue(nodeJson, helper.enxConstField.AttrName.ENXFILE_ATTR_ROLER)[helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE];
             var displayNodeName = objname;
-            if (nodeJson.BigType == EnxHelper.ModelType.Ne && roler) {
+            if (nodeJson.BigType == helper.enxHelper.ModelType.Ne && roler) {
                 displayNodeName += "(" + roler + ")";
             }
-            if (isPortConnect && nodeJson.BigType == EnxHelper.ModelType.Port) {
-                var interface_value = JsonHelper.GetJsonValue(nodeJson, EnxConstField.AttrName.ENXFILE_ATTR_INTERFACE)[EnxConstField.AttrName.ENXFILE_ATTR_VALUE];
+            if (isPortConnect && nodeJson.BigType == helper.enxHelper.ModelType.Port) {
+                var interface_value = helper.jsonHelper.GetJsonValue(nodeJson, helper.enxConstField.AttrName.ENXFILE_ATTR_INTERFACE)[helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE];
                 if (interface_value) {
                     displayNodeName = interface_value;
                 }
@@ -2051,21 +2051,21 @@
                 //绘制批量节点
                 $.each(edit.Property.LstNodeJson, function(index, node) {
                     var tempGraphNode = thisObj.Translater.JsonToCell(thisObj.Property.CoreGraph, node, rootNode);
-                    var objname = node[EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME][EnxConstField.AttrName.ENXFILE_ATTR_VALUE];
+                    var objname = node[helper.enxConstField.AttrName.ENXFILE_ATTR_OBJNAME][helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE];
                     dicNode[objname] = tempGraphNode;
                 });
                 //绘制链路
                 $.each(edit.Property.LstLinkJson, function(index, link) {
-                    var sourceNodeName = JsonHelper.GetJsonValue(link, EnxConstField.AttrName.ENXFILE_ATTR_SOURCETOPDEVICENAME)[EnxConstField.AttrName.ENXFILE_ATTR_VALUE];
-                    var targetNodeName = JsonHelper.GetJsonValue(link, EnxConstField.AttrName.ENXFILE_ATTR_TARGETTOPDEVICENAME)[EnxConstField.AttrName.ENXFILE_ATTR_VALUE];
-                    var sourceNode = JsonHelper.GetJsonValue(dicNode, sourceNodeName);
-                    var targetNode = JsonHelper.GetJsonValue(dicNode, targetNodeName);
-                    if (JsonHelper.IsEmptyJson(sourceNode) && JsonHelper.IsEmptyJson(targetNode)) {
+                    var sourceNodeName = helper.jsonHelper.GetJsonValue(link, helper.enxConstField.AttrName.ENXFILE_ATTR_SOURCETOPDEVICENAME)[helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE];
+                    var targetNodeName = helper.jsonHelper.GetJsonValue(link, helper.enxConstField.AttrName.ENXFILE_ATTR_TARGETTOPDEVICENAME)[helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE];
+                    var sourceNode = helper.jsonHelper.GetJsonValue(dicNode, sourceNodeName);
+                    var targetNode = helper.jsonHelper.GetJsonValue(dicNode, targetNodeName);
+                    if (helper.jsonHelper.IsEmptyJson(sourceNode) && helper.jsonHelper.IsEmptyJson(targetNode)) {
                         return true;
                     }
-                    var linkName = link[EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME][EnxConstField.AttrName.ENXFILE_ATTR_VALUE];
-                    var linkId = link[EnxHelper.Field.ID];
-                    thisObj.InsertLink(rootNode, linkId, linkName, sourceNode, targetNode, EnxHelper.ModelType.Link, link);
+                    var linkName = link[helper.enxConstField.AttrName.ENXFILE_ATTR_OBJNAME][helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE];
+                    var linkId = link[helper.enxHelper.Field.ID];
+                    thisObj.InsertLink(rootNode, linkId, linkName, sourceNode, targetNode, helper.enxHelper.ModelType.Link, link);
                     //对于分组的特殊处理
                     if (link.group) {
                         var groupName = link.group.value;
@@ -2092,7 +2092,7 @@
                     $.each(afterEditLinks, function(index, link) {
                         var tempSource = link.source.rootdevice._id == source.id ? source : target;
                         var tempTarget = link.target.rootdevice._id == target.id ? target : source;
-                        var edge = thisObj.InsertLink(parentNode, link.id, link.objname, tempSource, tempTarget, EnxHelper.ModelType.Link, link.data);
+                        var edge = thisObj.InsertLink(parentNode, link.id, link.objname, tempSource, tempTarget, helper.enxHelper.ModelType.Link, link.data);
                         if (index == afterEditLinks.length - 1) {
                             graph.setSelectionCell(edge);
                             self.SubGraph.SetTopNav(edge.data);
@@ -2131,7 +2131,7 @@
                     } else {
                         thisObj.RemoveLink(linkItem);
                         //删除缓存
-                        edit.RemoveModel(EnxHelper.Field.ID, linkItem.id);
+                        edit.RemoveModel(helper.enxHelper.Field.ID, linkItem.id);
                     }
                 }
             });
@@ -2141,9 +2141,9 @@
         };
         //用缓存json来附加节点字段
         this.AttachCell = function(cell, json) {
-            var id = json[EnxHelper.Field.ID];
-            var bigType = json[EnxHelper.Field.BigType];
-            var objname = json[EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME][EnxConstField.AttrName.ENXFILE_ATTR_VALUE];
+            var id = json[helper.enxHelper.Field.ID];
+            var bigType = json[helper.enxHelper.Field.BigType];
+            var objname = json[helper.enxConstField.AttrName.ENXFILE_ATTR_OBJNAME][helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE];
             cell[thisObj.ConstInfo.AttrName.BIGTYPE] = bigType;
             cell[thisObj.ConstInfo.AttrName.OBJNAME] = objname;
             cell[thisObj.ConstInfo.AttrName.DATA] = json;
@@ -2172,7 +2172,7 @@
             this.GetJsonBond = function(json) {
                 var result = [0, 0, thisObj.ConstInfo.FixWidth, thisObj.ConstInfo.FixHeight];
                 //150,129;192,225   317,338;359,434    494,296;536,392
-                var strPosition = JsonHelper.GetJsonValue(json, EnxConstField.AttrName.ENXFILE_ATTR_POSITION)[EnxConstField.AttrName.ENXFILE_ATTR_VALUE];
+                var strPosition = helper.jsonHelper.GetJsonValue(json, helper.enxConstField.AttrName.ENXFILE_ATTR_POSITION)[helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE];
                 if (strPosition && strPosition.indexOf(";") > -1) {
                     var arrPositon = strPosition.split(";");
                     var x = 0,
@@ -2227,10 +2227,10 @@
                 if (!bond || bond.length == 0) {
                     postion = thisObj.Translater.GetJsonBond(node);
                 }
-                var id = node[EnxHelper.Field.ID];
+                var id = node[helper.enxHelper.Field.ID];
                 var displayName = thisObj.GetDisplayNodeName(node, isPortConnect);
-                var bigType = node[EnxHelper.Field.BigType];
-                var objname = node[EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME][EnxConstField.AttrName.ENXFILE_ATTR_VALUE];
+                var bigType = node[helper.enxHelper.Field.BigType];
+                var objname = node[helper.enxConstField.AttrName.ENXFILE_ATTR_OBJNAME][helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE];
                 var tempGraphNode = graph.insertVertex(parentCell, id, displayName, postion[0], postion[1], postion[2], postion[3], style ? style : bigType);
                 thisObj.AttachCell(tempGraphNode, node);
                 return tempGraphNode;
@@ -2250,38 +2250,38 @@
             neStyle[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_TOP;
             neStyle[mxConstants.STYLE_VERTICAL_LABEL_POSITION] = mxConstants.ALIGN_BOTTOM;
             neStyle[mxConstants.STYLE_FONTCOLOR] = "#333";
-            this.Property.CoreGraph.getStylesheet().putCellStyle(EnxHelper.ModelType.Ne, neStyle);
+            this.Property.CoreGraph.getStylesheet().putCellStyle(helper.enxHelper.ModelType.Ne, neStyle);
             //测试仪样式
             var testerStyle = $.extend({}, neStyle);
             testerStyle[mxConstants.STYLE_IMAGE] = this.GetImagePath("v-tester.png");
-            this.Property.CoreGraph.getStylesheet().putCellStyle(EnxHelper.ModelType.Tester, testerStyle);
+            this.Property.CoreGraph.getStylesheet().putCellStyle(helper.enxHelper.ModelType.Tester, testerStyle);
             var devStyle = $.extend({}, neStyle);
             devStyle[mxConstants.STYLE_IMAGE] = this.GetImagePath("v-tester.png");
-            this.Property.CoreGraph.getStylesheet().putCellStyle(EnxHelper.ModelType.Dev, devStyle);
+            this.Property.CoreGraph.getStylesheet().putCellStyle(helper.enxHelper.ModelType.Dev, devStyle);
             //ATM样式
             var atmStyle = $.extend({}, neStyle);
             atmStyle[mxConstants.STYLE_IMAGE] = this.GetImagePath("v-atm.png");
-            this.Property.CoreGraph.getStylesheet().putCellStyle(EnxHelper.ModelType.Atm, atmStyle);
+            this.Property.CoreGraph.getStylesheet().putCellStyle(helper.enxHelper.ModelType.Atm, atmStyle);
             //ETH样式
             var ethStyle = $.extend({}, neStyle);
             ethStyle[mxConstants.STYLE_IMAGE] = this.GetImagePath("v-eth.png");
-            this.Property.CoreGraph.getStylesheet().putCellStyle(EnxHelper.ModelType.Eth, ethStyle);
+            this.Property.CoreGraph.getStylesheet().putCellStyle(helper.enxHelper.ModelType.Eth, ethStyle);
             //SDH样式
             var sdhStyle = $.extend({}, neStyle);
             sdhStyle[mxConstants.STYLE_IMAGE] = this.GetImagePath("v-sdh.png");
-            this.Property.CoreGraph.getStylesheet().putCellStyle(EnxHelper.ModelType.Sdh, sdhStyle);
+            this.Property.CoreGraph.getStylesheet().putCellStyle(helper.enxHelper.ModelType.Sdh, sdhStyle);
             //Sftp样式
             var sftpStyle = $.extend({}, neStyle);
             sftpStyle[mxConstants.STYLE_IMAGE] = this.GetImagePath("v-sftp.png");
-            this.Property.CoreGraph.getStylesheet().putCellStyle(EnxHelper.ModelType.Sftp, sftpStyle);
+            this.Property.CoreGraph.getStylesheet().putCellStyle(helper.enxHelper.ModelType.Sftp, sftpStyle);
             //Agent样式
             var computerStyle = $.extend({}, neStyle);
             computerStyle[mxConstants.STYLE_IMAGE] = this.GetImagePath("v-agent.png");
-            this.Property.CoreGraph.getStylesheet().putCellStyle(EnxHelper.ModelType.Agent, computerStyle);
+            this.Property.CoreGraph.getStylesheet().putCellStyle(helper.enxHelper.ModelType.Agent, computerStyle);
             //Network样式
             var networkStyle = $.extend({}, neStyle);
             networkStyle[mxConstants.STYLE_IMAGE] = this.GetImagePath("v-network.png");
-            this.Property.CoreGraph.getStylesheet().putCellStyle(EnxHelper.ModelType.Network, networkStyle);
+            this.Property.CoreGraph.getStylesheet().putCellStyle(helper.enxHelper.ModelType.Network, networkStyle);
             //连线样式
             var lineStyle = {};
             lineStyle[mxConstants.STYLE_STROKECOLOR] = thisObj.ConstInfo.LineDefualtColor;
@@ -2292,7 +2292,7 @@
             lineStyle[mxConstants.STYLE_FONTCOLOR] = "#5e698a";
             lineStyle[mxConstants.STYLE_FONTSIZE] = 12;
             lineStyle[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_BOTTOM;
-            this.Property.CoreGraph.getStylesheet().putCellStyle(EnxHelper.ModelType.Link, lineStyle);
+            this.Property.CoreGraph.getStylesheet().putCellStyle(helper.enxHelper.ModelType.Link, lineStyle);
             //自连接样式
             var loopLinkStyle = $.extend({}, lineStyle);
             loopLinkStyle[mxConstants.STYLE_CURVED] = true;
@@ -2336,19 +2336,19 @@
         this.GetCellsByFieldValue = function(type, fieldName, fieldValue) {
             var tempElmt = [];
             switch (type) {
-                case EnxHelper.ModelType.Ne:
-                case EnxHelper.ModelType.Tester:
-                case EnxHelper.ModelType.Dev:
-                case EnxHelper.ModelType.Sdh:
-                case EnxHelper.ModelType.Atm:
-                case EnxHelper.ModelType.Eth:
-                case EnxHelper.ModelType.Board:
-                case EnxHelper.ModelType.SubBoard:
-                case EnxHelper.ModelType.Port:
+                case helper.enxHelper.ModelType.Ne:
+                case helper.enxHelper.ModelType.Tester:
+                case helper.enxHelper.ModelType.Dev:
+                case helper.enxHelper.ModelType.Sdh:
+                case helper.enxHelper.ModelType.Atm:
+                case helper.enxHelper.ModelType.Eth:
+                case helper.enxHelper.ModelType.Board:
+                case helper.enxHelper.ModelType.SubBoard:
+                case helper.enxHelper.ModelType.Port:
                     tempElmt = this.GetAllNode(thisObj.Property.CoreGraph);
                     break;
 
-                case EnxHelper.ModelType.Link:
+                case helper.enxHelper.ModelType.Link:
                     tempElmt = this.GetAllLink(thisObj.Property.CoreGraph);
                     break;
 
@@ -2356,14 +2356,14 @@
                     tempElmt = this.GetAllNode(thisObj.Property.CoreGraph);
                     break;
             }
-            var cellJson = JsonHelper.GetJsonByKey(tempElmt, fieldName, fieldValue);
+            var cellJson = helper.jsonHelper.GetJsonByKey(tempElmt, fieldName, fieldValue);
             return cellJson;
         };
         //更新节点
         this.UpdateCell = function(type, json) {
-            var id = JsonHelper.GetStrValue(json, EnxHelper.Field.ID),
-                isTopDevice = json.IsTopDevice == EnxConstField.BoolStr.Yes,
-                isLink = type == EnxHelper.ModelType.Link,
+            var id = helper.jsonHelper.GetStrValue(json, helper.enxHelper.Field.ID),
+                isTopDevice = json.IsTopDevice == helper.enxConstField.BoolStr.Yes,
+                isLink = type == helper.enxHelper.ModelType.Link,
                 cell;
             if (isTopDevice || isLink) {
                 //连线或者顶层设备，在主画布获取
@@ -2371,9 +2371,9 @@
             } else {
                 //其他类型的在副画布获取
                 var allCell = thisObj.GetAllNode(thisObj.SubGraph.Graph, null, true);
-                cell = JsonHelper.GetJsonByKey(allCell, thisObj.ConstInfo.AttrName.ID, json._id);
+                cell = helper.jsonHelper.GetJsonByKey(allCell, thisObj.ConstInfo.AttrName.ID, json._id);
             }
-            if (JsonHelper.IsEmptyJson(cell)) {
+            if (helper.jsonHelper.IsEmptyJson(cell)) {
                 return;
             }
             var isNameChanged = cell.objname != json.objname.value;
@@ -2382,7 +2382,7 @@
                 thisObj.UpdateCellRelChildren(id, cell.objname, json.objname.value);
             }
             var value = thisObj.GetDisplayNodeName(json);
-            cell[thisObj.ConstInfo.AttrName.OBJNAME] = json[EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME][EnxConstField.AttrName.ENXFILE_ATTR_VALUE];
+            cell[thisObj.ConstInfo.AttrName.OBJNAME] = json[helper.enxConstField.AttrName.ENXFILE_ATTR_OBJNAME][helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE];
             cell[thisObj.ConstInfo.AttrName.DATA] = json;
             thisObj.Property.CoreGraph.getModel().setValue(cell, value);
             thisObj.SubGraph.Graph.getModel().setValue(cell, value);
@@ -2395,10 +2395,10 @@
             var childrens = edit.GetChildrens(id, true);
             $.each(childrens, function(index, value) {
                 var childName = value.objname.value;
-                if (childName.indexOf(oldname) == 0 && childName.substr(oldname.length, 1) == EnxConstField.NameSeparate) {
+                if (childName.indexOf(oldname) == 0 && childName.substr(oldname.length, 1) == helper.enxConstField.NameSeparate) {
                     childName = childName.replace(oldname, newname);
                 }
-                value[EnxConstField.AttrName.ENXFILE_ATTR_OBJNAME][EnxConstField.AttrName.ENXFILE_ATTR_VALUE] = childName;
+                value[helper.enxConstField.AttrName.ENXFILE_ATTR_OBJNAME][helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE] = childName;
                 thisObj.UpdateCell(value.BigType, value);
             });
         };
@@ -2598,14 +2598,14 @@
                 coreModel = coreGraph.getModel();
             if (!curentLink.target) {
                 return false;
-            } else if (curentLink.source.bigtype == EnxHelper.ModelType.Network && curentLink.target.bigtype == EnxHelper.ModelType.Network) {
+            } else if (curentLink.source.bigtype == helper.enxHelper.ModelType.Network && curentLink.target.bigtype == helper.enxHelper.ModelType.Network) {
                 //网络平面和网络平面之间不可以连线
                 coreGraph.removeCells([curentLink]);
                 toastr.warning("No connection between the network!");
                 return false;
             } else {
                 //用于控制连线的两个网元在副画布的距离；
-                curentLink.bigtype = EnxHelper.ModelType.Link;
+                curentLink.bigtype = helper.enxHelper.ModelType.Link;
                 curentLink.style = thisObj.ConstInfo.VirtualLinkStyleName;
                 setTimeout(function() {
                     coreGraph.fireEvent(new mxEventObject(mxEvent.CLICK, "event", evt, "cell", curentLink));
@@ -2766,7 +2766,7 @@
             //主画布
             if (thisObj.EditType == thisObj.ConstInfo.EnumEditType.Topo) {
                 graph = thisObj.Property.CoreGraph;
-                if (EnxHelper.ModelTypeOfTopDevice.indexOf(modelType) > -1) {
+                if (helper.enxHelper.ModelTypeOfTopDevice.indexOf(modelType) > -1) {
                     parent = graph.getDefaultParent();
                     bond = thisObj.GetTopDeviceBond(modelType, x, y);
                 }
@@ -2776,11 +2776,11 @@
                 var targetType = target && target.bigtype || "";
                 //target为网元的时候，只能插入单板和端口
                 //单板只接受端口和子卡 ;target为子卡的时候，只能拖入端口
-                if (targetType == EnxHelper.ModelType.Ne && (modelType == EnxHelper.ModelType.Board || modelType == EnxHelper.ModelType.Port || modelType == EnxHelper.ModelType.VM || modelType == EnxHelper.ModelType.Network)) {
+                if (targetType == helper.enxHelper.ModelType.Ne && (modelType == helper.enxHelper.ModelType.Board || modelType == helper.enxHelper.ModelType.Port || modelType == helper.enxHelper.ModelType.VM || modelType == helper.enxHelper.ModelType.Network)) {
                     parent = target;
-                } else if ((targetType == EnxHelper.ModelType.Board || targetType == EnxHelper.ModelType.VM) && (modelType == EnxHelper.ModelType.SubBoard || modelType == EnxHelper.ModelType.Port) || targetType == EnxHelper.ModelType.SubBoard && modelType == EnxHelper.ModelType.Port) {
+                } else if ((targetType == helper.enxHelper.ModelType.Board || targetType == helper.enxHelper.ModelType.VM) && (modelType == helper.enxHelper.ModelType.SubBoard || modelType == helper.enxHelper.ModelType.Port) || targetType == helper.enxHelper.ModelType.SubBoard && modelType == helper.enxHelper.ModelType.Port) {
                     parent = target;
-                } else if ((targetType == EnxHelper.ModelType.Tester || targetType == EnxHelper.ModelType.Sftp || targetType == EnxHelper.ModelType.Agent) && modelType == EnxHelper.ModelType.Port) {
+                } else if ((targetType == helper.enxHelper.ModelType.Tester || targetType == helper.enxHelper.ModelType.Sftp || targetType == helper.enxHelper.ModelType.Agent) && modelType == helper.enxHelper.ModelType.Port) {
                     parent = target;
                 }
                 //重置可移动性
@@ -2788,7 +2788,7 @@
                 graph = thisObj.SubGraph.Graph;
                 style = thisObj.ConstInfo.SwimStyle;
             }
-            if (JsonHelper.IsEmptyJson(parent)) {
+            if (helper.jsonHelper.IsEmptyJson(parent)) {
                 toastr.warning("Subelements are not allowed to add!");
                 return;
             }
@@ -2803,9 +2803,9 @@
         };
         //执行元素的拖入，都是有效的
         this.ExcuteDropInElement = function(graph, parentCell, type, bond, style) {
-            var parentName = JsonHelper.GetStrValue(parentCell, thisObj.ConstInfo.AttrName.OBJNAME);
-            var parentId = JsonHelper.GetStrValue(parentCell, thisObj.ConstInfo.AttrName.CANVASID);
-            var parentType = JsonHelper.GetStrValue(parentCell, thisObj.ConstInfo.AttrName.BIGTYPE);
+            var parentName = helper.jsonHelper.GetStrValue(parentCell, thisObj.ConstInfo.AttrName.OBJNAME);
+            var parentId = helper.jsonHelper.GetStrValue(parentCell, thisObj.ConstInfo.AttrName.CANVASID);
+            var parentType = helper.jsonHelper.GetStrValue(parentCell, thisObj.ConstInfo.AttrName.BIGTYPE);
             //缓存添加数据
             var nodeJson = edit.CreateModel(type, parentId, parentName, parentType);
             var postion = bond;
@@ -2821,7 +2821,7 @@
                     //如果是编辑面板，一定不能连线
                     tempGraphNode.setConnectable(false);
                 } else {
-                    tempGraphNode.setConnectable(tempGraphNode.bigtype == EnxHelper.ModelType.Port || tempGraphNode.bigtype == EnxHelper.ModelType.Network ? true : false);
+                    tempGraphNode.setConnectable(tempGraphNode.bigtype == helper.enxHelper.ModelType.Port || tempGraphNode.bigtype == helper.enxHelper.ModelType.Network ? true : false);
                 }
                 //禁止移动
                 thisObj.SubGraph.SetNodeCannotMove();
@@ -2898,7 +2898,7 @@
             var selectDevice = [];
             //一、网元和连线的分类/清除缓存数据/级联操作资源树； （暂时来说，主画布不是链路就是顶层设备）
             $.each(deleteCells, function(index, cell) {
-                if (cell.bigtype == EnxHelper.ModelType.Link) {
+                if (cell.bigtype == helper.enxHelper.ModelType.Link) {
                     selectLink.push(cell);
                     //注意如果有分组，则删除整个分组
                     if (cell.group) {
@@ -2911,14 +2911,14 @@
                     var linksInCell = cell.edges;
                     if (linksInCell) {
                         $.each(linksInCell, function(i, link) {
-                            edit.RemoveModel(EnxHelper.Field.ID, link.id);
+                            edit.RemoveModel(helper.enxHelper.Field.ID, link.id);
                         });
                     }
                     //删除子元件的缓存数据和树状数据
                     edit.RemoveModelByParentId(cell.id, true);
                 }
                 //删除当前元件缓存数据
-                edit.RemoveModel(EnxHelper.Field.ID, cell.id);
+                edit.RemoveModel(helper.enxHelper.Field.ID, cell.id);
             });
             //三、画布中清除数据
             $.each(selectLink, function(index, link) {
@@ -2933,19 +2933,19 @@
             var graph = thisObj.Property.CoreGraph;
             var lst = [];
             switch (type) {
-                case EnxHelper.ModelType.Link:
+                case helper.enxHelper.ModelType.Link:
                     //只可能是主画布，不需要遍历 （连线面板是不允许外部删除的）
                     lst = this.GetAllLink(graph);
                     break;
 
-                case EnxHelper.ModelType.Ne:
-                case EnxHelper.ModelType.Tester:
-                case EnxHelper.ModelType.Sftp:
-                case EnxHelper.ModelType.Agent:
-                case EnxHelper.ModelType.Network:
-                case EnxHelper.ModelType.Atm:
-                case EnxHelper.ModelType.Eth:
-                case EnxHelper.ModelType.Sdh:
+                case helper.enxHelper.ModelType.Ne:
+                case helper.enxHelper.ModelType.Tester:
+                case helper.enxHelper.ModelType.Sftp:
+                case helper.enxHelper.ModelType.Agent:
+                case helper.enxHelper.ModelType.Network:
+                case helper.enxHelper.ModelType.Atm:
+                case helper.enxHelper.ModelType.Eth:
+                case helper.enxHelper.ModelType.Sdh:
                     //只可能是主画布，不需要遍历
                     lst = this.GetAllNode(graph);
                     break;
@@ -2953,9 +2953,9 @@
             if (!lst || lst.length == 0) {
                 return;
             }
-            var cell = JsonHelper.GetJsonByKey(lst, "id", id);
+            var cell = helper.jsonHelper.GetJsonByKey(lst, "id", id);
             if (cell.id) {
-                if (type == EnxHelper.ModelType.Link) {
+                if (type == helper.enxHelper.ModelType.Link) {
                     //主画布的连线删除，需要重新绘制所有的兄弟连线
                     thisObj.RemoveLink(cell);
                 } else {
@@ -2976,7 +2976,7 @@
         this.SetNodeAttr = function(cell, fieldName, json) {
             var type = cell.bigtype;
             edit.SetNodeAttr(type, cell.id, fieldName, json);
-            cell[fieldName] = json[EnxConstField.AttrName.ENXFILE_ATTR_VALUE];
+            cell[fieldName] = json[helper.enxConstField.AttrName.ENXFILE_ATTR_VALUE];
         };
         //删除节点
         this.RemoveNodeAttr = function(cell, fieldName) {
@@ -2991,7 +2991,7 @@
                 thisObj.Property.CoreGraph.toggleCells(false, sameDoublePoint);
                 //分组名称
                 var groupName = thisObj.CreateLinkGroupName(cell);
-                var groupJson = EnxHelper.AttrParameter(thisObj.ConstInfo.AttrName.GROUP, groupName);
+                var groupJson = helper.enxHelper.AttrParameter(thisObj.ConstInfo.AttrName.GROUP, groupName);
                 //加入分组
                 thisObj.PushLinkToGroup(cell, groupName);
                 //同源/端节点 把分组名称设置为连线的名称
@@ -3012,8 +3012,8 @@
         //把节点加入分组 （当前选中的节点）
         this.PushLinkToGroup = function(cell, groupName) {
             //更新缓存数据的值
-            var groupJson = EnxHelper.AttrParameter(thisObj.ConstInfo.AttrName.GROUP, groupName);
-            groupJson[EnxConstField.AttrName.ENXFILE_ATTR_GROUPSHOW] = "true";
+            var groupJson = helper.enxHelper.AttrParameter(thisObj.ConstInfo.AttrName.GROUP, groupName);
+            groupJson[helper.enxConstField.AttrName.ENXFILE_ATTR_GROUPSHOW] = "true";
             thisObj.SetNodeAttr(cell, thisObj.ConstInfo.AttrName.GROUP, groupJson);
             //当前节点 把分组名称设置为连线的名称
             thisObj.Property.CoreGraph.getModel().setValue(cell, groupName);
@@ -3062,7 +3062,7 @@
         //顶层设备拷贝
         this.Copy = function() {
             var selectItemLst = thisObj.Property.CoreGraph.getSelectionCells();
-            var selectNode = JsonHelper.FilterListByValues(selectItemLst, thisObj.ConstInfo.AttrName.VERTEX, [true]);
+            var selectNode = helper.jsonHelper.FilterListByValues(selectItemLst, thisObj.ConstInfo.AttrName.VERTEX, [true]);
             mxClipboard.copy(thisObj.Property.CoreGraph, selectNode);
         };
         //顶层设备粘贴
